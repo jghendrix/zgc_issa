@@ -1,0 +1,232 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+.Random.seed|object|501372022a2d07f7|||||||||||||||
+bb|object|44094e2e567df9bc|||||||||||||||
+caribou|stem|f7e20248aa9dca51|15e6c4c6a0b0f9a6|8dfe5f9ee2a0594b|-1065274702||t20301.6202886756s|ce2285d588502ec9|6280277|qs|local|vector|||0.65||
+caribou_file|stem|30f7727781d23ead|95c374ef96cad853|1e5edfb2908770c8|626213282|input/all_Fogo_caribou_locs_20June2025.csv|t20259.8377750993s|5bc5756ce1f35b8a|42343873|file|local|vector|||0||
+cfs_file|stem||545b17c1df2da766|fc13f092aa456596|1545548134|input/cfs.tif|t20301.6135090148s||0|file|local|vector|||||_paths_ missing files inputcfs.tif
+cfs_path|object|444ba31a286bf044|||||||||||||||
+coast|stem|2c7ee4086586c347|f2ab58cd8b9609c7|fa2fc849419b9aba|1981904306||t20301.6202738279s|de5e0a3fe4349a5f|84821|qs|local|vector|||1.08||
+coastcol|object|e416ea227a7e3970|||||||||||||||
+crs|object|d5d359cacca24dfa|||||||||||||||
+crs_sp|object|92e108a70a6ee217|||||||||||||||
+datetime_col|object|25a786f18de988fe|||||||||||||||
+dist_to_feature|function|b82ad129cbd0a215|||||||||||||||
+epsg|object|2ab37a92b52eafc5|||||||||||||||
+extract_distance_to|function|66e4e50e54aa67a2|||||||||||||||
+extract_layers|function|f3fa95b388f7841e|||||||||||||||
+extract_lc|function|dca51699c110aee8|||||||||||||||
+extract_lc_radius|function|4352434d1c1d6b37|||||||||||||||
+extract_pt|function|c52799c22907ef22|||||||||||||||
+extract_raster|function|fcd024c021fcdb3d|||||||||||||||
+extract_stoich|function|368bc75366e146cf|||||||||||||||
+extract_tod|function|d1d68aaaa2d0794b|||||||||||||||
+forestcol|object|6aaac0be7f395795|||||||||||||||
+generate_pts|function|7f751aef04cd03cd|||||||||||||||
+get_coastline|function|96a0de367da2d6ea|||||||||||||||
+get_lakes|function|d5a1c4c227255fb3|||||||||||||||
+get_roads|function|d961c7c048f0444c|||||||||||||||
+gps_path|object|660b51fbcfdc0a10|||||||||||||||
+GPS_tidying|function|45e6b4f2aae9b4fc|||||||||||||||
+gridcol|object|a122eb0c01415da1|||||||||||||||
+id_col|object|bc33c1349a78e0bd|||||||||||||||
+id_path|object|7d0d8a0973b99ee1|||||||||||||||
+ids|stem|285fc3cfd543ac64|adf0c7f1fdfa8244|606335df22187110|127298475||t20301.6202776098s|4fa881245fd93336|320|qs|local|vector|||0.02||
+ids_file|stem|ac3bac5987a1c19f|3a3d993c7e2c1960|b8ba5de7aa5112bc|296387082|input/collar-animal-ids.csv|t20286.4927385765s|4764b896dcd0d132|527|file|local|vector|||0||
+islandcol|object|be13c8f592230e36|||||||||||||||
+landcol|object|6b3530b15d4ff28a|||||||||||||||
+legend_path|object|3caba3b684fb69ee|||||||||||||||
+levels|object|7d425057f118a0b3|||||||||||||||
+lichen|stem|0097b50aa6707d97|2971915dff478746|436f274868acd070|1598394285||t20301.6202930551s|aa0f5c8b0ca066d8|770|qs|local|vector|||0.18||
+lichen_file|stem|31c85be408176818|f8dad68b35a1afb9|e24453d1208dd910|153277309|input/Cladonia_N.tif|t20300.7231125268s|01f599948394f251|34086016|file|local|vector|||0||
+lichen_path|object|9efe9c5ea895f4f1|||||||||||||||
+locs_prep|stem|29ef44cb927f9c41|586ba5f203abcd61|b2acd627894fcef2|-631140334||t20301.6207865852s|513de9ffc8aebf2d|6499656|qs|local|group||locs_prep_c2e50061*locs_prep_6d89cd25*locs_prep_ea522d1e*locs_prep_d8f6645f*locs_prep_1a1a93ae*locs_prep_54afa3fc*locs_prep_d5fee30c*locs_prep_1bf20c8d*locs_prep_50de6a73*locs_prep_aa567e08*locs_prep_5d88c74f*locs_prep_8f5d23c7*locs_prep_04f61322*locs_prep_adcdf573*locs_prep_3d8f664f*locs_prep_b4556d5c*locs_prep_fdde062f*locs_prep_7d0e5431*locs_prep_23b709a2*locs_prep_887c18c3*locs_prep_62e41981*locs_prep_6bef87f2*locs_prep_46b03be9*locs_prep_56bdd69b*locs_prep_d20e6349*locs_prep_72495a56*locs_prep_9798a188*locs_prep_12bde595*locs_prep_fa2b24cd*locs_prep_a567d34d*locs_prep_5bcd9778*locs_prep_cda8a196*locs_prep_d7e6d8aa*locs_prep_e05aeea7*locs_prep_e830e955*locs_prep_9d608d44*locs_prep_8160e653*locs_prep_af10e31e*locs_prep_f1313b66*locs_prep_6d315876*locs_prep_0c9bc0f1*locs_prep_f29b7c85*locs_prep_d2ba80d6*locs_prep_fe3bd74c*locs_prep_8454cdac*locs_prep_3f37dda3*locs_prep_b30ff40c|40.52||
+n_random_steps|object|f3582cdc107e111b|||||||||||||||
+parkboundcol|object|58a7d971c943be55|||||||||||||||
+parkcol|object|b62f2d883ff5355f|||||||||||||||
+plot_map|function|34d9bb9d87b7bce1|||||||||||||||
+prepare_data|function|78de06a8664cfa95|||||||||||||||
+prepare_locs|function|e175e22dcb562cf2|||||||||||||||
+project_locs|function|fe5b647804f21e2f|||||||||||||||
+rasterise|function|bec8dce95416e4ec|||||||||||||||
+rate|object|b398f7bd0ae01a33|||||||||||||||
+resample_tracks|function|ac87c84d11ed267d|||||||||||||||
+roadcol|object|81da904d3a2320a4|||||||||||||||
+roadcols|object|fb15041c30a0286e|||||||||||||||
+roadlevels|object|641409c2c2b0f2e9|||||||||||||||
+roadpal|object|9d77e06805624bdb|||||||||||||||
+roads|stem|898de68ea2a9fa90|dc95f35a20eff49e|8b142870601533bc|1038729194||t20301.6202205267s|cb62f1ec814f20de|30558|qs|local|vector|||6.42||
+sdss|stem|662758136f2204fd|2b5dd8b70980492f|3cd9f004277b5ceb|1294151837||t20301.6202955584s|7769978a1e72a4db|788|qs|local|vector|||0.15||
+sdss_file|stem|24b513a650e7d518|f253576d8c386383|45ead7df1b245dbd|49310699|input/sdss.tif|t20231.6951581949s|7798bf3026c5c04f|193412566|file|local|vector|||0||
+sdss_legend|stem|7a51a65acbe3614e|ffbf8d8d05743fa8|062cb9d639d2d3d7|-1648936476||t20301.6202780109s|bf1a1ce7cd804ab5|251|qs|local|vector|||0||
+sdss_legend_file|stem|0c056c65d44e3966|c930bb10580bfb89|63e22de26eacaa8d|1073122042|input/legend_sdss.csv|t20231.6205925894s|63e5c65d6d1ce375|134|file|local|vector|||0||
+sdss_legend_path|object|86f6275b9997cb12|||||||||||||||
+sdss_path|object|63e3b3dc6a50d454|||||||||||||||
+seasonal_split|object|9c939838458b7c1f|||||||||||||||
+split_by|object|bc33c1349a78e0bd|||||||||||||||
+split_key|stem|67df7c06abbb83e2|9edc101637eaef5a|dccb2be78d8cce21|-2017162053||t20301.6209061008s|a0cdeb7a83ca634e|391|qs|local|vector|||0.01||
+streamcol|object|460450e967eaebcd|||||||||||||||
+streampolcol|object|abae39a2c1f1c53c|||||||||||||||
+summarise_model|function|bb9268f578a28bed|||||||||||||||
+targets_data|object|bb4e7c798ef8e1d3|||||||||||||||
+targets_extract|object|1af5d49c412e3b3f|||||||||||||||
+targets_prep|object|21b7e8960ffb8f63|||||||||||||||
+targets_tracks|object|70d045bb77e365e7|||||||||||||||
+themeMap|object|1438d4b6b3ea898a|||||||||||||||
+tidy_GPS|stem|241420056bfb714a|25c9231d210b65e7|6e72f73336ee79ed|-1554542148||t20301.6203153158s|957298ec7d16fcf6|6367406|qs|local|vector|||1.49||
+tolerance|object|14ad31fbc077bf02|||||||||||||||
+tracks|pattern|31640c392c5a066b|0e0eb77dce5be7c8||146750882||||6522035|qs|local|vector||tracks_5cbe3b69*tracks_2a7ecbe2*tracks_2f6713cd*tracks_eb1a8505*tracks_ffb9d6a3*tracks_683b1595*tracks_a295b7eb*tracks_40dabd38*tracks_3fa85dd2*tracks_02102de6*tracks_30337bbb*tracks_f4bdc5f3*tracks_ccaa36e3*tracks_e884b563*tracks_61f4335c*tracks_84e0a4d9*tracks_9bd52668*tracks_aeba9164*tracks_6a9b8f4d*tracks_373a231c*tracks_f062f05c*tracks_6d396d79*tracks_8a980984*tracks_d1886c62*tracks_5bd2bd6a*tracks_30f728f4*tracks_b771088d*tracks_5dfd451d*tracks_c4c0e28f*tracks_f81573d9*tracks_07b94384*tracks_b75cc9ef*tracks_33c3488a*tracks_83dde40f*tracks_ef10a523*tracks_0c52466f*tracks_0573b217*tracks_620126f2*tracks_3c5eb503*tracks_bfef11c7*tracks_1b069231*tracks_98d1d8d8*tracks_905f4902*tracks_9ad28fa2*tracks_9e3ca4fa*tracks_a01a56b8*tracks_2f5a4ddb|6.57||
+tracks_02102de6|branch|c08ad558cb3c33ae|0e0eb77dce5be7c8|195285b6d4e4240e|1056490760||t20301.6208244347s|0a5407b5936b61a2|196373|qs|local|vector|tracks||0.15||
+tracks_0573b217|branch|b46183bab203ceb1|0e0eb77dce5be7c8|195285b6d4e4240e|147581822||t20301.6208866704s|22ffbcaf42b8829e|106955|qs|local|vector|tracks||0.1||
+tracks_07b94384|branch|bdcc355c35cb78f6|0e0eb77dce5be7c8|195285b6d4e4240e|-1424318457||t20301.6208748214s|702d059c587e7d94|23716|qs|local|vector|tracks||0.05||
+tracks_0c52466f|branch|766d2598b48e6efb|0e0eb77dce5be7c8|195285b6d4e4240e|-2073559090||t20301.6208847762s|34beeb2cd841427b|85654|qs|local|vector|tracks||0.08||
+tracks_1b069231|branch|41a2e1bd9cab9a62|0e0eb77dce5be7c8|195285b6d4e4240e|1303868452||t20301.6208950345s|bfbbd775756369bf|103942|qs|local|vector|tracks||0.1||
+tracks_2a7ecbe2|branch|d1d464dcc8f52bf4|0e0eb77dce5be7c8|195285b6d4e4240e|911508649||t20301.6208003343s|6ed397ac7a336fcd|163793|qs|local|vector|tracks||0.14||
+tracks_2f5a4ddb|branch|970c24dc1adcc001|0e0eb77dce5be7c8|195285b6d4e4240e|1361836360||t20301.6209051497s|fb70bc12325e4ef7|67399|qs|local|vector|tracks||0.07||
+tracks_2f6713cd|branch|a9fffb11577368cf|0e0eb77dce5be7c8|195285b6d4e4240e|-742385366||t20301.620801353s|7f56930f702b5ec3|22928|qs|local|vector|tracks||0.05||
+tracks_30337bbb|branch|13abd6886e198b48|0e0eb77dce5be7c8|195285b6d4e4240e|408101733||t20301.620826573s|12a99921fbe9e2fc|140916|qs|local|vector|tracks||0.12||
+tracks_30f728f4|branch|1685244e42f888e1|0e0eb77dce5be7c8|195285b6d4e4240e|-1515444880||t20301.6208643803s|8e5a84320b999b73|138514|qs|local|vector|tracks||0.13||
+tracks_33c3488a|branch|8b35d9a32edc4574|0e0eb77dce5be7c8|195285b6d4e4240e|-645112497||t20301.6208785306s|19674efbe1dd5dab|90301|qs|local|vector|tracks||0.08||
+tracks_373a231c|branch|b46b451ed4a6fca0|0e0eb77dce5be7c8|195285b6d4e4240e|-1097245118||t20301.6208507565s|8a0f55ecf42cc690|143647|qs|local|vector|tracks||0.11||
+tracks_3c5eb503|branch|da54e07af0f5b787|0e0eb77dce5be7c8|195285b6d4e4240e|-748201596||t20301.6208906175s|3574996aa67e2b4b|110048|qs|local|vector|tracks||0.09||
+tracks_3fa85dd2|branch|73bb7c8e5818d107|0e0eb77dce5be7c8|195285b6d4e4240e|-693385000||t20301.6208218545s|aea308c661a97713|226044|qs|local|vector|tracks||0.16||
+tracks_40dabd38|branch|551a697dc16f6fb1|0e0eb77dce5be7c8|195285b6d4e4240e|968489346||t20301.6208194298s|0cc9cc82b6b2fa70|284491|qs|local|vector|tracks||0.24||
+tracks_5bd2bd6a|branch|174728662a8a6bd7|0e0eb77dce5be7c8|195285b6d4e4240e|-1883478721||t20301.6208622053s|894bcc029098937a|140772|qs|local|vector|tracks||0.13||
+tracks_5cbe3b69|branch|9792637254d953e5|0e0eb77dce5be7c8|195285b6d4e4240e|-814228714||t20301.6207980441s|4e6ac6954f8cc704|409982|qs|local|vector|tracks||0.42||
+tracks_5dfd451d|branch|a64bcd2cbfdaad48|0e0eb77dce5be7c8|195285b6d4e4240e|2078699499||t20301.6208676611s|7c448a59e49e3a36|126452|qs|local|vector|tracks||0.11||
+tracks_61f4335c|branch|38148a57840dfdac|0e0eb77dce5be7c8|195285b6d4e4240e|-1666103964||t20301.6208368091s|422fb2f14672b6cc|138976|qs|local|vector|tracks||0.19||
+tracks_620126f2|branch|a265b72a26a7e3f9|0e0eb77dce5be7c8|195285b6d4e4240e|2135000356||t20301.620888742s|c722f62a1041e183|111126|qs|local|vector|tracks||0.08||
+tracks_683b1595|branch|cdd5059018ca33b0|0e0eb77dce5be7c8|195285b6d4e4240e|1535665192||t20301.6208140531s|0254793c40663038|171009|qs|local|vector|tracks||0.13||
+tracks_6a9b8f4d|branch|c9265eaeb5290c6b|0e0eb77dce5be7c8|195285b6d4e4240e|2144309846||t20301.6208486383s|ffd888fbe1fbab88|100437|qs|local|vector|tracks||0.1||
+tracks_6d396d79|branch|eaa6654fe157743b|0e0eb77dce5be7c8|195285b6d4e4240e|324817581||t20301.620855038s|2ac0389f7418986c|96318|qs|local|vector|tracks||0.09||
+tracks_83dde40f|branch|8c45f50887bb687e|0e0eb77dce5be7c8|195285b6d4e4240e|-587148425||t20301.620881223s|7d371b54973caaa9|199135|qs|local|vector|tracks||0.17||
+tracks_84e0a4d9|branch|764342b281eb77a0|0e0eb77dce5be7c8|195285b6d4e4240e|949031498||t20301.6208389387s|1311c78b8b8e3d86|79454|qs|local|vector|tracks||0.13||
+tracks_8a980984|branch|f7412d26202b2125|0e0eb77dce5be7c8|195285b6d4e4240e|-879681824||t20301.6208573059s|7a41f79c7480ab5d|146516|qs|local|vector|tracks||0.13||
+tracks_905f4902|branch|6438e431ef835f77|0e0eb77dce5be7c8|195285b6d4e4240e|-1666767602||t20301.620898651s|efb0bb3b89e46260|113035|qs|local|vector|tracks||0.11||
+tracks_98d1d8d8|branch|b57dfe6fe3a8d720|0e0eb77dce5be7c8|195285b6d4e4240e|-438263697||t20301.6208966073s|e97c89c6ebff3c06|64455|qs|local|vector|tracks||0.06||
+tracks_9ad28fa2|branch|caac21670f3938a1|0e0eb77dce5be7c8|195285b6d4e4240e|674697738||t20301.6208996322s|cbda82c21105299e|16254|qs|local|vector|tracks||0.03||
+tracks_9bd52668|branch|9579ee98b4368fa8|0e0eb77dce5be7c8|195285b6d4e4240e|-651512162||t20301.6208442876s|0d665ea9edb441b4|307247|qs|local|vector|tracks||0.38||
+tracks_9e3ca4fa|branch|2857c6747d81a173|0e0eb77dce5be7c8|195285b6d4e4240e|-1101794202||t20301.6209016762s|b1afd971113caff1|111024|qs|local|vector|tracks||0.13||
+tracks_a01a56b8|branch|8f482e5c6ab95a97|0e0eb77dce5be7c8|195285b6d4e4240e|50011410||t20301.6209038851s|9c57af7552916f1e|201882|qs|local|vector|tracks||0.12||
+tracks_a295b7eb|branch|06d0650f68e58c42|0e0eb77dce5be7c8|195285b6d4e4240e|2034068637||t20301.6208159174s|acfca9b548322f32|115751|qs|local|vector|tracks||0.09||
+tracks_aeba9164|branch|73f6b23e7defb57b|0e0eb77dce5be7c8|195285b6d4e4240e|-1524854900||t20301.6208467406s|679eba3e86c5bb94|144158|qs|local|vector|tracks||0.13||
+tracks_b75cc9ef|branch|69a0ee4ef4cf931d|0e0eb77dce5be7c8|195285b6d4e4240e|-1232361714||t20301.6208767587s|e1007ec04d2b7afa|110390|qs|local|vector|tracks||0.09||
+tracks_b771088d|branch|2175642d1c116bae|0e0eb77dce5be7c8|195285b6d4e4240e|-162895849||t20301.6208652004s|027d9d4bdd137385|2136|qs|local|vector|tracks||0.03||
+tracks_bfef11c7|branch|65fd2bf9c14e2b35|0e0eb77dce5be7c8|195285b6d4e4240e|1637090578||t20301.6208930129s|0b1ac4355a8f4b8e|153708|qs|local|vector|tracks||0.14||
+tracks_c4c0e28f|branch|c99c280063d66e6f|0e0eb77dce5be7c8|195285b6d4e4240e|1541082062||t20301.6208701177s|bda1470cc22514e2|142157|qs|local|vector|tracks||0.13||
+tracks_ccaa36e3|branch|897967fed579b56d|0e0eb77dce5be7c8|195285b6d4e4240e|-636256916||t20301.6208315076s|101f816164b88d77|105129|qs|local|vector|tracks||0.12||
+tracks_d1886c62|branch|83686a53f58d9ef2|0e0eb77dce5be7c8|195285b6d4e4240e|-2078910307||t20301.6208596303s|5ed103ad1a1dda00|142964|qs|local|vector|tracks||0.11||
+tracks_e884b563|branch|939ef4ec2d82ee83|0e0eb77dce5be7c8|195285b6d4e4240e|882294953||t20301.6208338465s|6dcf96529a85fae0|145775|qs|local|vector|tracks||0.15||
+tracks_eb1a8505|branch|fdc51f2ca0f5be1e|0e0eb77dce5be7c8|195285b6d4e4240e|-1226758397||t20301.6208101183s|5c93fc3f3db5a69f|170598|qs|local|vector|tracks||0.69||
+tracks_ef10a523|branch|972b1c62bf6c964c|0e0eb77dce5be7c8|195285b6d4e4240e|1011756101||t20301.6208831285s|602a8f8cbebff7ef|101274|qs|local|vector|tracks||0.1||
+tracks_extract|stem|82629349a60b8043|6f428a4335e7eb8b|4caa7c0f79690f3a|774455331||t20301.627918915s|2721421c522ce239|130719426|qs|local|vector|||17.02||
+tracks_f062f05c|branch|8690addf9137a3e2|0e0eb77dce5be7c8|195285b6d4e4240e|-638071011||t20301.6208530785s|967abe67859096c2|145380|qs|local|vector|tracks||0.12||
+tracks_f4bdc5f3|branch|b013cd662ff1299f|0e0eb77dce5be7c8|195285b6d4e4240e|-1425747480||t20301.6208294306s|4ff3527faffe7228|190719|qs|local|vector|tracks||0.18||
+tracks_f81573d9|branch|f999b7207bb29121|0e0eb77dce5be7c8|195285b6d4e4240e|-418122821||t20301.620873872s|803b9977400a4c2a|334579|qs|local|vector|tracks||0.25||
+tracks_ffb9d6a3|branch|9308b87524360de7|0e0eb77dce5be7c8|195285b6d4e4240e|1343421733||t20301.620811763s|d3f3977764a749af|78522|qs|local|vector|tracks||0.06||
+tracks_lichen|stem|96e70dfe4061e0ae|a752a7938650caff|107ac251b4b24f0c|2077595192||t20301.6627792562s|5fc239b7fb04ee76|144970696|qs|local|vector|||18.53||
+tracks_lichen_fixed|stem|1a88555fb3005ebd|c2f37c51e9382b0d|21bd8cf5828ed829|1775875566||t20301.6703427958s|c43219d427c28189|143378329|qs|local|vector|||0.67||
+tracks_random|pattern|5c35669f658a9a36|ffa49d64374f7fb0||1958964458||||125198217|qs|local|vector||tracks_random_1d0a4d59*tracks_random_77841dba*tracks_random_60cc1b7b*tracks_random_ec90f8a6*tracks_random_1b508f7c*tracks_random_337cc2d2*tracks_random_0005ff29*tracks_random_70592f39*tracks_random_9769eaeb*tracks_random_f4587896*tracks_random_2279475b*tracks_random_571cf574*tracks_random_074d72eb*tracks_random_66e2c21d*tracks_random_bba5062a*tracks_random_3955e808*tracks_random_9e450147*tracks_random_fb9c592e*tracks_random_ef220e5d*tracks_random_c2b413cf*tracks_random_599976e0*tracks_random_9d018430*tracks_random_ff134e8c*tracks_random_5ebad62a*tracks_random_af3ecd42*tracks_random_a3aa0992*tracks_random_ee4ef8e6*tracks_random_e0ad1718*tracks_random_bac8888d*tracks_random_12493cab*tracks_random_85975853*tracks_random_e3d6f53c*tracks_random_77ae2dde*tracks_random_18336a93*tracks_random_3fbb9664*tracks_random_41ca9836*tracks_random_697b9b7a*tracks_random_2313482f*tracks_random_38de34b5*tracks_random_d142a29a*tracks_random_eb8d2ba0*tracks_random_736e20d9*tracks_random_f6bbfa36*tracks_random_544f059f*tracks_random_39336478*tracks_random_938cd14f*tracks_random_3360496e|570.25||
+tracks_random_0005ff29|branch|857c3e749e5149a4|ffa49d64374f7fb0|eb6ef8c1fe67f0d1|741954647||t20301.6222881469s|450a1c236a24d1fb|1775101|qs|local|vector|tracks_random||14.78|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_074d72eb|branch|8161ba1090dbe6d3|ffa49d64374f7fb0|2ac1446af7941a4c|-1033992790||t20301.623304262s|9ac98780ede97a91|1894523|qs|local|vector|tracks_random||10.82|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_12493cab|branch|1f086fb8ce204877|ffa49d64374f7fb0|dc8e8a07758100a5|-691476328||t20301.6259647958s|6303a45a77ab81f8|4130716|qs|local|vector|tracks_random||14.17|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_18336a93|branch|e76c4cd63dc22998|ffa49d64374f7fb0|683e6e489ce168cf|-1566242517||t20301.6263503549s|0a7bd1bc0c2579c0|4592978|qs|local|vector|tracks_random||15.36|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_1b508f7c|branch|82fd2e3aa0abaf91|ffa49d64374f7fb0|62c187d3d8f60098|1862534058||t20301.6219186192s|e5bf06b50834b8b3|1600974|qs|local|vector|tracks_random||9.39|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_1d0a4d59|branch|1cdf3e2085424c8e|ffa49d64374f7fb0|3f1cfd8972519f79|988341695||t20301.621513053s|5a5b211e064f4842|6833270|qs|local|vector|tracks_random||46.59|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_2279475b|branch|5382396bf4f10ae5|ffa49d64374f7fb0|8c7b738bd39389bb|1819458715||t20301.6229938717s|7f60714f724f10ea|2768833|qs|local|vector|tracks_random||9.99|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_2313482f|branch|363b1872bdd2c16a|ffa49d64374f7fb0|8a4d7a313d7ef0c6|1273275983||t20301.6267498444s|3c36fa810321265d|2573832|qs|local|vector|tracks_random||8.75|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_3360496e|branch|3f60e72c32a8f937|ffa49d64374f7fb0|421b925df2159992|-723583868||t20301.6276341827s|67b7a02c53312cf5|1375125|qs|local|vector|tracks_random||4.3|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_337cc2d2|branch|ff051c31f8b8253a|ffa49d64374f7fb0|01e8eff8ab278432|-1327654711||t20301.6221160663s|60e83c4da1c92a8d|3115176|qs|local|vector|tracks_random||16.97|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_38de34b5|branch|f8dba8ab6caa46b9|ffa49d64374f7fb0|23ae0cfdfe9982e6|222168539||t20301.6268539169s|fd37dc30d9cb73f5|2561706|qs|local|vector|tracks_random||8.87|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_39336478|branch|421f0b4cbba5d5ca|ffa49d64374f7fb0|cc89b55f7259c5ea|409769335||t20301.6274010185s|84e471efa0fdfb51|2580796|qs|local|vector|tracks_random||8.63|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_3955e808|branch|7f0a1a98c745fddb|ffa49d64374f7fb0|f5fc65cb3c9108d4|1420522133||t20301.6237212742s|88e79da50528e85d|1379277|qs|local|vector|tracks_random||6.64|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_3fbb9664|branch|0452e8202b040bac|ffa49d64374f7fb0|98af9008710d829f|1745487658||t20301.6264442136s|bae6b2694b4ff7c6|2169820|qs|local|vector|tracks_random||7.98|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_41ca9836|branch|0c21a8912bf7b786|ffa49d64374f7fb0|f40aa08f387da9b8|1941387246||t20301.6265309641s|4fd09fc1237fc22b|1993593|qs|local|vector|tracks_random||7.39|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_544f059f|branch|e61bf924e79fb6c5|ffa49d64374f7fb0|e99c714f5dca6864|-972762323||t20301.6273000956s|b980fcb1f162dee0|378886|qs|local|vector|tracks_random||1.25|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_571cf574|branch|11036c584a42f2dc|ffa49d64374f7fb0|be8bbfc8df9919b4|1617922311||t20301.6231778059s|30e3fb5975aaf991|3637670|qs|local|vector|tracks_random||15.75|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_599976e0|branch|de058f763b083a00|ffa49d64374f7fb0|b07af8ccd815448c|769810367||t20301.6247174654s|fe98ccd400e6c7c7|2728150|qs|local|vector|tracks_random||16.91|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_5ebad62a|branch|9002743f2b6b0ccd|ffa49d64374f7fb0|21bd678a5eb86ea4|-1600763857||t20301.6251716916s|6922cb2bb387b758|2545883|qs|local|vector|tracks_random||16|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_60cc1b7b|branch|f003fbd509da62fc|ffa49d64374f7fb0|9e88a113ed347920|50761134||t20301.6216633431s|b262e24f08025ed2|273927|qs|local|vector|tracks_random||1.83|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_66e2c21d|branch|283db3d6794d5080|ffa49d64374f7fb0|8c0b7d3569ea38a6|1647499378||t20301.6234690471s|f20f99c81fd9abe1|2787144|qs|local|vector|tracks_random||14.12|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_697b9b7a|branch|6c4da57453d865bd|ffa49d64374f7fb0|49c29a4f67f5016c|470960495||t20301.6266473682s|cdb306fe8efcfed4|2395011|qs|local|vector|tracks_random||9.95|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_70592f39|branch|45bc4ed3c1658629|ffa49d64374f7fb0|62e860c493e6bbf8|-1887782934||t20301.6224791451s|5691c7dd1ce661d4|4399715|qs|local|vector|tracks_random||16.39|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_736e20d9|branch|e2c0e4f512806537|ffa49d64374f7fb0|543b4941f7651838|-1566549992||t20301.6271935873s|c87c594295bd8679|1499360|qs|local|vector|tracks_random||5.24|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_77841dba|branch|ade95133b2363c27|ffa49d64374f7fb0|b8f5634545c40072|-363096381||t20301.6216411794s|6e7a9de954ded204|3036932|qs|local|vector|tracks_random||10.87|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_77ae2dde|branch|7f2ad07e0c66f64d|ffa49d64374f7fb0|0864876f48dea821|219286866||t20301.6261708147s|60e3a5df2ad968ec|2106667|qs|local|vector|tracks_random||6.58|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_85975853|branch|2ea95d644499be27|ffa49d64374f7fb0|b5f4119a87f4acd8|-1698850780||t20301.6259881071s|cef53b183f116a07|553614|qs|local|vector|tracks_random||1.94|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_938cd14f|branch|2932b5ecadf0a87b|ffa49d64374f7fb0|ea72825ffe431071|616555244||t20301.627583496s|6d7a064f657200f8|4596879|qs|local|vector|tracks_random||15.6|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_9769eaeb|branch|ada9ade6cd051a29|ffa49d64374f7fb0|956324d73308691e|1529995725||t20301.6226841777s|822aaaea1f35fd71|4390618|qs|local|vector|tracks_random||17.56|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_9d018430|branch|b00eb3660737dd57|ffa49d64374f7fb0|63e17cb1346408c3|611387531||t20301.624831568s|ddd13d5a1c4ceb36|1618361|qs|local|vector|tracks_random||9.76|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_9e450147|branch|07ae922668ef8eb1|ffa49d64374f7fb0|9605789964135414|-138230974||t20301.6240203011s|65266476737b50e2|6223902|qs|local|vector|tracks_random||25.65|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_a3aa0992|branch|fb1e8648bfb6cb0f|ffa49d64374f7fb0|7a57287de3e0e205|-322061180||t20301.6255020659s|3fd8cdb4cef098a7|2698371|qs|local|vector|tracks_random||13.17|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_af3ecd42|branch|5e3dbe02a11df5e1|ffa49d64374f7fb0|a1bb753eae5306c6|1051219214||t20301.6253482748s|f4dcc7b3f5b42229|2562086|qs|local|vector|tracks_random||15.16|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_bac8888d|branch|75b5d396abaa5509|ffa49d64374f7fb0|4f149129af6395c5|627325550||t20301.6257991347s|fb61dd129410daf3|2755131|qs|local|vector|tracks_random||13.09|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_bba5062a|branch|0e271bec57398f64|ffa49d64374f7fb0|7cef8630b02fd042|502589328||t20301.6236434406s|1b7ecd4fafba1bab|2615460|qs|local|vector|tracks_random||14.93|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_c2b413cf|branch|16c6df3ae86e72f8|ffa49d64374f7fb0|9e39c8f22920c0e9|-1814880375||t20301.6245204141s|472c05bc13a799f8|2609065|qs|local|vector|tracks_random||16.44|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_d142a29a|branch|d7d5dd77c75617b2|ffa49d64374f7fb0|5b43e6a12da1ed36|-1189559107||t20301.627033164s|bfe048ed92216fed|3484808|qs|local|vector|tracks_random||15.36|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_e0ad1718|branch|acdb7441e761664a|ffa49d64374f7fb0|734912949504286c|-927018208||t20301.6256463163s|daf2afb8937c0c4c|2350455|qs|local|vector|tracks_random||11.91|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_e3d6f53c|branch|9e45619a52e9ffe0|ffa49d64374f7fb0|bde2afe0cc6d4998|1473134598||t20301.6260933756s|400dc60dd7d3be0a|2557259|qs|local|vector|tracks_random||8.97|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_eb8d2ba0|branch|5a8240207b56162d|ffa49d64374f7fb0|750934d0d71094c1|1088720260||t20301.6271321638s|671703f433fe3121|2346268|qs|local|vector|tracks_random||8.44|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_ec90f8a6|branch|0f775c33479a7833|ffa49d64374f7fb0|0eb66fe41abf1b5d|-1727353031||t20301.6218086705s|f0df6b84aed94524|3294174|qs|local|vector|tracks_random||12.46|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_ee4ef8e6|branch|906a0fd6f3c24de1|ffa49d64374f7fb0|596b710ab060fd0c|803604149||t20301.6255073976s|cdc2e474414af4ae|19076|qs|local|vector|tracks_random||0.4|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_ef220e5d|branch|cbe5cd5b1bfc3f06|ffa49d64374f7fb0|406db096edd98a69|-707548522||t20301.6243291216s|bf174e8f0dff9d3f|1763240|qs|local|vector|tracks_random||11.09|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_f4587896|branch|8b90288b5d6b37cd|ffa49d64374f7fb0|e890521b6d3a1de1|574643581||t20301.6228768197s|75fe710be2ac1ea4|3607200|qs|local|vector|tracks_random||16.5|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_f6bbfa36|branch|70baddd8a0d91690|ffa49d64374f7fb0|f7cbb83141bbc7f2|749147524||t20301.627284922s|95ca3ee4a68ac9e9|2634147|qs|local|vector|tracks_random||7.76|NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_fb9c592e|branch|448f7291ddb66e34|ffa49d64374f7fb0|e51e0b95305617d9|-631240816||t20301.6241996787s|fb26d6792b444c80|2653457|qs|local|vector|tracks_random||15.38|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_random_ff134e8c|branch|90db01f041dbf879|ffa49d64374f7fb0|dee8e305935d6790|-416743879||t20301.6249850546s|6172dd06779c9450|2729581|qs|local|vector|tracks_random||13.16|Some bursts contain  3 steps and will be removed. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced. NaNs produced|
+tracks_resampled|pattern|0bd263daba29e916|7edc657ca371360e||1132533942||||17809843|qs|local|vector||tracks_resampled_d17cd74a*tracks_resampled_44eb1d2e*tracks_resampled_28c7531f*tracks_resampled_ee01188f*tracks_resampled_d44e95f8*tracks_resampled_1d972e2f*tracks_resampled_d5b18b40*tracks_resampled_ce376be2*tracks_resampled_7a7a222a*tracks_resampled_809c33e8*tracks_resampled_8002df6b*tracks_resampled_b4261219*tracks_resampled_a6d1acae*tracks_resampled_ae5e8a50*tracks_resampled_b80cf421*tracks_resampled_de390411*tracks_resampled_da99a796*tracks_resampled_5bba33cb*tracks_resampled_b9381eec*tracks_resampled_3648e480*tracks_resampled_84698a42*tracks_resampled_b49781c8*tracks_resampled_30d0cebc*tracks_resampled_99673ff1*tracks_resampled_fa1a80c2*tracks_resampled_0f964a59*tracks_resampled_1ebc25b4*tracks_resampled_3103872d*tracks_resampled_556107c6*tracks_resampled_43d2744f*tracks_resampled_cebb5395*tracks_resampled_ac41141f*tracks_resampled_187cda96*tracks_resampled_e192c5a8*tracks_resampled_65ccbe4b*tracks_resampled_a65c859f*tracks_resampled_8cfc1250*tracks_resampled_479bd090*tracks_resampled_73b8dace*tracks_resampled_ad266c90*tracks_resampled_12892c78*tracks_resampled_fc207237*tracks_resampled_d87d91c2*tracks_resampled_b8f9d220*tracks_resampled_a092b40d*tracks_resampled_368ebf25*tracks_resampled_6574c77e|3.48||
+tracks_resampled_0f964a59|branch|b41c3df4845b8515|7edc657ca371360e|b1e4cab7eb77901a|1597338849||t20301.6209451531s|dc1358ba7c1ba858|377377|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_12892c78|branch|0e294b76dc6e4675|7edc657ca371360e|9f7cca74a4f27fa4|1641239176||t20301.6209630123s|3f061779e20448b6|325215|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_187cda96|branch|b6731a7536f8aae5|7edc657ca371360e|b7b05d10c06dc784|1711122720||t20301.6209529529s|95594a5bf3d36b80|285160|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_1d972e2f|branch|6ecefe047af85071|7edc657ca371360e|820c62ac9cec3da3|-359404796||t20301.6209161778s|95c0d872ee9ec000|462034|qs|local|vector|tracks_resampled||0.1||
+tracks_resampled_1ebc25b4|branch|560ca296ddf5b1bd|7edc657ca371360e|dce6535075cd2c7a|201201143||t20301.6209458978s|a348d163359ff9d0|4000|qs|local|vector|tracks_resampled||0.03||
+tracks_resampled_28c7531f|branch|05a39df9cb999cd0|7edc657ca371360e|2d87aa02a2c6bfb6|-1238759871||t20301.6209117383s|764285d2c164f49d|39543|qs|local|vector|tracks_resampled||0.03||
+tracks_resampled_30d0cebc|branch|29910d210c391239|7edc657ca371360e|361dd539bc7aa092|-282881233||t20301.620941442s|fc1f835e9fda42d2|391053|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_3103872d|branch|24ee5e0184d97980|7edc657ca371360e|2eabed554638a2d5|1625355428||t20301.620947073s|c60aaaaf2efbe959|326987|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_3648e480|branch|8eda56bfe8c7de6c|7edc657ca371360e|8912cb3581d484ba|1565909369||t20301.6209368724s|3cd4ab77a877b613|375317|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_368ebf25|branch|988966462e4dcc15|7edc657ca371360e|bb85931e15c85304|-1645369763||t20301.6209699542s|bbc403b17a19346d|655903|qs|local|vector|tracks_resampled||0.1||
+tracks_resampled_43d2744f|branch|ff7995559ef145f8|7edc657ca371360e|d5382e84965db591|-1638635160||t20301.6209500383s|2426de31e60aa1d1|550044|qs|local|vector|tracks_resampled||0.1||
+tracks_resampled_44eb1d2e|branch|4012fd70e3f0c53f|7edc657ca371360e|1caf314722b49eb1|-691700763||t20301.620910893s|9c161a31e43dd8e6|432547|qs|local|vector|tracks_resampled||0.12||
+tracks_resampled_479bd090|branch|00947514e9abcb6f|7edc657ca371360e|eabdd420908d3f17|936782826||t20301.6209593738s|37fe0b7aaef13237|348103|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_556107c6|branch|788d0f12d247c068|7edc657ca371360e|dac3333bbd63d2ce|-751605665||t20301.6209482329s|77eaba3b6060401b|381262|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_5bba33cb|branch|d0b81c06f0234bc6|7edc657ca371360e|b5cb49a6ef81696d|2059954594||t20301.6209346158s|7c9dd2438c6e2d5b|378986|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_6574c77e|branch|e807eaf37f5b2fcf|7edc657ca371360e|9c9d35574c5214ee|1544278265||t20301.6209710306s|3150659697845eb8|184473|qs|local|vector|tracks_resampled||0.05||
+tracks_resampled_65ccbe4b|branch|771c4dd5d14b67fb|7edc657ca371360e|926d8d37c4bb4ef7|-1885626495||t20301.6209558765s|5f6e76970f606bdc|304693|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_73b8dace|branch|ca67186e4ace14b8|7edc657ca371360e|13eb63ca5c392719|-503163425||t20301.6209605628s|7f77e8762bd9035b|349836|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_7a7a222a|branch|82fc0d202dece2e5|7edc657ca371360e|947332da56a1b64e|-1440163283||t20301.6209220645s|5fd6c6f4990595c0|632271|qs|local|vector|tracks_resampled||0.1||
+tracks_resampled_8002df6b|branch|e7187add6c45855a|7edc657ca371360e|bcd0038ae708cf85|400873999||t20301.6209250044s|dbdb8a8c647f3bfc|378333|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_809c33e8|branch|6081a9ab25828358|7edc657ca371360e|2d145ced908e8e27|1022350204||t20301.6209233915s|12152a8bb7080b1c|503525|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_84698a42|branch|ce7a3e9e86996e13|7edc657ca371360e|5137f9363d1436ec|-1308142490||t20301.6209390989s|0d58f5483eb951d2|381494|qs|local|vector|tracks_resampled||0.12||
+tracks_resampled_8cfc1250|branch|7bf27df75fefe8a8|7edc657ca371360e|1c83f5f2637c432b|410235706||t20301.6209581996s|cb8db2f100780790|328647|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_99673ff1|branch|8c350dea312c9e81|7edc657ca371360e|e58072bf484134f0|578037455||t20301.6209426972s|9adb2c0fe965a734|372812|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_a092b40d|branch|692cc74ae963c1c5|7edc657ca371360e|3f657d387db532dc|-38498638||t20301.6209681182s|633e24cb362c3947|347667|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_a65c859f|branch|700fab60a77fa549|7edc657ca371360e|877270d115f0118c|-438445905||t20301.6209570821s|2c478439b55d51ff|266672|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_a6d1acae|branch|19bc7f95238f8196|7edc657ca371360e|c3d1f27035a111de|1182496203||t20301.6209278921s|1fcc85201ec44c8e|273689|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_ac41141f|branch|e78cd447512308e0|7edc657ca371360e|e2b40bd8f47e09cb|-1069946946||t20301.6209518634s|d3cd57827bc35c21|348779|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_ad266c90|branch|a608db09ecaf457b|7edc657ca371360e|c4067293c168f4d3|526556513||t20301.620961926s|395ea06300e53d22|490457|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_ae5e8a50|branch|4f0ab2e6221921e5|7edc657ca371360e|0900f6a400e18e77|-174977504||t20301.6209291247s|6f4a0c72ec813989|390497|qs|local|vector|tracks_resampled||0.07||
+tracks_resampled_b4261219|branch|44b6d75ade77c409|7edc657ca371360e|d9f1616b231b3012|747614570||t20301.6209267632s|d5f8293f64bb07a7|503993|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_b49781c8|branch|2ce1254c454ae639|7edc657ca371360e|baa99bdc8f3a1efb|481209908||t20301.6209401773s|07ae844ae252cbf2|234152|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_b80cf421|branch|9c9667c2a5570863|7edc657ca371360e|b29dd4dd38663f93|877584496||t20301.6209303323s|fbf6a56ea799d815|382461|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_b8f9d220|branch|34a440e98f56dbcd|7edc657ca371360e|caec7b0d5967d4bc|541139962||t20301.6209668945s|b8f352f19123bc69|49343|qs|local|vector|tracks_resampled||0.03||
+tracks_resampled_b9381eec|branch|05ea4d8848a481da|7edc657ca371360e|d31bb8e97ce8dfe5|265425713||t20301.6209357227s|d951766d4d4446f5|253123|qs|local|vector|tracks_resampled||0.05||
+tracks_resampled_ce376be2|branch|91863f758487ef9b|7edc657ca371360e|08fdb1006f0fef53|-592726578||t20301.6209201899s|dc833c7b6235c83d|635064|qs|local|vector|tracks_resampled||0.13||
+tracks_resampled_cebb5395|branch|351f89df51a320cd|7edc657ca371360e|fc8a1f080209624f|-289443564||t20301.6209507649s|22bac3d83e584fd0|71154|qs|local|vector|tracks_resampled||0.03||
+tracks_resampled_d17cd74a|branch|f46863ba68823deb|7edc657ca371360e|bf04a677916262ef|-172941399||t20301.620908833s|4a3a1d3d70e14516|1075620|qs|local|vector|tracks_resampled||0.14||
+tracks_resampled_d44e95f8|branch|669a55a02655ed68|7edc657ca371360e|752b0eee001d90c7|-1955143992||t20301.6209148259s|fa4b7780772cc928|233542|qs|local|vector|tracks_resampled||0.04||
+tracks_resampled_d5b18b40|branch|cc37ddd176e7c604|7edc657ca371360e|ce2f76467f10d9fe|-1729752459||t20301.6209180777s|73957b76d73e234f|271502|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_d87d91c2|branch|caa1177fbf1846c0|7edc657ca371360e|eb428fccfebb33f3|-186597307||t20301.6209661623s|af995afd8fbb5bfd|347615|qs|local|vector|tracks_resampled||0.06||
+tracks_resampled_da99a796|branch|e765103e20420329|7edc657ca371360e|ac8a32879230c8b0|634993397||t20301.620933344s|75f458f8470d284c|969455|qs|local|vector|tracks_resampled||0.12||
+tracks_resampled_de390411|branch|08c896ff34e2a548|7edc657ca371360e|daefe5a326663d5f|1245033487||t20301.6209313005s|10bf02f4c6fedf4e|193378|qs|local|vector|tracks_resampled||0.04||
+tracks_resampled_e192c5a8|branch|a0d3aa31dba600ea|7edc657ca371360e|3949bb43c216af13|-1746643775||t20301.620954677s|1ddd51689360585b|650577|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_ee01188f|branch|93875a4067ab8079|7edc657ca371360e|e7be82f8af9aa855|1074743234||t20301.6209137351s|32ce17e33b390e82|461427|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_fa1a80c2|branch|397574f707208d0d|7edc657ca371360e|efb1e064ff87d0f1|2094355581||t20301.6209438829s|38a5ff9c384f3fc1|373276|qs|local|vector|tracks_resampled||0.08||
+tracks_resampled_fc207237|branch|8336f64782b89157|7edc657ca371360e|39754437718ca55a|1632262655||t20301.6209650649s|1411274dfcf3718f|216785|qs|local|vector|tracks_resampled||0.14||
+tracks_vasc|stem|29b3c12b112d4a6b|56ab860a4228c14c|8859bc9b1d55a756|-1087100515||t20301.6706275485s|b3498b9673359237|158225237|qs|local|vector|||19.49||
+tz|object|60eb2f254a4a732f|||||||||||||||
+vascular|stem|0b276fd11280e673|f3930870162bfeb6|08fbb0af90191a89|-307079963||t20301.620290573s|0c06bd7502b40ecf|769|qs|local|vector|||0.09||
+vascular_file|stem|af3019ad4320500d|b0200013a400e65c|ea539767a011f250|439952278|input/Vascular_N.tif|t20300.7231386893s|49cb953e895578cb|36907779|file|local|vector|||0||
+vascular_path|object|d1323d03617fe8e6|||||||||||||||
+water|stem|0c1e7ec88df7a116|59b6770a8d8b78bf|8e73e726b97fe994|-2135480064||t20301.6202611061s|b35af125279470ce|269352|qs|local|vector|||3.33||
+watercol|object|d911c2060b5709f1|||||||||||||||
+x_col|object|6efda9bb51c588ae|||||||||||||||
+y_col|object|4fae1742f80f4623|||||||||||||||

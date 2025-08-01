@@ -11,14 +11,14 @@ tar_option_set(format = 'qs')
 # Data --------------------------------------------------------------------
 # Path to land cover rasters
 # lc = Canadian Forest service, sdss = provincial product
-cfs_path <- file.path('input', 'cfs.tif')
+#cfs_path <- file.path('input', 'cfs.tif')
 sdss_path <- file.path('input', 'sdss.tif')
-legend_path <- file.path('input', 'cfs_legend.csv')
-sdss_legend_path <- file.path('input', 'trimmed_legend_sdss.csv')
+#legend_path <- file.path('input', 'cfs_legend.csv')
+sdss_legend_path <- file.path('input', 'legend_sdss.csv')
 
 # Stoich layer paths
-lichen_path <- file.path('input', 'N_Cladonia.tif')
-vascular_path <- file.path('input', 'N_vascular.tif')
+lichen_path <- file.path('input', 'Cladonia_N.tif')
+vascular_path <- file.path('input', 'Vascular_N.tif')
 
 # Caribou data path
 gps_path <- file.path('input', 'all_Fogo_caribou_locs_20June2025.csv')
@@ -70,16 +70,16 @@ targets_data <- c(
     fread(!!.x)
   ),
   
-  tar_file_read(
-    cfs,
-    cfs_path,
-    raster(!!.x)
-  ),
-  tar_file_read(
-    cfs_legend,
-    legend_path,
-    fread(!!.x)
-  ),
+ # tar_file_read(
+#    cfs,
+ #   cfs_path,
+  #  raster(!!.x)
+  #),
+#  tar_file_read(
+#    cfs_legend,
+#    legend_path,
+#    fread(!!.x)
+#  ),
   
   tar_file_read(
     sdss,
@@ -166,13 +166,13 @@ targets_extract <- c(
     extract_layers(
       tracks_random,
       crs,
-      cfs,
-      cfs_legend
+      sdss,
+      sdss_legend
     )
   ),
   
   tar_target(
-    tracks_stoich,
+    tracks_lichen,
     extract_stoich(
       tracks_extract,
       crs,
@@ -180,10 +180,19 @@ targets_extract <- c(
     )
   ),
   
+  # less than 10% of clusters have a lichen value for each cell. lots of NAs... do we consider NA for lichen to be a zero?
+  
   tar_target(
-    tracks_stoich,
+    tracks_lichen_fixed,
+    tracks_lichen %>% 
+      rename(Cladonia_N = pt_stoich) %>%
+      mutate(Cladonia_N = ifelse(is.na(Cladonia_N), 0, Cladonia_N))
+  ),
+  
+  tar_target(
+    tracks_vasc,
     extract_stoich(
-      tracks_extract,
+      tracks_lichen_fixed,
       crs,
       vascular
     )

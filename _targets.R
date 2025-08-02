@@ -161,10 +161,17 @@ targets_tracks <- c(
 ## Extracting data for tracks ------------------------------
 
 targets_extract <- c(
+  
+  tar_target(
+    tracks_cleaned,
+    remove_NA_steps(tracks_random)
+    )
+  ,
+  
   tar_target(
     tracks_extract,
     extract_layers(
-      tracks_random,
+      tracks_cleaned,
       crs,
       sdss,
       sdss_legend
@@ -197,7 +204,19 @@ targets_extract <- c(
       vascular
     )
   )
-  
+  ## Lots of NAs in the stoich maps. Maybe using a radius around the point instead of that specific 5m cell would be better?
+    ,
+
+  tar_target(
+    tracks_lichen_radius,
+    extract_stoich_radius(
+      tracks_extract,
+      crs,
+      lichen,
+      100
+    )
+  )
+
 )
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above

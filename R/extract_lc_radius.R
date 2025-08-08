@@ -1,6 +1,8 @@
 #' @title Extract landcover
 extract_lc_radius <- function(DT, crs, lc, legend, radius) {
 
+  #DT %<>% dplyr::filter(doy > 305 | doy < 90)
+  
   setDT(DT)
   # want to draw a 100m buffer around locations and extract % forest within that buffer
 
@@ -17,7 +19,7 @@ extract_lc_radius <- function(DT, crs, lc, legend, radius) {
 
   buffer_lc <- raster::extract(lc, DT_sf_buffer)
 
-  prop_forest <- rapply(buffer_lc, function(lc) ifelse(lc %in% c("81", "210", "220", "230"), 1, 0), how = "replace")
+  prop_forest <- rapply(buffer_lc, function(lc) ifelse(lc %in% c("2", "3", "5"), 1, 0), how = "replace")
 
 means <- sapply(prop_forest, FUN = mean)
 

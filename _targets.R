@@ -183,7 +183,9 @@ targets_extract <- c(
     extract_stoich(
       tracks_extract,
       crs,
-      lichen
+      lichen,
+      6 # 6 = the interval by which to average out the 5m x 5m pixels, this takes the average stoich at 30m
+      # calling all NAs zero
     )
   ),
   
@@ -192,8 +194,8 @@ targets_extract <- c(
   tar_target(
     tracks_lichen_fixed,
     tracks_lichen %>% 
-      rename(Cladonia_N = pt_stoich) %>%
-      mutate(Cladonia_N = ifelse(is.na(Cladonia_N), 0, Cladonia_N))
+      rename(N_Cladonia = pt_r3) %>%
+      mutate(N_Cladonia = ifelse(is.na(N_Cladonia), 0, N_Cladonia))
   ),
   
   tar_target(
@@ -201,23 +203,110 @@ targets_extract <- c(
     extract_stoich(
       tracks_lichen_fixed,
       crs,
-      vascular
+      vascular,
+      6
     )
-  )
+  ),
+  
   ## Lots of NAs in the stoich maps. Maybe using a radius around the point instead of that specific 5m cell would be better?
-    ,
+    
+  # drawing the radius would take for bloody ever, like 70 DAYS of computation
+  
+  # aggregated the stoich maps to larger pixels instead, much faster,
 
   tar_target(
-    tracks_lichen_radius,
-    extract_stoich_radius(
-      tracks_extract,
+    tracks_lc,
+    extract_forest(
+      tracks_vasc,
       crs,
-      lichen,
-      100
+      sdss,
+      3
     )
   )
 
 )
+
+# Targets: distributions --------------------------------------------------
+targets_distributions <- c(
+  tar_target(
+    dist_parameters,
+    calc_distribution_parameters(tracks_random),
+    pattern = map(tracks_random)
+  ),
+  tar_target(
+    dist_sl_plots,
+    plot_distributions(tracks_resampled, 'sl_'),
+    pattern = map(tracks_resampled),
+    iteration = 'list'
+  ),
+  tar_target(
+    dist_ta_plots,
+    plot_distributions(tracks_resampled, 'ta_'),
+    pattern = map(tracks_resampled),
+    iteration = 'list'
+  )
+)
+
+# Targets: winter model ----------------------------------------------------------
+targets_winter <- c(
+  tar_target(
+    winter_prep,
+    tracks_lc %>% filter(doy > 305 | doy < 90)
+  ),
+  tar_target(
+    winter_model,
+    stdm_model(winter_prep)
+  ),
+  tar_target(
+    winter_model_check,
+    model_check(winter_model)
+  ),
+  
+  tar_target(
+  winter_VIF,
+    summarise_model(winter_model, winter_prep)
+  )
+)
+
+# Targets: model output and effects ------------------------------------------------------------
+targets_fire_effects <- c(
+  tar_target(
+    indiv_winter,
+    indiv_estimates(winter_model)
+  ),
+  tar_target(
+    winter_boxplot,
+    plot_box_horiz(indiv_winter, plot_theme())
+  ),
+  
+  
+  
+  
+  
+  
+  
+  tar_target(
+    sum_fire,
+    sum_plot(indiv_fire, plot_theme(), "fire")
+  ),
+  tar_target(
+    s_indiv_fire,
+    indiv_seasonal(s_fire_model, season_key, "fire"),
+    pattern = map(s_fire_model, season_key)
+  ),
+  tar_target(
+    s_fire_boxplot,
+    plot_boxplot_seasonal(s_indiv_fire, plot_theme(), "fire"),
+    pattern = map(s_indiv_fire)
+  ),
+  
+  tar_target(
+    sum_s_fire,
+    sum_seasonal(s_indiv_fire, plot_theme(), "fire"),
+    pattern = map(s_indiv_fire)
+  )
+)
+
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above
 lapply(grep('targets', ls(), value = TRUE), get)

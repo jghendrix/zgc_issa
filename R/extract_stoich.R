@@ -1,6 +1,6 @@
 ## Extracting land cover of given point
 
-extract_stoich <- function(DT, crs, stoich) {
+extract_stoich <- function(DT, crs, stoich, pixel) {
 
   sites <- setDT(DT)
   
@@ -8,11 +8,17 @@ extract_stoich <- function(DT, crs, stoich) {
   
   crs(stoich) <- crs$wkt
   
-   # stoich <- raster::projectRaster(stoich, crs = crs$wkt, method = 'ngb')
+  # stoich rasters are at a 5m resolution, can we average those out to like 30m?
   
-		extract_pt(sites, stoich, pt)
-	#	sites[legend, lc_description := label, on = .(pt_lc = class)]
-
+  # first sub 0s for NAs
+  r <- rast(stoich) %>% classify(cbind(NA, 0))
+  # then aggregate 5m to 30m
+  r2 <- aggregate(r, fact = pixel)
+  
+  r3 <- raster(r2)
+  
+ 	extract_pt(sites, r3, pt)
+	
 			}
 
   

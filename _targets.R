@@ -247,11 +247,12 @@ targets_distributions <- c(
   )
 )
 
-# Targets: winter model ----------------------------------------------------------
+# Targets: seasonal models ----------------------------------------------------------
 targets_winter <- c(
   tar_target(
     winter_prep,
     tracks_lc %>% filter(doy > 305 | doy < 90)
+    # Nov 1st to March 31st
   ),
   tar_target(
     winter_model,
@@ -262,14 +263,24 @@ targets_winter <- c(
     model_check(winter_model)
   ),
   
+  
   tar_target(
-  winter_VIF,
-    summarise_model(winter_model, winter_prep)
+    summer_prep,
+    tracks_lc %>% filter(doy > 120 | doy < 244)
+    # May 1st to Aug 31st
+  ),
+  tar_target(
+    summer_model,
+    stdm_model(summer_prep)
+  ),
+  tar_target(
+    summer_model_check,
+    model_check(summer_model)
   )
 )
 
 # Targets: model output and effects ------------------------------------------------------------
-targets_fire_effects <- c(
+targets_seasonal_effects <- c(
   tar_target(
     indiv_winter,
     indiv_estimates(winter_model)
@@ -278,18 +289,25 @@ targets_fire_effects <- c(
     winter_boxplot,
     plot_box_horiz(indiv_winter, plot_theme())
   ),
-  
-  
-  
-  
-  
-  
+  tar_target(
+    sum_winter,
+    sum_plot(indiv_winter, plot_theme(), "winter")
+  ),
   
   tar_target(
-    sum_fire,
-    sum_plot(indiv_fire, plot_theme(), "fire")
+    indiv_summer,
+    indiv_estimates(summer_model)
   ),
   tar_target(
+    summer_boxplot,
+    plot_box_horiz(indiv_summer, plot_theme())
+  ),
+  
+  
+  
+  
+  
+tar_target(
     s_indiv_fire,
     indiv_seasonal(s_fire_model, season_key, "fire"),
     pattern = map(s_fire_model, season_key)

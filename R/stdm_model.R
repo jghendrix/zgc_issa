@@ -27,6 +27,7 @@ stdm_model <- function(DT) {
 			N_Cladonia:I(log(sl_)) +
 			N_vasc:I(log(sl_)) +
 			(1 | indiv_step_id) +
+	    (1 | yr) +
 			(0 + prop_forest | id) +
 			(0 + N_Cladonia | id) +
 			(0 + N_vasc | id) +
@@ -37,7 +38,7 @@ stdm_model <- function(DT) {
 		,
 		data = DT,
 		family = poisson(),
-		map = list(theta = factor(c(NA, 1:7))),
-	start = list(theta = c(log(1000), seq(0, 0, length.out = 7)))
+		map = list(theta = factor(c(NA, 1:8))),
+	start = list(theta = c(log(1000), seq(0, 0, length.out = 8)))
 	)
 }

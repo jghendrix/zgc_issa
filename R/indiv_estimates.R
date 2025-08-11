@@ -23,8 +23,8 @@ indiv_estimates <- function(model) {
 										estimate = ifelse(term == "N_Cladonia:I(log(sl_))",
 																			estimate + clad_pop, estimate)) %>%
 		filter(term != "I(log(sl_)):N_vasc" & term != "I(log(sl_)):N_Cladonia") %>%
-	  mutate(term = ifelse(term == "prop_forest:I(log(sl_))", 
-	                       "I(log(sl_)):prop_forest", term))
+	  mutate(term = ifelse(term == "I(log(sl_)):prop_forest",
+	                       "prop_forest:I(log(sl_))", term))
 
 	indiv %<>% filter(term != "(Intercept)")
 

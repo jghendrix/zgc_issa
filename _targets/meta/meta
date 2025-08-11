@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|aa14ca26772894d8|||||||||||||||
+.Random.seed|object|f33a97526d1b784a|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 caribou|stem|f7e20248aa9dca51|15e6c4c6a0b0f9a6|8dfe5f9ee2a0594b|-1065274702||t20301.6202886756s|ce2285d588502ec9|6280277|qs|local|vector|||0.65||
@@ -36,6 +36,7 @@ id_path|object|7d0d8a0973b99ee1|||||||||||||||
 ids|stem|285fc3cfd543ac64|adf0c7f1fdfa8244|606335df22187110|127298475||t20301.6202776098s|4fa881245fd93336|320|qs|local|vector|||0.02||
 ids_file|stem|ac3bac5987a1c19f|3a3d993c7e2c1960|b8ba5de7aa5112bc|296387082|input/collar-animal-ids.csv|t20286.4927385765s|4764b896dcd0d132|527|file|local|vector|||0||
 indiv_estimates|function|9ffd3aee6363777a|||||||||||||||
+indiv_summer|stem|652ab1d3da8b1d9c|01ecc433cdcf8fcc|1724725cec959f03|-549763119||t20309.5352144549s|76574b61e78ac857|5892|qs|local|vector|||54.05||
 indiv_winter|stem|94c97c7dca87b00a|3c3d6f231549aaab|93a1304af2e9dfc3|-2101056623||t20308.6179077615s|389568049dd4d135|5430|qs|local|vector|||103.87||
 islandcol|object|be13c8f592230e36|||||||||||||||
 landcol|object|6b3530b15d4ff28a|||||||||||||||
@@ -84,6 +85,8 @@ streampolcol|object|abae39a2c1f1c53c|||||||||||||||
 sum_plot|function|0e3dea642d73c60e|||||||||||||||
 sum_winter|stem|57357d5d9641931e|97f2fb29e7c0ac2b|52e207bf6726716c|1988234938||t20308.6204321446s|4e52ce659a1ab920|142690|qs|local|vector|||6.52|Removed 44 rows containing missing values or values outside the scale rangegeom_segment.|
 summarise_model|function|bb9268f578a28bed|||||||||||||||
+summer_model|stem|8d28067c64bbbe6b|9c1fad10ab496429|7aa737523fa42faa|-842982072||t20309.5345657477s|b45911362f9eec55|1004868128|qs|local|vector|||78435.92||
+summer_prep|stem|7d7c8cf055c71fd3|333518de525dc145|3c0a388810a2e5c1|283385905||t20308.6218404187s|03d0a3f4d8f63ce4|179809918|qs|local|vector|||3.18||
 targets_data|object|bb4e7c798ef8e1d3|||||||||||||||
 targets_distributions|object|0f2f9fb3060e243d|||||||||||||||
 targets_extract|object|0d0875c56f9aa783|||||||||||||||
@@ -270,8 +273,8 @@ watercol|object|d911c2060b5709f1
 extract_tod|function|d1d68aaaa2d0794b
 plot_box_horiz|function|77aca61742601728
 tz|object|60eb2f254a4a732f
-indiv_estimates|function|9ffd3aee6363777a
-targets_seasonal_effects|object|2ab93d5fc6552651
+indiv_estimates|function|b7badf70dff4eb70
+targets_seasonal_effects|object|99d67dac12d18d31
 parkboundcol|object|58a7d971c943be55
 summarise_model|function|bb9268f578a28bed
 extract_pt|function|c52799c22907ef22
@@ -288,7 +291,7 @@ sdss_legend_path|object|86f6275b9997cb12
 rasterise|function|bec8dce95416e4ec
 targets_data|object|bb4e7c798ef8e1d3
 model_check|function|7ec6d14bc2ab9bd7
-.Random.seed|object|f33a97526d1b784a
+.Random.seed|object|5ffa01935a940ac8
 targets_distributions|object|0f2f9fb3060e243d
 id_col|object|bc33c1349a78e0bd
 sdss_path|object|63e3b3dc6a50d454
@@ -337,4 +340,3 @@ extract_stoich|function|b9a00262f5a85513
 sum_plot|function|0e3dea642d73c60e
 plot_distributions|function|6ca3d5ebb84c3b94
 dist_to_feature|function|b82ad129cbd0a215
-summer_prep|stem|7d7c8cf055c71fd3|333518de525dc145|3c0a388810a2e5c1|283385905||t20308.6218404187s|03d0a3f4d8f63ce4|179809918|qs|local|vector|||3.18||

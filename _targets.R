@@ -302,7 +302,10 @@ targets_seasonal_effects <- c(
     summer_boxplot,
     plot_box_horiz(indiv_summer, plot_theme())
   ),
-  
+  tar_target(
+    sum_summer,
+    sum_plot(indiv_summer, plot_theme(), "summer")
+  ),
   
   
   

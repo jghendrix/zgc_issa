@@ -1,19 +1,10 @@
 #' @title Prepare speed
 #' @export
 #' @author Jack G Hendrix
-prepare_speed <- function(DT, summary, model, params) {
+prepare_speed <- function(DT, summary, params) {
 
-if(model == "fire")
-sum <- DT[,.(med_new = median(dist_to_new_burn, na.rm = T),
-						 med_old = median(dist_to_old_burn, na.rm = T),
-						 mean_forest = mean(prop_forest, na.rm = T)),
-					by = .(id)]
-
-# haven't messed with the road one yet
-
-if(model == "road")
-	sum <- DT[,.(med_minor = median(dist_to_minor, na.rm = T),
-							 med_tch = median(dist_to_tch, na.rm = T),
+	sum <- DT[,.(mean_Clad = mean(N_Cladonia, na.rm = T),
+							 mean_vasc = mean(N_vasc, na.rm = T),
 							 mean_forest = mean(prop_forest, na.rm = T)),
 						by = .(id)]
 

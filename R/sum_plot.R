@@ -1,10 +1,10 @@
 #' @title Individual estimates w/ SE
 #'  @export
 #' @author Jack G Hendrix
-sum_plot <- function(DT, theme, season) {
+sum_plot <- function(DT, theme, model) {
 
 fixed <- read.csv('input/seasonal_issa_fixed_output.csv') %>%
-			filter(season == season) %>%
+			filter(season == model) %>%
 			dplyr::select(popn = term, mean = estimate, mse = se)
 
 	gbox <-	ggplot(data = fixed, aes(x = popn, y = mean)) +
@@ -25,7 +25,7 @@ fixed <- read.csv('input/seasonal_issa_fixed_output.csv') %>%
 			plot_theme()
 
 		ggsave(
-			paste0('graphics/summary/', season, '_indiv_selection.png'),
+			paste0('graphics/summary/', model, '_indiv_selection.png'),
 			gbox,
 			width = 10,
 			height = 10,

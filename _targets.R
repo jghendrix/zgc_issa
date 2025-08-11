@@ -251,8 +251,7 @@ targets_distributions <- c(
 targets_winter <- c(
   tar_target(
     winter_prep,
-    tracks_lc %>% filter(doy > 305 | doy < 90)
-    # Nov 1st to March 31st
+    prepare_model(tracks_lc, "winter")
   ),
   tar_target(
     winter_model,
@@ -266,8 +265,7 @@ targets_winter <- c(
   
   tar_target(
     summer_prep,
-    tracks_lc %>% filter(doy > 120 | doy < 244)
-    # May 1st to Aug 31st
+    prepare_model(tracks_lc, "summer")
   ),
   tar_target(
     summer_model,
@@ -305,26 +303,51 @@ targets_seasonal_effects <- c(
   tar_target(
     sum_summer,
     sum_plot(indiv_summer, plot_theme(), "summer")
-  ),
-  
-  
-  
-  
-tar_target(
-    s_indiv_fire,
-    indiv_seasonal(s_fire_model, season_key, "fire"),
-    pattern = map(s_fire_model, season_key)
+  )
+)
+
+# Targets: speed from seasonal models ------------------------------------------------------------
+targets_speed <- c(
+  tar_target(
+    prep_speed_winter,
+    prepare_speed(
+      DT = winter_prep,
+      summary = indiv_winter,
+      params = dist_parameters
+    )
   ),
   tar_target(
-    s_fire_boxplot,
-    plot_boxplot_seasonal(s_indiv_fire, plot_theme(), "fire"),
-    pattern = map(s_indiv_fire)
+    calc_speed_forest_winter,
+    calc_speed(prep_speed_winter, 'forest', seq = 0:1)
   ),
-  
   tar_target(
-    sum_s_fire,
-    sum_seasonal(s_indiv_fire, plot_theme(), "fire"),
-    pattern = map(s_indiv_fire)
+    plot_speed_forest_winter,
+    plot_dist(calc_speed_forest_winter, plot_theme(), 'forest') +
+      labs(x = 'Proportion forested (90 m cell)', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    calc_speed_new_burn,
+    calc_speed(prep_speed_fire, 'dist_to_new_burn', seq(1, 5000, length.out = 100L))
+  ),
+  tar_target(
+    plot_speed_new_burn,
+    plot_dist(calc_speed_new_burn, plot_theme()) +
+      labs(x = 'Distance to younger burns (km)', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    calc_speed_old_burn,
+    calc_speed(prep_speed_fire, 'dist_to_old_burn', seq(1, 5000, length.out = 100L))
+  ),
+  tar_target(
+    plot_speed_old_burn,
+    plot_dist(calc_speed_old_burn, plot_theme()) +
+      labs(x = 'Distance to older burns (km)', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    fire_plots,
+    save_plot(plot_speed_forest_fire, "fire_model_speed_forest",
+              plot_speed_new_burn, "fire_model_speed_new_burn",
+              plot_speed_old_burn, "fire_model_speed_old_burn")
   )
 )
 

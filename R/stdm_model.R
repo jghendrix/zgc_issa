@@ -4,19 +4,7 @@
 #' 
 stdm_model <- function(DT) {
 
-  DT %<>%
-    rename(N_vasc = pt_r3, 
-           prop_forest = pt_r,
-           id = Animal_ID) %>% 
-    group_by(indiv_step_id) %>% 
-    filter(max(N_Cladonia) > 0) %>%
-    ungroup() %>%
-    filter(sl_ > 0)
-  
-  # There are 121 clusters where every observed + available in the cluster is zero for Cladonia and vascular N
-  # filter out any clusters where max(N_Cladonia) = 0
- 
-	glmmTMB(
+ 	glmmTMB(
 		case_ ~ -1 +
 			I(log(sl_)) +
 		  I(cos(ta_)) +

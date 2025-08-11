@@ -317,38 +317,86 @@ targets_speed <- c(
     )
   ),
   tar_target(
-    calc_speed_forest_winter,
+    calc_speed_forest_w,
     calc_speed(prep_speed_winter, 'forest', seq = 0:1)
   ),
   tar_target(
-    plot_speed_forest_winter,
-    plot_dist(calc_speed_forest_winter, plot_theme(), 'forest') +
+    plot_speed_forest_w,
+    plot_dist(calc_speed_forest_w, plot_theme(), 'forest') +
       labs(x = 'Proportion forested (90 m cell)', y = 'Speed (m/hr)')
   ),
   tar_target(
-    calc_speed_new_burn,
-    calc_speed(prep_speed_fire, 'dist_to_new_burn', seq(1, 5000, length.out = 100L))
+    calc_speed_Cladonia_w,
+    calc_speed(prep_speed_winter, 'Cladonia', seq(0, 1, length.out = 100L))
+    # highest N_Clad obs is 0.75, let's use 1% as upper threshold
   ),
   tar_target(
-    plot_speed_new_burn,
-    plot_dist(calc_speed_new_burn, plot_theme()) +
-      labs(x = 'Distance to younger burns (km)', y = 'Speed (m/hr)')
+    plot_speed_Cladonia_w,
+    plot_dist(calc_speed_Cladonia_w, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'Speed (m/hr)')
   ),
   tar_target(
-    calc_speed_old_burn,
-    calc_speed(prep_speed_fire, 'dist_to_old_burn', seq(1, 5000, length.out = 100L))
+    calc_speed_vasc_w,
+    calc_speed(prep_speed_winter, 'vascular', seq(1, 4, length.out = 100L))
+    # highest N_vasc obs is 3.9, let's use 4% as upper threshold
   ),
   tar_target(
-    plot_speed_old_burn,
-    plot_dist(calc_speed_old_burn, plot_theme()) +
-      labs(x = 'Distance to older burns (km)', y = 'Speed (m/hr)')
+    plot_speed_vasc_w,
+    plot_dist(calc_speed_vasc_w, plot_theme()) +
+      labs(x = '%N of vascular plants', y = 'Speed (m/hr)')
   ),
   tar_target(
-    fire_plots,
-    save_plot(plot_speed_forest_fire, "fire_model_speed_forest",
-              plot_speed_new_burn, "fire_model_speed_new_burn",
-              plot_speed_old_burn, "fire_model_speed_old_burn")
+    winter_plots,
+    save_plot(plot_speed_forest_w, "winter_model_speed_forest",
+              plot_speed_Cladonia_w, "winter_model_speed_Cladonia",
+              plot_speed_vasc_w, "winter_model_speed_vascular")
+  ),
+  
+  # summer version of all these now
+  tar_target(
+    prep_speed_summer,
+    prepare_speed(
+      DT = summer_prep,
+      summary = indiv_summer,
+      params = dist_parameters
+    )
+  ),
+  tar_target(
+    calc_speed_forest_s,
+    calc_speed(prep_speed_summer, 'forest', seq = 0:1)
+  ),
+  tar_target(
+    plot_speed_forest_s,
+    plot_dist(calc_speed_forest_s, plot_theme(), 'forest') +
+      labs(x = 'Proportion forested (90 m cell)', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    calc_speed_Cladonia_s,
+    calc_speed(prep_speed_summer, 'Cladonia', seq(0, 1, length.out = 100L))
+    # highest N_Clad obs is 0.75, let's use 1% as upper threshold
+  ),
+  tar_target(
+    plot_speed_Cladonia_s,
+    plot_dist(calc_speed_Cladonia_s, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    calc_speed_vasc_s,
+    calc_speed(prep_speed_summer, 'vascular', seq(1, 4, length.out = 100L))
+    # highest N_vasc obs is 3.9, let's use 4% as upper threshold
+  ),
+  tar_target(
+    plot_speed_vasc_s,
+    plot_dist(calc_speed_vasc_s, plot_theme()) +
+      labs(x = '%N of vascular plants', y = 'Speed (m/hr)')
+  ),
+  tar_target(
+    summer_plots,
+    save_plot(plot_speed_forest_s, "summer_model_speed_forest",
+              plot_speed_Cladonia_s, "summer_model_speed_Cladonia",
+              plot_speed_vasc_s, "summer_model_speed_vascular")
   )
+
 )
 
 # Targets: all ------------------------------------------------------------

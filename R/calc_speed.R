@@ -24,7 +24,7 @@ calc_speed <- function(DT, covariate, seq) {
     x = list(list(seq))),
     by=.(id)]
   
-  if(covariate == "forest")
+  if(covariate == "vascular")
     DT[, `:=` (spd = list(list((shape +`I(log(sl_))` +
                                   `prop_forest:I(log(sl_))`*mean_forest +
                                   `N_Cladonia:I(log(sl_))`*mean_Clad +

@@ -399,6 +399,133 @@ targets_speed <- c(
 
 )
 
+# Targets: RSS from winter model -----------------------------------------------------------
+targets_rss_winter <- c(
+  tar_target(
+    pred_h1_Cladonia_w,
+    predict_h1_Cladonia(winter_prep, winter_model)
+  ),
+  
+  tar_target(
+    pred_h1_vasc_w,
+    predict_h1_vasc(winter_prep, winter_model)
+  ),
+  
+  tar_target(
+    pred_h1_forest_w,
+    predict_h1_forest(winter_prep, winter_model)
+  ),
+  tar_target(
+    pred_h2_w,
+    predict_h2(winter_prep, winter_model)
+  ),
+#  tar_target(
+ #   pred_h2_fire_forest,
+#    predict_h2_forest(model_prep, fire_model, "fire")
+#  ),
+  tar_target(
+    rss_forest_w,
+    calc_rss(pred_h1_forest_w, 'h1_forest', pred_h2_w, 'h2')
+  ),
+  tar_target(
+    rss_Cladonia_w,
+    calc_rss(pred_h1_Cladonia_w, 'h1_Cladonia', pred_h2_w, 'h2')
+  ),
+  tar_target(
+    rss_vasc_w,
+    calc_rss(pred_h1_vasc_w, 'h1_vasc', pred_h2_w, 'h2')
+  ),
+  tar_target(
+    plot_rss_forest_w,
+    plot_rss(rss_forest_w, plot_theme()) +
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
+           title = 'Winter - RSS compared to mean proportion forest')
+  ),
+  tar_target(
+    plot_rss_Cladonia_w,
+    plot_rss(rss_Cladonia_w, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'Winter - RSS for Cladonia %N relative to mean')
+  ),
+  tar_target(
+    plot_rss_vasc_w,
+    plot_rss(rss_vasc_w, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'Winter - RSS for vascular plant %N relative to mean')
+  ),
+  tar_target(
+    winter_rss_plots,
+    save_rss_plot(plot_rss_forest_w, "rss_forest_winter",
+                  plot_rss_Cladonia_w, "rss_Cladonia_winter",
+                  plot_rss_vasc_w, "rss_vascular_winter")
+  )
+)
+
+# Targets: RSS from summer model -----------------------------------------------------------
+targets_rss_summer <- c(
+  tar_target(
+    pred_h1_Cladonia_s,
+    predict_h1_Cladonia(summer_prep, summer_model)
+  ),
+  
+  tar_target(
+    pred_h1_vasc_s,
+    predict_h1_vasc(summer_prep, summer_model)
+  ),
+  
+  tar_target(
+    pred_h1_forest_s,
+    predict_h1_forest(summer_prep, summer_model)
+  ),
+  tar_target(
+    pred_h2_s,
+    predict_h2(summer_prep, summer_model)
+  ),
+  #  tar_target(
+  #   pred_h2_fire_forest,
+  #    predict_h2_forest(model_prep, fire_model, "fire")
+  #  ),
+  tar_target(
+    rss_forest_s,
+    calc_rss(pred_h1_forest_s, 'h1_forest', pred_h2_s, 'h2')
+  ),
+  tar_target(
+    rss_Cladonia_s,
+    calc_rss(pred_h1_Cladonia_s, 'h1_Cladonia', pred_h2_s, 'h2')
+  ),
+  tar_target(
+    rss_vasc_s,
+    calc_rss(pred_h1_vasc_s, 'h1_vasc', pred_h2_s, 'h2')
+  ),
+  tar_target(
+    plot_rss_forest_s,
+    plot_rss(rss_forest_s, plot_theme()) +
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
+           title = 'summer - RSS compared to mean proportion forest')
+  ),
+  tar_target(
+    plot_rss_Cladonia_s,
+    plot_rss(rss_Cladonia_s, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'summer - RSS for Cladonia %N relative to mean')
+  ),
+  tar_target(
+    plot_rss_vasc_s,
+    plot_rss(rss_vasc_s, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'summer - RSS for vascular plant %N relative to mean')
+  ),
+  tar_target(
+    summer_rss_plots,
+    save_rss_plot(plot_rss_forest_s, "rss_forest_summer",
+                  plot_rss_Cladonia_s, "rss_Cladonia_summer",
+                  plot_rss_vasc_s, "rss_vascular_summer")
+  )
+)
+
+
+
+
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above
 lapply(grep('targets', ls(), value = TRUE), get)

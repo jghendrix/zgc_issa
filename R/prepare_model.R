@@ -12,16 +12,17 @@ prepare_model <- function(DT, season) {
     ungroup() %>%
     filter(sl_ > 0)
   
-  if(season == "winter") {
+  if(season == "winter"){
     
     DT %<>% filter(doy > 305 | doy < 90)
   # Nov 1st to March 31st
   }
   
-  else{
+  if(season == "summer"){
     
-  DT %<>% filter(doy > 120 | doy < 244)
+  DT %<>% filter(doy > 120 & doy < 244)
     # May 1st to Aug 31st
   }
   
+  return(DT)
 	}

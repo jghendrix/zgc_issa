@@ -20,7 +20,7 @@ stdm_model <- function(DT) {
 			(0 + N_Cladonia | id) +
 			(0 + N_vasc | id) +
 		  (0 + I(log(sl_)) | id) +
-	 	  (0 + I(log(sl_)):prop_forest | id) +
+	 	  (0 + prop_forest:I(log(sl_)) | id) +
 			(0 + N_Cladonia:I(log(sl_)) | id) +
 			(0 + N_vasc:I(log(sl_)) | id)
 		,

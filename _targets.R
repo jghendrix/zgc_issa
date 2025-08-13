@@ -524,8 +524,106 @@ targets_rss_summer <- c(
 )
 
 
+# Targets: seasonal models with ta_ interaction ----------------------------------------------------------
+targets_turning_angle <- c(
+  
+  tar_target(
+    winter_ta_model,
+    ta_model(winter_prep)
+  ),
+  tar_target(
+    summer_ta_model,
+    ta_model(summer_prep)
+  ),
+  
+  tar_target(
+    indiv_ta_winter,
+    indiv_estimates(winter_ta_model)
+  ),
+  tar_target(
+    winter_ta_boxplot,
+    plot_box_horiz(indiv_ta_winter, plot_theme())
+  ),
+  tar_target(
+    sum_ta_winter,
+    sum_plot(indiv_ta_winter, plot_theme(), "winter")
+  )#,
+  
+#  tar_target(
+#    indiv_summer,
+#    indiv_estimates(summer_model)
+#  ),
+#  tar_target(
+#    summer_boxplot,
+#    plot_box_horiz(indiv_summer, plot_theme())
+#  ),
+#  tar_target(
+#    sum_summer,
+#    sum_plot(indiv_summer, plot_theme(), "summer")
+#  )
+)
 
 
+# Targets: RSS for stoich categorised out by speed ----------------------------------
+
+targets_rss_by_speed <- c(
+  
+  tar_target(
+    pred_h1_Cladonia_slow,
+    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.25)
+  ),
+  tar_target(
+    pred_h2_slow,
+    predict_h2_speed(winter_prep, winter_model, 0.25)
+  ),
+  tar_target(
+    rss_Cladonia_slow,
+    calc_rss_speed(pred_h1_Cladonia_slow, 'h1_Cladonia', pred_h2_slow, 'h2', 0.25)
+  ),
+  
+  tar_target(
+    pred_h1_Cladonia_med,
+    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.5)
+  ),
+  
+  tar_target(
+    pred_h2_med,
+    predict_h2_speed(winter_prep, winter_model, 0.5)
+  ),
+  
+  tar_target(
+    rss_Cladonia_med,
+    calc_rss_speed(pred_h1_Cladonia_med, 'h1_Cladonia', pred_h2_med, 'h2', 0.5)
+  ),
+  
+  tar_target(
+    pred_h1_Cladonia_fast,
+    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.75)
+  ),
+  
+  tar_target(
+    pred_h2_fast,
+    predict_h2_speed(winter_prep, winter_model, 0.75)
+  ),
+  
+  tar_target(
+    rss_Cladonia_fast,
+    calc_rss_speed(pred_h1_Cladonia_fast, 'h1_Cladonia', pred_h2_fast, 'h2', 0.75)
+  ),
+  
+  tar_target(
+    rss_Cladonia_by_speed,
+    join_rss(rss_Cladonia_slow, rss_Cladonia_med, rss_Cladonia_fast)
+  ),
+  
+  tar_target(
+    plot_rss_Cladonia_speed,
+    plot_rss_speed(rss_Cladonia_by_speed, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'winter - RSS for Cladonia %N by speed')
+  )
+  
+)
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above
 lapply(grep('targets', ls(), value = TRUE), get)

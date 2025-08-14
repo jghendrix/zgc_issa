@@ -20,6 +20,9 @@ sdss_legend_path <- file.path('input', 'legend_sdss.csv')
 lichen_path <- file.path('input', 'Cladonia_N.tif')
 vascular_path <- file.path('input', 'Vascular_N.tif')
 
+lichen_ratio_path <- file.path('input', 'Cladonia_CN.tif')
+vascular_ratio_path <- file.path('input', 'Vascular_CN.tif')
+
 # Caribou data path
 gps_path <- file.path('input', 'all_Fogo_caribou_locs_20June2025.csv')
 id_path <- file.path('input', 'collar-animal-ids.csv')
@@ -102,7 +105,17 @@ targets_data <- c(
     vascular_path,
     raster(!!.x)
   ),
-  
+
+  tar_file_read(
+    lichen_ratio,
+    lichen_ratio_path,
+    raster(!!.x)
+  ),
+  tar_file_read(
+    vascular_ratio,
+    vascular_ratio_path,
+    raster(!!.x)
+),
   tar_target(
     coast,
     get_coastline(bb, crs)
@@ -184,6 +197,7 @@ targets_extract <- c(
       tracks_extract,
       crs,
       lichen,
+      "N_Cladonia",
       6 # 6 = the interval by which to average out the 5m x 5m pixels, this takes the average stoich at 30m
       # calling all NAs zero
     )
@@ -192,10 +206,9 @@ targets_extract <- c(
   # less than 10% of clusters have a lichen value for each cell. lots of NAs... do we consider NA for lichen to be a zero?
   
   tar_target(
-    tracks_lichen_fixed,
+   tracks_lichen_fixed,
     tracks_lichen %>% 
-      rename(N_Cladonia = pt_r3) %>%
-      mutate(N_Cladonia = ifelse(is.na(N_Cladonia), 0, N_Cladonia))
+    mutate(N_Cladonia = ifelse(is.na(N_Cladonia), 0, N_Cladonia))
   ),
   
   tar_target(
@@ -204,6 +217,7 @@ targets_extract <- c(
       tracks_lichen_fixed,
       crs,
       vascular,
+      "N_vascular",
       6
     )
   ),
@@ -221,6 +235,28 @@ targets_extract <- c(
       crs,
       sdss,
       3
+    )
+  ),
+  
+  tar_target(
+    tracks_clad_ratio,
+    extract_stoich(
+      tracks_lc,
+      crs,
+      lichen_ratio,
+      "CN_Cladonia",
+      6
+    )
+  ),
+  
+  tar_target(
+    tracks_vasc_ratio,
+    extract_stoich(
+      tracks_clad_ratio,
+      crs,
+      vascular_ratio,
+      "CN_vascular",
+      6
     )
   )
 

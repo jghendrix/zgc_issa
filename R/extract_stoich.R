@@ -1,6 +1,6 @@
 ## Extracting land cover of given point
 
-extract_stoich <- function(DT, crs, stoich, pixel) {
+extract_stoich <- function(DT, crs, stoich, var, pixel) {
 
   sites <- setDT(DT)
   
@@ -16,9 +16,9 @@ extract_stoich <- function(DT, crs, stoich, pixel) {
   r2 <- aggregate(r, fact = pixel)
   
   r3 <- raster(r2)
-  
- 	extract_pt(sites, r3, pt)
-	
+
+ 	extract_pt(sites, r3, pt) %>%
+ 	  rename(!!var := pt_r3)
 			}
 
   

@@ -1,4 +1,4 @@
-#' @title iSSA informed by stoich layer of caribou
+#' @title iSSA informed by C:N stoich layer of caribou
 #' @export
 #' @author Jack G Hendrix
 #' 

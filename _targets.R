@@ -217,7 +217,7 @@ targets_extract <- c(
       tracks_lichen_fixed,
       crs,
       vascular,
-      "N_vascular",
+      "N_vasc",
       6
     )
   ),
@@ -255,7 +255,7 @@ targets_extract <- c(
       tracks_clad_ratio,
       crs,
       vascular_ratio,
-      "CN_vascular",
+      "CN_vasc",
       6
     )
   )
@@ -287,7 +287,7 @@ targets_distributions <- c(
 targets_winter <- c(
   tar_target(
     winter_prep,
-    prepare_model(tracks_lc, "winter")
+    prepare_model(tracks_vasc_ratio, "winter")
   ),
   tar_target(
     winter_model,
@@ -301,7 +301,7 @@ targets_winter <- c(
   
   tar_target(
     summer_prep,
-    prepare_model(tracks_lc, "summer")
+    prepare_model(tracks_vasc_ratio, "summer")
   ),
   tar_target(
     summer_model,
@@ -310,6 +310,16 @@ targets_winter <- c(
   tar_target(
     summer_model_check,
     model_check(summer_model)
+  ),
+  
+  # Ratio models?
+  tar_target(
+    winter_ratio,
+    ratio_model(winter_prep)
+  ),
+  tar_target(
+    summer_ratio,
+    ratio_model(summer_prep)
   )
 )
 

@@ -4,8 +4,7 @@
 prepare_model <- function(DT, season) {
 
   DT %<>%
-    rename(N_vasc = pt_r3, 
-           prop_forest = pt_r,
+    rename(prop_forest = pt_r,
            id = Animal_ID) %>% 
     group_by(indiv_step_id) %>% 
     filter(max(N_Cladonia) > 0) %>%

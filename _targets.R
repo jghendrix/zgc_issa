@@ -289,6 +289,9 @@ targets_winter <- c(
     winter_prep,
     prepare_model(tracks_vasc_ratio, "winter")
   ),
+  
+  ## Le Goff and Peignier both call winter 1 Jan - 16 March
+  
   tar_target(
     winter_model,
     stdm_model(winter_prep)
@@ -303,6 +306,8 @@ targets_winter <- c(
     summer_prep,
     prepare_model(tracks_vasc_ratio, "summer")
   ),
+  
+  # Peignier calls summer 15 July - 1 Sept (with calving starting late May?)
   tar_target(
     summer_model,
     stdm_model(summer_prep)

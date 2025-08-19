@@ -24,6 +24,7 @@
 # Working files
 input/
 output/
+graphics/
 
 # produced vignettes
 vignettes/*.html
@@ -51,3 +52,4 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+/graphics

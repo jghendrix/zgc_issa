@@ -1,12 +1,12 @@
 #' @title Plot RSS by speed
 #' @export
-#' @author Julie W. Turner, Alec L. Robitaille
+
 plot_rss_speed <- function(rss, theme) {
 
 
 	rss %<>% mutate(idspd = paste0(id, "_", speed)) %>%
-    mutate(`Speed percentile` = ifelse(speed == 0.25, "25th (18 m/h)", "50th (65 m/h)"),
-           `Speed percentile` = ifelse(speed == 0.75, "75th (164 m/h)", `Speed percentile`))
+    mutate(`Speed percentile` = ifelse(speed == 0.1, "10th (7 m/h)", "50th (116 m/h)"),
+           `Speed percentile` = ifelse(speed == 0.9, "90th (572 m/h)", `Speed percentile`))
 
 
 	ggplot(data = rss, aes(x = x, y = rss, colour = `Speed percentile`)) +

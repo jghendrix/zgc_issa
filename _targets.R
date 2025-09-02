@@ -327,10 +327,13 @@ targets_winter <- c(
     winter_ratio,
     ratio_model(winter_prep)
   ),
+  # winter model is giving NA for step length output... cannot trust this model
+  
   tar_target(
     summer_ratio,
     ratio_model(summer_prep)
   )
+  # summer appears to be fine though?
 )
 
 # Targets: model output and effects ------------------------------------------------------------
@@ -359,9 +362,13 @@ targets_seasonal_effects <- c(
   tar_target(
     sum_summer,
     sum_plot(indiv_summer, plot_theme(), "summer")
-  )
+  ),
+  
+  tar_target(
+    indiv_summer_ratio,
+    indiv_ratio_estimates(summer_ratio)
 )
-
+)
 # Targets: speed from seasonal models ------------------------------------------------------------
 targets_speed <- c(
   tar_target(
@@ -580,6 +587,68 @@ targets_rss_summer <- c(
 )
 
 
+# Targets: RSS from summer RATIO model -----------------------------------------------------------
+targets_rss_summer <- c(
+  tar_target(
+    pred_h1_Cladonia_r,
+    predict_h1_Cladonia_ratio(summer_prep, summer_ratio)
+  ),
+  
+  tar_target(
+    pred_h1_vasc_r,
+    predict_h1_vasc_ratio(summer_prep, summer_ratio)
+  ),
+  
+  tar_target(
+    pred_h1_forest_r,
+    predict_h1_forest_ratio(summer_prep, summer_ratio)
+),
+
+  tar_target(
+    pred_h2_r,
+    predict_h2(summer_prep, summer_ratio)
+  ),
+
+  tar_target(
+    rss_forest_r,
+    calc_rss(pred_h1_forest_r, 'h1_forest', pred_h2_r, 'h2')
+  ),
+  tar_target(
+    rss_Cladonia_r,
+    calc_rss(pred_h1_Cladonia_r, 'h1_Cladonia', pred_h2_r, 'h2')
+  ),
+  tar_target(
+    rss_vasc_r,
+    calc_rss(pred_h1_vasc_r, 'h1_vasc', pred_h2_r, 'h2')
+  ),
+  tar_target(
+    plot_rss_forest_r,
+    plot_rss(rss_forest_r, plot_theme()) +
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
+           title = 'summer - RSS compared to mean proportion forest')
+  ),
+  tar_target(
+    plot_rss_Cladonia_r,
+    plot_rss(rss_Cladonia_r, plot_theme()) +
+      labs(x = 'C:N in Cladonia', y = 'logRSS',
+           title = 'summer - RSS for Cladonia C:N relative to mean')
+  ),
+  tar_target(
+    plot_rss_vasc_r,
+    plot_rss(rss_vasc_r, plot_theme()) +
+      labs(x = 'C:N in vascular plants', y = 'logRSS',
+           title = 'summer - RSS for vascular plant C:N relative to mean')
+  ),
+  tar_target(
+    summer_ratio_plots,
+    save_rss_plot(plot_rss_forest_r, "rss_forest_ratio",
+                  plot_rss_Cladonia_r, "rss_Cladonia_ratio",
+                  plot_rss_vasc_r, "rss_vascular_ratio")
+  )
+)
+
+
+
 # Targets: seasonal models with ta_ interaction ----------------------------------------------------------
 
 # turning angle models have been added to example_targets.R in template code folder
@@ -589,15 +658,15 @@ targets_rss_by_speed <- c(
   
   tar_target(
     pred_h1_Cladonia_slow,
-    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.25)
+    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.1)
   ),
   tar_target(
     pred_h2_slow,
-    predict_h2_speed(winter_prep, winter_model, 0.25)
+    predict_h2_speed(winter_prep, winter_model, 0.1)
   ),
   tar_target(
     rss_Cladonia_slow,
-    calc_rss_speed(pred_h1_Cladonia_slow, 'h1_Cladonia', pred_h2_slow, 'h2', 0.25)
+    calc_rss_speed(pred_h1_Cladonia_slow, 'h1_Cladonia', pred_h2_slow, 'h2', 0.1)
   ),
   
   tar_target(
@@ -617,17 +686,17 @@ targets_rss_by_speed <- c(
   
   tar_target(
     pred_h1_Cladonia_fast,
-    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.75)
+    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.9)
   ),
   
   tar_target(
     pred_h2_fast,
-    predict_h2_speed(winter_prep, winter_model, 0.75)
+    predict_h2_speed(winter_prep, winter_model, 0.9)
   ),
   
   tar_target(
     rss_Cladonia_fast,
-    calc_rss_speed(pred_h1_Cladonia_fast, 'h1_Cladonia', pred_h2_fast, 'h2', 0.75)
+    calc_rss_speed(pred_h1_Cladonia_fast, 'h1_Cladonia', pred_h2_fast, 'h2', 0.9)
   ),
   
   tar_target(

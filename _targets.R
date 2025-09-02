@@ -275,12 +275,17 @@ targets_distributions <- c(
     pattern = map(tracks_resampled),
     iteration = 'list'
   ),
+  #FO2023012 has a somewhatwonky bimodal distribution of step length, everyone else looks normal
+  
   tar_target(
     dist_ta_plots,
     plot_distributions(tracks_resampled, 'ta_'),
     pattern = map(tracks_resampled),
     iteration = 'list'
   )
+  # 2017013 has higher peaks at -3 and +3
+  # 2017004 is basically flat
+  # 2013012 is weird again
 )
 
 # Targets: seasonal models ----------------------------------------------------------
@@ -576,45 +581,8 @@ targets_rss_summer <- c(
 
 
 # Targets: seasonal models with ta_ interaction ----------------------------------------------------------
-targets_turning_angle <- c(
-  
-  tar_target(
-    winter_ta_model,
-    ta_model(winter_prep)
-  ),
-  tar_target(
-    summer_ta_model,
-    ta_model(summer_prep)
-  ),
-  
-  tar_target(
-    indiv_ta_winter,
-    indiv_estimates(winter_ta_model)
-  ),
-  tar_target(
-    winter_ta_boxplot,
-    plot_box_horiz(indiv_ta_winter, plot_theme())
-  ),
-  tar_target(
-    sum_ta_winter,
-    sum_plot(indiv_ta_winter, plot_theme(), "winter")
-  )#,
-  
-#  tar_target(
-#    indiv_summer,
-#    indiv_estimates(summer_model)
-#  ),
-#  tar_target(
-#    summer_boxplot,
-#    plot_box_horiz(indiv_summer, plot_theme())
-#  ),
-#  tar_target(
-#    sum_summer,
-#    sum_plot(indiv_summer, plot_theme(), "summer")
-#  )
-)
 
-
+# turning angle models have been added to example_targets.R in template code folder
 # Targets: RSS for stoich categorised out by speed ----------------------------------
 
 targets_rss_by_speed <- c(

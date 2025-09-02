@@ -3,24 +3,26 @@
 #' @author Jack G Hendrix
 prepare_model <- function(DT, season) {
 
-  DT %<>%
+  DT %<>% 
     rename(prop_forest = pt_r,
-           id = Animal_ID) %>% 
-    group_by(indiv_step_id) %>% 
-    filter(max(N_Cladonia) > 0) %>%
-    ungroup() %>%
+           id = Animal_ID) %>%
+    # Initially: was just removing clusters where every single step was a 0 for cladonia
+    # now removing any step where Cladonia is a true zero... which means some clusters are going to have less than 10 avail steps. Gonna assume that's fine, for now, but maybe we should later go on and kick out steps with only 1 or 2 vs. 10 avail?
+    #group_by(indiv_step_id) %>% 
+    filter(N_Cladonia > 0) %>%
+    #ungroup() %>%
     filter(sl_ > 0)
   
   if(season == "winter"){
     
-    DT %<>% filter(doy > 305 | doy < 90)
+    DT %<>% filter(doy < 75)
   # Nov 1st to March 31st
   }
   
   if(season == "summer"){
     
-  DT %<>% filter(doy > 120 & doy < 244)
-    # May 1st to Aug 31st
+  DT %<>% filter(doy > 181 & doy < 245)
+    # May 1st to Sept 1st
   }
   
   return(DT)

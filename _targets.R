@@ -233,8 +233,8 @@ targets_extract <- c(
     extract_forest(
       tracks_vasc,
       crs,
-      sdss,
-      3
+      sdss, # this version of sdss is actually also down to 5m cells, same as the stoich layers... so if we x3, we aren't getting 30 -> 90, it's only doing a 15 x 15m pixel for forest, in fact. yikes. If we make this 20 it'll be a 100x100 cell, aka a 50ish m radius
+      20
     )
   ),
   
@@ -606,7 +606,7 @@ targets_rss_summer <- c(
 
   tar_target(
     pred_h2_r,
-    predict_h2(summer_prep, summer_ratio)
+    predict_h2_ratio(summer_prep, summer_ratio)
   ),
 
   tar_target(
@@ -647,6 +647,7 @@ targets_rss_summer <- c(
   )
 )
 
+# Selection for ratio over summer: seems like they avoid 'high-quality' Cladonia, which aligns with the %N summer model. But they also select HIGHER C:N ratio during summer, at the same time they're selecting higher %N? How is this possible?
 
 
 # Targets: seasonal models with ta_ interaction ----------------------------------------------------------

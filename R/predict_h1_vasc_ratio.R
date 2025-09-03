@@ -11,12 +11,12 @@ predict_h1_vasc_ratio <- function(DT, model) {
     ta_ = mean(ta_),
     prop_forest = mean(prop_forest, na.rm = T),
     CN_Cladonia = mean(CN_Cladonia, na.rm = T),
-    CN_vasc = seq(from = 0, to = 4, length.out = N),
+    CN_vasc = seq(from = 0, to = 75, length.out = N),
     indiv_step_id = NA,
     yr = NA
   ), by = id]
   
   new_data[, h1_vasc := predict(model, .SD, type = 'link', re.form = NULL)]
   
-  new_data[, x := seq(from = 0, to = 4, length.out = N), by = id]
+  new_data[, x := seq(from = 0, to = 75, length.out = N), by = id]
 }

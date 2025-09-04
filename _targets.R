@@ -658,58 +658,66 @@ targets_rss_summer <- c(
 targets_rss_by_speed <- c(
   
   tar_target(
-    pred_h1_Cladonia_slow,
-    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.1)
+    pred_h1_Cladonia_byspeed_w,
+    predict_h1_Cladonia_speed(winter_prep, winter_model)
   ),
   tar_target(
-    pred_h2_slow,
-    predict_h2_speed(winter_prep, winter_model, 0.1)
+    pred_h2_byspeed_w,
+    predict_h2_speed(winter_prep, winter_model)
   ),
   tar_target(
-    rss_Cladonia_slow,
-    calc_rss_speed(pred_h1_Cladonia_slow, 'h1_Cladonia', pred_h2_slow, 'h2', 0.1)
-  ),
-  
-  tar_target(
-    pred_h1_Cladonia_med,
-    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.5)
+    rss_Cladonia_byspeed_w,
+    calc_rss_speed(pred_h1_Cladonia_byspeed_w, 'h1_Cladonia', pred_h2_byspeed_w, 'h2')
   ),
   
   tar_target(
-    pred_h2_med,
-    predict_h2_speed(winter_prep, winter_model, 0.5)
-  ),
-  
-  tar_target(
-    rss_Cladonia_med,
-    calc_rss_speed(pred_h1_Cladonia_med, 'h1_Cladonia', pred_h2_med, 'h2', 0.5)
-  ),
-  
-  tar_target(
-    pred_h1_Cladonia_fast,
-    predict_h1_Cladonia_speed(winter_prep, winter_model, 0.9)
-  ),
-  
-  tar_target(
-    pred_h2_fast,
-    predict_h2_speed(winter_prep, winter_model, 0.9)
-  ),
-  
-  tar_target(
-    rss_Cladonia_fast,
-    calc_rss_speed(pred_h1_Cladonia_fast, 'h1_Cladonia', pred_h2_fast, 'h2', 0.9)
-  ),
-  
-  tar_target(
-    rss_Cladonia_by_speed,
-    join_rss(rss_Cladonia_slow, rss_Cladonia_med, rss_Cladonia_fast)
-  ),
-  
-  tar_target(
-    plot_rss_Cladonia_speed,
-    plot_rss_speed(rss_Cladonia_by_speed, plot_theme()) +
+    plot_rss_Cladonia_speed_w,
+    plot_rss_speed(rss_Cladonia_byspeed_w, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'winter - RSS for Cladonia %N by speed')
+  ),
+  
+  tar_target(
+    pred_h1_vasc_byspeed_w,
+    predict_h1_vasc_speed(winter_prep, winter_model)
+  ),
+  
+  tar_target(
+    rss_vasc_byspeed_w,
+    calc_rss_speed(pred_h1_vasc_byspeed_w, 'h1_vasc', pred_h2_byspeed_w, 'h2')
+  ),
+  
+  tar_target(
+    plot_rss_vasc_speed_w,
+    plot_rss_speed(rss_vasc_byspeed_w, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'winter - RSS for vascular %N by speed')
+  ),
+  
+  tar_target(
+    pred_h1_forest_byspeed_w,
+    predict_h1_forest_speed(winter_prep, winter_model)
+  ),
+  
+  tar_target(
+    rss_forest_byspeed_w,
+    calc_rss_speed(pred_h1_forest_byspeed_w, 'h1_forest', pred_h2_byspeed_w, 'h2')
+  ),
+  
+  tar_target(
+    plot_rss_forest_speed_w,
+    plot_rss_speed(rss_forest_byspeed_w, plot_theme()) +
+      labs(x = '% forest cover (100m)', y = 'logRSS',
+           title = 'winter - RSS for forest cover')
+  ),
+  
+  
+  tar_target(
+    speed_rss_plots,
+    save_rss_plot(plot_rss_Cladonia_speed_w, 'by_speed_Cladonia_winter',
+                  plot_rss_vasc_speed_w, 'by_speed_vasc_winter',
+                  plot_rss_forest_speed_w, 'by_speed_forest_winter'
+                  )
   )
   
 )

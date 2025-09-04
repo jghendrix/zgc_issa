@@ -3,7 +3,7 @@
 #' @author Jack G Hendrix
 sum_plot <- function(DT, theme, model) {
 
-fixed <- read.csv('input/seasonal_issa_fixed_output.csv') %>%
+fixed <- read.csv('input/seasonal_issa_fixed_output_sl.csv') %>%
 			filter(season == model) %>%
 			dplyr::select(popn = term, mean = estimate, mse = se)
 

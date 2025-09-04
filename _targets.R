@@ -657,6 +657,7 @@ targets_rss_summer <- c(
 
 targets_rss_by_speed <- c(
   
+  # First from the winter versions of these models -----
   tar_target(
     pred_h1_Cladonia_byspeed_w,
     predict_h1_Cladonia_speed(winter_prep, winter_model)
@@ -713,11 +714,75 @@ targets_rss_by_speed <- c(
   
   
   tar_target(
-    speed_rss_plots,
+    winter_speed_rss_plots,
     save_rss_plot(plot_rss_Cladonia_speed_w, 'by_speed_Cladonia_winter',
                   plot_rss_vasc_speed_w, 'by_speed_vasc_winter',
                   plot_rss_forest_speed_w, 'by_speed_forest_winter'
                   )
+  ),
+  
+  # Now the summer version of the speed-factored RSS ----
+  
+  tar_target(
+    pred_h1_Cladonia_byspeed_s,
+    predict_h1_Cladonia_speed(summer_prep, summer_model)
+  ),
+  tar_target(
+    pred_h2_byspeed_s,
+    predict_h2_speed(summer_prep, summer_model)
+  ),
+  tar_target(
+    rss_Cladonia_byspeed_s,
+    calc_rss_speed(pred_h1_Cladonia_byspeed_s, 'h1_Cladonia', pred_h2_byspeed_s, 'h2')
+  ),
+  
+  tar_target(
+    plot_rss_Cladonia_speed_s,
+    plot_rss_speed(rss_Cladonia_byspeed_s, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'summer - RSS for Cladonia %N by speed')
+  ),
+  
+  tar_target(
+    pred_h1_vasc_byspeed_s,
+    predict_h1_vasc_speed(summer_prep, summer_model)
+  ),
+  
+  tar_target(
+    rss_vasc_byspeed_s,
+    calc_rss_speed(pred_h1_vasc_byspeed_s, 'h1_vasc', pred_h2_byspeed_s, 'h2')
+  ),
+  
+  tar_target(
+    plot_rss_vasc_speed_s,
+    plot_rss_speed(rss_vasc_byspeed_s, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'summer - RSS for vascular %N by speed')
+  ),
+  
+  tar_target(
+    pred_h1_forest_byspeed_s,
+    predict_h1_forest_speed(summer_prep, summer_model)
+  ),
+  
+  tar_target(
+    rss_forest_byspeed_s,
+    calc_rss_speed(pred_h1_forest_byspeed_s, 'h1_forest', pred_h2_byspeed_s, 'h2')
+  ),
+  
+  tar_target(
+    plot_rss_forest_speed_s,
+    plot_rss_speed(rss_forest_byspeed_s, plot_theme()) +
+      labs(x = '% forest cover (100m)', y = 'logRSS',
+           title = 'summer - RSS for forest cover')
+  ),
+  
+  tar_target(
+    summer_speed_rss_plots,
+    save_rss_plot(plot_rss_Cladonia_speed_s, 'by_speed_Cladonia_summer',
+                  plot_rss_vasc_speed_s, 'by_speed_vasc_summer',
+                  plot_rss_forest_speed_s, 'by_speed_forest_summer'
+    )
   )
   
 )

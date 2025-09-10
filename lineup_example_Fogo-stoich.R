@@ -8,160 +8,341 @@ library(patchwork)
 # amt has a make_issf_model() function
 # you have to manually define the coefficients as a vector
 # let's focus on the winter %N model for now?
-summary(winter_model)
-
-# ignoring the individual random effects, I suppose?
-coefs <- c("log(sl_)" = 0.096163,
-           "cos(ta_)" = 0.004050,
-           "prop_forest" = 0.120643,
-           "N_Cladonia" = -0.863676,
-           "N_vasc" = 0.440493,
-           "log(sl_):prop_forest" = -0.236011,
-           "log(sl_):N_Cladonia" = 0.334932,
-           "log(sl_):N_vasc" = -0.89289
-           )
-# what were the parameters of the distribution we drew from?
-# each individual got its own distributions, but if we average those to the population
-# kappa 0.1634281    
-# shape 0.6341374   
-# scale 378.2702
-
-wint <- amt::make_issf_model(coefs = coefs,
-                     sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
-                     ta = make_vonmises_distr(kappa = 0.1634281)
-                     )
-                      
-rdk <- redistribution_kernel(wint, 
-                             start = start, # what is this???
-                             map = r, # the predictive surface on which we're modelling
-                             as.rast= FALSE, # why??
-                             landscape= "continuous")
 
 # We need a single stacked raster with all of the predictors in it... easy enough for lichen + vascular stoich, but what about prop forest?
 # we subsampled that out into a raster to extract from in the targets workflow, can we just pull that one in?
 
-# .. Simulations ------------
-# See here for how to simulate with amt: https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14263
-# And an application with lineup plots: https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14336
+forest <- raster('output/prop_forest.tif')
+f.terra <- rast(forest)
 
-# The idea is to first fit a SSF and then use this model to simulate trajectories.
+lich <- rast(lichen)
+vasc <- rast(vascular)
 
+# need the forest % back in 5m cells to match up with the stoich, though
+f5 <- disagg(f.terra, 20)
+# then shift it to match the stoich layers
+fshift <- terra::shift(f5, dx = 5, dy = 115)
+# and match up the extents
+ftrim <- terra::crop(fshift, lich)
+# make sure all the CRS are good too
+crs(lich) <- crs$wkt
+crs(vasc) <- crs$wkt
+crs(ftrim) <- crs$wkt
 
-# . Examples in R ----------
-# .. Load data -------------
-# We will use some tracking data from a red deer from Germany that is shipped with
-# the amt package
+# update the names to match the model
+names(lich) <- "N_Cladonia"
+varnames(lich) <- "N_Cladonia"
+names(vasc) <- "N_vasc"
+varnames(vasc) <- "N_vasc"
+names(ftrim) <- "prop_forest"
+varnames(ftrim) <- "prop_forest"
+layers <- c(ftrim, lich)
+layers <- c(layers, vasc)
 
-data("deer")
-forest <- get_sh_forest()
+writeRaster(layers, 'output/issa_surface.tif', overwrite = TRUE)
 
-deer <- deer |>
-  slice_head(n = 120)  # Lets only take first 120 observations
-
-# Observed mean step length for day and night
-p.truth <- deer |>
-  steps_by_burst() |>
-  extract_covariates(forest, where = "both") |>
-  time_of_day(where = "both") |>
-  ggplot(aes(tod_start_, sl_)) + geom_boxplot()
-
-p.truth
-
-# .. Fit SSF ----------------
-# Prepare data
-deer.rs <- deer |> steps_by_burst() |>
-  random_steps() |>
-  time_of_day(where = "both")
+# 9 Sept: got it working, had to add "_end" to my coefficients even though that wasn't part of the model itself... dumb AF
 
 
-# ... Null model ------------
-m0 <- deer.rs |> fit_clogit(case_ ~ sl_ + strata(step_id_))
-summary(m0)
+## Winter comparisons of 19 simulations to one real ----
+# first need to make our amt() version of the model
+summary(winter_model)
 
-rdk <- amt::redistribution_kernel(
-  x = m0,
-  start = make_start(deer[1, ], dt = hours(6)),
-  map = forest,
-  n.control = 1e3,
-  tolerance.outside = 0.5
+# ignoring the individual random effects, I suppose
+w.coefs <- c("log(sl_)" = -0.011359,
+           "cos(ta_)" = -0.005263,
+           "N_Cladonia_end" = -0.840131,
+           "N_vasc_end" = 0.352084,
+           "prop_forest_end" = 0.061596,
+           "log(sl_):prop_forest_end" = -0.437933,
+           "log(sl_):N_Cladonia_end" = 0.454820,
+           "log(sl_):N_vasc_end" = -0.048125
 )
+# what were the parameters of the distribution we drew from?
+# each individual got its own distributions, but if we average those to the population for both seasons
+# kappa 0.1634281    
+# shape 0.6341374   
+# scale 378.2702
 
-r1 <- simulate_path(rdk, n.steps = 50)
-
-r1 |> make_track(x_, y_, t_, crs = get_crs(deer)) |>
-  steps() |>
-  time_of_day(where = "both") |>
-  ggplot(aes(tod_start_, sl_)) + geom_boxplot() +
-  scale_y_continuous(limits = c(0, 2000))
-
-
-# Now lets replicate this 19 times
-set.seed(123)
-plots <- replicate(19, {
-  simulate_path(rdk, n.steps = 50) |>
-    make_track(x_, y_, t_, crs = get_crs(deer)) |>
-    steps() |>
-    time_of_day(where = "both") |>
-    ggplot(aes(tod_start_, sl_)) + geom_boxplot() +
-    scale_y_continuous(limits = c(0, 2000))
-
-}, simplify = FALSE
-)
-
-plots <- c(plots, list(p.truth))
-wrap_plots(plots)
-
-# Lets shuffle
-plots <- sample(plots)
-wrap_plots(plots)
-
-
-# ... Day night model -------------
-
-m1 <- deer.rs |> fit_clogit(case_ ~ sl_ + sl_:tod_end_ + strata(step_id_))
-summary(m1)
-
-rdk <- amt::redistribution_kernel(
-  x = m1,
-  start = make_start(deer[1, ], dt = hours(6)),
-  fun = function(xy, map) {
-    extract_covariates(xy, map, where = "both") |>
-      time_of_day(where = "both")
-  },
-  map = forest,
-  n.control = 1e3,
-  tolerance.outside = 0.5
-)
-
-r1 <- simulate_path(rdk, n.steps = 50)
-
-r1 |> make_track(x_, y_, t_, crs = get_crs(deer)) |>
-  steps() |>
-  time_of_day(where = "both") |>
-  ggplot(aes(tod_start_, sl_)) + geom_boxplot() +
-  scale_y_continuous(limits = c(0, 2000))
-
-
-# Now lets replicate this 19 times
-set.seed(123)
-plots <- replicate(19, {
-  simulate_path(rdk, n.steps = 50) |>
-    make_track(x_, y_, t_, crs = get_crs(deer)) |>
-    steps() |>
-    time_of_day(where = "both") |>
-    ggplot(aes(tod_start_, sl_)) + geom_boxplot() +
-    scale_y_continuous(limits = c(0, 2000))
-
-}, simplify = FALSE
+wint <- amt::make_issf_model(coefs = w.coefs,
+                             sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
+                             ta = make_vonmises_distr(kappa = 0.1634281)
 )
 
 
-plots <- c(plots, list(p.truth))
-wrap_plots(plots)
+# maybe start with which step begins around the origin we picked above...
+winter_steps <- winter_prep %>% filter(case_ == TRUE)
 
-# Lets shuffle
-plots <- sample(plots)
-wrap_plots(plots)
+# where do most of these steps start?
+# pick an individual to start with... 2016013 has the most steps
+fogo <- winter_steps %>% filter(id == "FO2016013")
+hist(subset(fogo,x1_ > 702000 & x1_ < 706000)$x1_, breaks = 30)
+# let's call it 703500
+hist(subset(fogo, x1_ > 702000 & x1_ < 706000)$y1_, breaks = 30)
+# and 5511000
 
-# For more sophisticated ways to shuffle, have a look at the nullabor package
-# (https://cran.r-project.org/web/packages/nullabor/)
+# we should generate new starting points for the 19 references, using different starts
+
+# Run 19 distinct simulations with different starting points ------
+n <- 19
+ssf_sim <-list()
+
+for(i in 1:n){
+  start <- make_start(c(runif(1, 702000, 706000), 
+                        runif(1,5510000,5512000)), 
+                      dt = hours(2),
+                      crs = crs$wkt,
+                      ta_ = 0)
+  
+  rdk <- amt::redistribution_kernel(wint, 
+                               start = start,
+                               map = layers,
+                               as.rast = FALSE,
+                               landscape= "continuous",
+                              tolerance.outside = 0.1)
+  
+  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 50) 
+  ### simulate individual trajectories
+  ssf_sim[[i]]$id <- i
+}
+
+# take all those tracks and bind them together
+ssf_simdat <- do.call(rbind, ssf_sim) 
+
+ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
+
+# Plot just four of these, at first
+ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
+
+rand <- ggplot() + 
+  geom_spatraster(data = lich)  +
+  geom_path(data = ssf_simtr, aes(x_, y_), 
+            col= "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  theme_bw()
+
+# Now we have to insert the single observed track into this set of 19
+# pick a random individual, and a start point within our parameters
+fogo <- winter_steps %>% filter(id == "FO2016013")
+begin <- fogo %>% filter(x1_ > 702000 & x1_ < 706000 & y1_ > 5510000 & y1_ < 5512000)
+# 959 options for starting points of a 50-step segment 
+begin %<>% slice_sample(n = 1)
+# randomly choose one, turned out to be step_id_ 14344
+
+w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ <= 14394) %>%
+  make_track(x1_, y1_, t1_) %>%
+  mutate(id = 20)
+
+ggplot() + 
+  geom_spatraster(data = lich)  +
+  geom_path(data = w.track, aes(x_, y_), 
+            col= "red") +
+ # facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(700000, 708000)) + 
+  ylim(c(5505000, 5515000))
+  theme_bw()
+
+
+# now bring them all together
+w.comp <- rbind(ssf_simtr, w.track)
+w.comp %>% summarise(minx = min(x_), maxx = max(x_),
+                   miny = min(y_), maxy = max(y_))
+# use these to trim down our plots slightly so you can actually see the trajectories
+
+sim_on_forest <- ggplot() + 
+  geom_spatraster(data = ftrim)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(698000, 708000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "Proportion forested") +
+  theme(strip.background = element_blank(),
+        strip.text.x = element_blank()) +
+  theme_bw()
+
+ggsave(filename = "graphics/validation/winter_sim50.png",
+       sims,
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# try it on the forest cover map?
+
+sim_on_forest <- ggplot() + 
+  geom_spatraster(data = ftrim)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(698000, 708000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "Proportion forested") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.text = element_blank())
+ggsave(filename = "graphics/validation/winter_sim50_forest.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+
+
+
+
+## Summer comparisons of 19 simulations to one real ----
+
+summer_steps <- summer_prep %>% filter(case_ == TRUE)
+
+# first, pick an individual to use as our basis
+ids <- summer_prep %>% group_by(id) %>% summarise(n = n())
+# lots of individuals could work... 2017007 has the most steps
+# we could theoretically randomly sample one of them too, but for now let's just use her... she died spring 2024 of brainworm tho, so make sure to use earlier data
+sea <- summer_steps %>% filter(id == "FO2017007")
+
+hist(subset(sea, x1_ > 710000 & x1_ < 712000)$x1_, breaks = 50)
+# let's call it 710 000 to 712 000
+hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
+# among these steps, the y-values are between 550 3000 and 550 5000
+
+begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5503000 & y1_ < 5505000)
+# 1887 options for starting points of a 50-step segment 
+rand <- begin %>% slice_sample(n = 1)
+# randomly choose one, turned out to be step_id_ 1048
+s.track <- sea %>% filter(step_id_ >= 1048 & step_id_ <= (1048+50)) %>%
+  make_track(x1_, y1_, t1_) %>%
+  mutate(id = 20)
+# only gave 47... try a new ID. 15343?
+s.track <- sea %>% filter(step_id_ >= 15343 & step_id_ < (15343+50)) %>%
+  make_track(x1_, y1_, t1_) %>%
+  mutate(id = 20)
+# ok that stepID got us a full 50 step segment
+
+ggplot() + 
+  geom_spatraster(data = vasc)  +
+  geom_path(data = s.track, aes(x_, y_), 
+            col= "red") +
+  # facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(709000, 713000)) + 
+  # zoomed these out by an additional 1km on all sides to get better perspective on where we are
+  ylim(c(5502000, 5506000)) +
+  theme_bw()
+
+# This ended up being in the deep southeast coast, like just west of Cape Cove... I don't think this is the best place necessarily to test our stoich model LOL
+# but let's go for it, i suppose
+
+# Building amt() version of summer_model
+summary(summer_model)
+
+s.coefs <- c("log(sl_)" = -0.097192,
+             "cos(ta_)" = -0.167543,
+             "N_Cladonia_end" = -0.310456,
+             "N_vasc_end" = 0.075547,
+             "prop_forest_end" = 0.556155,
+             "log(sl_):prop_forest_end" = -0.017874,
+             "log(sl_):N_Cladonia_end" = -0.093476,
+             "log(sl_):N_vasc_end" = 0.052240
+)
+
+summ <- amt::make_issf_model(coefs = s.coefs,
+        sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
+        ta = make_vonmises_distr(kappa = 0.1634281)
+) 
+
+# Run 19 distinct simulations with different starting points ------
+n <- 19
+ssf_sim <-list()
+
+for(i in 1:n){
+  start <- make_start(c(runif(1, 710000, 712000), 
+                        runif(1,5503000,5505000)), 
+                      dt = hours(2),
+                      crs = crs$wkt,
+                      ta_ = 0)
+  
+  rdk <- amt::redistribution_kernel(summ, 
+                                    start = start,
+                                    map = layers,
+                                    as.rast = FALSE,
+                                    landscape= "continuous",
+                                    tolerance.outside = 0.1)
+  
+  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 50) 
+  ### simulate individual trajectories
+  ssf_sim[[i]]$id <- i
+}
+
+# take all those tracks and bind them together
+ssf_simdat <- do.call(rbind, ssf_sim) 
+
+ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
+
+# Plot just four of these, at first
+ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
+
+ggplot() + 
+  geom_spatraster(data = vasc)  +
+  geom_path(data = ssf_simtr, aes(x_, y_), 
+            col= "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  theme_bw()
+
+# Now we have to insert the single observed track into this set of 19
+# pick a random individual, and a start point within our parameters
+# now bring them all together
+s.comp <- rbind(ssf_simtr, s.track)
+s.comp %>% summarise(minx = min(x_), maxx = max(x_),
+                   miny = min(y_), maxy = max(y_))
+# use these to trim down our plots slightly so you can actually see the trajectories
+
+s_sim_on_vasc <- ggplot() + 
+  geom_spatraster(data = vasc)  +
+  geom_path(data = s.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(708000, 715000)) + 
+  ylim(c(5501000, 5508000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "%N in vascular plants") +
+  #theme(strip.background = element_blank(), strip.text.x = element_blank()) +
+  theme_bw()
+
+ggsave(filename = "graphics/validation/summer_sim50.png",
+       s_sim_on_vasc,
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# try it on the forest cover map?
+
+s_sim_on_forest <- ggplot() + 
+  geom_spatraster(data = ftrim)  +
+  geom_path(data = s.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(708000, 715000)) + 
+  ylim(c(5501000, 5508000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "Proportion forested") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.text = element_blank())
+ggsave(filename = "graphics/validation/summer_sim50_forest.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+

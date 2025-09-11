@@ -9,7 +9,8 @@ library(patchwork)
 # you have to manually define the coefficients as a vector
 # let's focus on the winter %N model for now?
 
-# We need a single stacked raster with all of the predictors in it... easy enough for lichen + vascular stoich, but what about prop forest?
+# We need a single stacked raster with all of the predictors in it -----
+# easy enough for lichen + vascular stoich, but what about prop forest?
 # we subsampled that out into a raster to extract from in the targets workflow, can we just pull that one in?
 
 forest <- raster('output/prop_forest.tif')
@@ -101,7 +102,8 @@ for(i in 1:n){
                                landscape= "continuous",
                               tolerance.outside = 0.1)
   
-  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 50) 
+  # Originally did 50 steps, but we should extend that probably eh?
+  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 120) 
   ### simulate individual trajectories
   ssf_sim[[i]]$id <- i
 }
@@ -130,7 +132,7 @@ begin <- fogo %>% filter(x1_ > 702000 & x1_ < 706000 & y1_ > 5510000 & y1_ < 551
 begin %<>% slice_sample(n = 1)
 # randomly choose one, turned out to be step_id_ 14344
 
-w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ <= 14394) %>%
+w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ < (14344 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
 

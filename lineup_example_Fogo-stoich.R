@@ -1,7 +1,9 @@
 library(amt)
 library(tidyverse)
 library(terra)
+library(raster)
 library(patchwork)
+library(tidyterra)
 
 # This simulation system is built with amt... my model is glmmTMB
 
@@ -40,10 +42,10 @@ varnames(ftrim) <- "prop_forest"
 layers <- c(ftrim, lich)
 layers <- c(layers, vasc)
 
-writeRaster(layers, 'output/issa_surface.tif', overwrite = TRUE)
+writeRaster(layers, 'output/issa_preds.tif')
 
-# 9 Sept: got it working, had to add "_end" to my coefficients even though that wasn't part of the model itself... dumb AF
-
+## WORKFLOW STARTS HERE-----
+layers <- rast(raster('output/issa_surface.tif'))
 
 ## Winter comparisons of 19 simulations to one real ----
 # first need to make our amt() version of the model
@@ -72,6 +74,7 @@ wint <- amt::make_issf_model(coefs = w.coefs,
 
 
 # maybe start with which step begins around the origin we picked above...
+tar_load(winter_prep)
 winter_steps <- winter_prep %>% filter(case_ == TRUE)
 
 # where do most of these steps start?
@@ -114,15 +117,15 @@ ssf_simdat <- do.call(rbind, ssf_sim)
 ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
 
 # Plot just four of these, at first
-ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
+#ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
 
-rand <- ggplot() + 
-  geom_spatraster(data = lich)  +
-  geom_path(data = ssf_simtr, aes(x_, y_), 
-            col= "black") +
-  facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
-  theme_bw()
+#ggplot() + 
+ # geom_spatraster(data = lich)  +
+  #geom_path(data = ssf_simtr, aes(x_, y_), 
+   #         col= "black") +
+#  facet_wrap(~ id, nrow = 4) + 
+ # scale_fill_terrain_c() +
+  #theme_bw()
 
 # Now we have to insert the single observed track into this set of 19
 # pick a random individual, and a start point within our parameters
@@ -149,48 +152,59 @@ ggplot() +
 
 # now bring them all together
 w.comp <- rbind(ssf_simtr, w.track)
-w.comp %>% summarise(minx = min(x_), maxx = max(x_),
-                   miny = min(y_), maxy = max(y_))
+w.comp %>% summarise(minx = min(x_, na.rm = T), maxx = max(x_, na.rm = T),
+                   miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
 # use these to trim down our plots slightly so you can actually see the trajectories
 
+# Also want to include a perimeter of Fogo somehow
+# could use the shape file to mask the rasters to NA outside of the poly
+fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
+forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
+lich_poly <- crop(lich, fogo_poly, mask = TRUE)
+vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
+
 sim_on_forest <- ggplot() + 
-  geom_spatraster(data = ftrim)  +
+  geom_spatraster(data = forest_poly)  +
   geom_path(data = w.comp, aes(x_, y_), 
             col = "black") +
   facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
-  xlim(c(698000, 708000)) + 
-  ylim(c(5505000, 5515000)) +
-  xlab("") +
-  ylab("") +
-  labs(fill = "Proportion forested") +
-  theme(strip.background = element_blank(),
-        strip.text.x = element_blank()) +
-  theme_bw()
-
-ggsave(filename = "graphics/validation/winter_sim50.png",
-       sims,
-       height = 2000,
-       width = 2400,
-       units = "px")
-
-# try it on the forest cover map?
-
-sim_on_forest <- ggplot() + 
-  geom_spatraster(data = ftrim)  +
-  geom_path(data = w.comp, aes(x_, y_), 
-            col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
-  xlim(c(698000, 708000)) + 
+  xlim(c(700000, 710000)) + 
   ylim(c(5505000, 5515000)) +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
   theme_bw() +
   theme(strip.background = element_blank(),
-        strip.text = element_blank())
-ggsave(filename = "graphics/validation/winter_sim50_forest.png",
+        strip.text = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+ggsave(filename = "graphics/validation/winter_forest_120.png",
+       sim_on_forest,
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# try it on the Cladonia map?
+
+sim_on_Clad <- ggplot() + 
+  geom_spatraster(data = lich_poly)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(700000, 710000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "%N in Cladonia") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.text = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+ggsave(filename = "graphics/validation/winter_sim120_Cladonia.png",
+       sim_on_Clad,
        height = 2000,
        width = 2400,
        units = "px")
@@ -201,7 +215,7 @@ ggsave(filename = "graphics/validation/winter_sim50_forest.png",
 
 
 ## Summer comparisons of 19 simulations to one real ----
-
+tar_load(summer_prep)
 summer_steps <- summer_prep %>% filter(case_ == TRUE)
 
 # first, pick an individual to use as our basis
@@ -218,18 +232,14 @@ hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
 begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5503000 & y1_ < 5505000)
 # 1887 options for starting points of a 50-step segment 
 rand <- begin %>% slice_sample(n = 1)
-# randomly choose one, turned out to be step_id_ 1048
-s.track <- sea %>% filter(step_id_ >= 1048 & step_id_ <= (1048+50)) %>%
+# randomly choose one, turned out to be step_id_ 6895
+s.track <- sea %>% filter(step_id_ >= 6895 & step_id_ < (6895+120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
-# only gave 47... try a new ID. 15343?
-s.track <- sea %>% filter(step_id_ >= 15343 & step_id_ < (15343+50)) %>%
-  make_track(x1_, y1_, t1_) %>%
-  mutate(id = 20)
-# ok that stepID got us a full 50 step segment
+# ok that stepID got us a full 120 step segment
 
 ggplot() + 
-  geom_spatraster(data = vasc)  +
+  geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.track, aes(x_, y_), 
             col= "red") +
   # facet_wrap(~ id, nrow = 4) + 
@@ -278,7 +288,7 @@ for(i in 1:n){
                                     landscape= "continuous",
                                     tolerance.outside = 0.1)
   
-  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 50) 
+  ssf_sim[[i]] <- simulate_path(rdk, n.steps = 120) 
   ### simulate individual trajectories
   ssf_sim[[i]]$id <- i
 }
@@ -308,20 +318,23 @@ s.comp %>% summarise(minx = min(x_), maxx = max(x_),
 # use these to trim down our plots slightly so you can actually see the trajectories
 
 s_sim_on_vasc <- ggplot() + 
-  geom_spatraster(data = vasc)  +
+  geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
             col = "black") +
   facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
-  xlim(c(708000, 715000)) + 
-  ylim(c(5501000, 5508000)) +
+  xlim(c(705000, 715000)) + 
+  ylim(c(5499000, 5508000)) +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +
-  #theme(strip.background = element_blank(), strip.text.x = element_blank()) +
-  theme_bw()
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.text = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/summer_sim50.png",
+ggsave(filename = "graphics/validation/summer_sim120.png",
        s_sim_on_vasc,
        height = 2000,
        width = 2400,
@@ -330,21 +343,23 @@ ggsave(filename = "graphics/validation/summer_sim50.png",
 # try it on the forest cover map?
 
 s_sim_on_forest <- ggplot() + 
-  geom_spatraster(data = ftrim)  +
+  geom_spatraster(data = forest_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
             col = "black") +
   facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
-  xlim(c(708000, 715000)) + 
-  ylim(c(5501000, 5508000)) +
+  xlim(c(705000, 715000)) + 
+  ylim(c(5499000, 5508000)) +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
   theme_bw() +
   theme(strip.background = element_blank(),
-        strip.text = element_blank())
-ggsave(filename = "graphics/validation/summer_sim50_forest.png",
+        strip.text = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+
+ggsave(filename = "graphics/validation/summer_sim120_forest.png",
        height = 2000,
        width = 2400,
        units = "px")
-

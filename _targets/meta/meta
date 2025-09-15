@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|044b803fb38adcc2|||||||||||||||
+.Random.seed|object|c360b3b668fa31c6|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 calc_rss|function|e5633c936e184a51|||||||||||||||
@@ -297,7 +297,7 @@ prep_speed_summer|stem|644cac93d35b6d46|ef29b75f162c1c85|8f13a44694f48435|829739
 prep_speed_winter|stem|f864c78eff4e05cc|e4f45d78816fde3f|f07cd4a285a79b9b|914348213||t20334.8327272347s|e0b8c76e5f999237|2272|qs|local|vector|||0.33||
 prepare_data|function|78de06a8664cfa95|||||||||||||||
 prepare_locs|function|e175e22dcb562cf2|||||||||||||||
-prepare_model|function|de7306146f93786a|||||||||||||||
+prepare_model|function|fdd172b3b1e2c63d|||||||||||||||
 prepare_speed|function|bc845305ae30ca8a|||||||||||||||
 project_locs|function|fe5b647804f21e2f|||||||||||||||
 rasterise|function|bec8dce95416e4ec|||||||||||||||
@@ -353,6 +353,7 @@ summer_boxplot|stem|db0b50bc0cdc93c1|46cd9e54214089be|d5d7d1b2aa34f374|203929927
 summer_model|stem|d0323f71528d0bf9|9c1fad10ab496429|72c04f6048cdffd5|-842982072||t20334.7765556641s|01cb6850400c9427|178895337|qs|local|vector|||1716.18||
 summer_model_check|stem|82c77e5042e8fd01|2b25b819aa8f096d|df3d1730bd671eb1|-536557083||t20334.8248060953s|8619def19bb20a44|79|qs|local|vector|||0||
 summer_plots|stem|212fab019a1fc432|6eddd9422510cdec|087f6483cc3ce246|-1507927956||t20334.8329059611s|b3654bf3682c79ca|86|qs|local|vector|||1.57||
+summer_popn|stem|753817ef4802d13a|57132ea92be5f232|ef46db3751d8e999|-1677682759||t20343.6542653296s|5113d0056c90d5c1|518|qs|local|vector|||1.72||
 summer_prep|stem|5e287a01169bef9e|e1869eb8b97b0519|6c4f45401c1180cc|283385905||t20334.6968372575s|d46fe0c922d4d0ec|33949085|qs|local|vector|||5.44||
 summer_ratio|stem|c9eaf743a400f4f3|d426f0721d565e4a|76c3ad93954651fd|-2047373249||t20334.8026358577s|befd366870eae8dd|105642263|qs|local|vector|||2249.86|NANaN function evaluation. NANaN function evaluation. Model convergence problem false convergence 8. See vignettetroubleshooting, helpdiagnose|
 summer_ratio_plots|stem|cebe277d270bda0b|4e4b00fa8d374e56|e570e65501c9dbd6|2125052850||t20334.8328719991s|ff026697d66e9a9f|75|qs|local|vector|||1.96||

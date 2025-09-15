@@ -25,6 +25,7 @@
 input/
 output/
 graphics/
+GEE/
 
 # produced vignettes
 vignettes/*.html

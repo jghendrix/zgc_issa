@@ -14,16 +14,19 @@ prepare_model <- function(DT, season) {
     ungroup() %>%
     filter(sl_ > 0)
   
+  ## 12 September: these date ranges are all wrong?? WTF?
+  
   if(season == "winter"){
     
-    DT %<>% filter(doy < 75)
-  # Nov 1st to March 31st
+    DT %<>% filter(doy < 75 & doy > 14)
+  # winter = Jan 15th to March 3rd (Peignier et al 2019)
   }
   
   if(season == "summer"){
     
   DT %<>% filter(doy > 181 & doy < 245)
-    # May 1st to Sept 1st
+    # July 1st to Aug 31st?
+    # spring = 1 May - 19 June, summer = 15 July - 1 September
   }
   
   return(DT)

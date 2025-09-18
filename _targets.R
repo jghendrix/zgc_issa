@@ -588,7 +588,7 @@ targets_rss_summer <- c(
 
 
 # Targets: RSS from summer RATIO model -----------------------------------------------------------
-targets_rss_summer <- c(
+targets_rss_summer_ratio <- c(
   tar_target(
     pred_h1_Cladonia_r,
     predict_h1_Cladonia_ratio(summer_prep, summer_ratio)
@@ -806,23 +806,23 @@ targets_rss_social_popn <- c(
   ),
   
   tar_target(
-    p_h2_winter,
-    predict_h2_popn(winter_prep, winter_popn)
+    p_h2_winter_clad,
+    predict_h2_popn(winter_prep, winter_popn, "Cladonia")
   ),
   
   tar_target(
     min_Clad_winter,
-    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_min', p_h2_winter, 'h2_min')
+    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_min', p_h2_winter_clad, 'h2_min')
   ),
   
   tar_target(
     mean_Clad_winter,
-    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_mean', p_h2_winter, 'h2_mean')
+    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_mean', p_h2_winter_clad, 'h2_mean')
   ),
   
   tar_target(
     max_Clad_winter,
-    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_max', p_h2_winter, 'h2_max')
+    calc_rss_popn(p_h1_Cladonia_winter, 'h1_Clad_max', p_h2_winter_clad, 'h2_max')
   ),
   
   tar_target(
@@ -834,7 +834,133 @@ targets_rss_social_popn <- c(
     p_Clad_winter_plot,
     plot_rss_popn(popn_Cladonia_winter, plot_theme()) +
       labs(x = '%N in Cladonia lichen', y = 'logRSS',
+           title = 'Population-level RSS for Cladonia %N in winter')),
+  
+  # and now try vascular in summer?
+  tar_target(
+    p_h1_vasc_summer,
+    predict_h1_vasc_popn(summer_prep, summer_popn)
+  ),
+  
+  tar_target(
+    p_h2_summer_vasc,
+    predict_h2_popn(summer_prep, summer_popn, "vasc")
+  ),
+  
+  tar_target(
+    min_vasc_summer,
+    calc_rss_popn(p_h1_vasc_summer, 'h1_vasc_min', p_h2_summer_vasc, 'h2_min')
+  ),
+  
+  tar_target(
+    mean_vasc_summer,
+    calc_rss_popn(p_h1_vasc_summer, 'h1_vasc_mean', p_h2_summer_vasc, 'h2_mean')
+  ),
+  
+  tar_target(
+    max_vasc_summer,
+    calc_rss_popn(p_h1_vasc_summer, 'h1_vasc_max', p_h2_summer_vasc, 'h2_max')
+  ),
+  
+  tar_target(
+    popn_vasc_summer,
+    join_rss_popn(min_vasc_summer, mean_vasc_summer, max_vasc_summer)
+  ),
+  
+  tar_target(
+    p_vasc_summer_plot,
+    plot_rss_popn(popn_vasc_summer, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'Population-level RSS for vascular %N in summer')),
+  
+  # how about the alternate where we'd expect a neutral response?
+  tar_target(
+    p_h1_vasc_winter,
+    predict_h1_vasc_popn(winter_prep, winter_popn)
+  ),
+  
+  tar_target(
+    p_h2_winter_vasc,
+    predict_h2_popn(winter_prep, winter_popn, "vasc")
+  ),
+  
+  tar_target(
+    min_vasc_winter,
+    calc_rss_popn(p_h1_vasc_winter, 'h1_vasc_min', p_h2_winter_vasc, 'h2_min')
+  ),
+  
+  tar_target(
+    mean_vasc_winter,
+    calc_rss_popn(p_h1_vasc_winter, 'h1_vasc_mean', p_h2_winter_vasc, 'h2_mean')
+  ),
+  
+  tar_target(
+    max_vasc_winter,
+    calc_rss_popn(p_h1_vasc_winter, 'h1_vasc_max', p_h2_winter_vasc, 'h2_max')
+  ),
+  
+  tar_target(
+    popn_vasc_winter,
+    join_rss_popn(min_vasc_winter, mean_vasc_winter, max_vasc_winter)
+  ),
+  
+  tar_target(
+    p_vasc_winter_plot,
+    plot_rss_popn(popn_vasc_winter, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'Population-level RSS for vascular %N in winter')),
+  
+  # and Cladonia in summer for completion sake
+  
+  tar_target(
+    p_h1_Cladonia_summer,
+    predict_h1_Cladonia_popn(summer_prep, summer_popn)
+  ),
+  
+  tar_target(
+    p_h2_summer_Cladonia,
+    predict_h2_popn(summer_prep, summer_popn, "Cladonia")
+  ),
+  
+  tar_target(
+    min_Cladonia_summer,
+    calc_rss_popn(p_h1_Cladonia_summer, 'h1_Clad_min', p_h2_summer_Cladonia, 'h2_min')
+  ),
+  
+  tar_target(
+    mean_Cladonia_summer,
+    calc_rss_popn(p_h1_Cladonia_summer, 'h1_Clad_mean', p_h2_summer_Cladonia, 'h2_mean')
+  ),
+  
+  tar_target(
+    max_Cladonia_summer,
+    calc_rss_popn(p_h1_Cladonia_summer, 'h1_Clad_max', p_h2_summer_Cladonia, 'h2_max')
+  ),
+  
+  tar_target(
+    popn_Cladonia_summer,
+    join_rss_popn(min_Cladonia_summer, mean_Cladonia_summer, max_Cladonia_summer)
+  ),
+  
+  tar_target(
+    p_Cladonia_summer_plot,
+    plot_rss_popn(popn_Cladonia_summer, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'Population-level RSS for Cladonia %N in summer')),
+  
+  # Putting winter + summer for each stoich on the same plot
+  tar_target(
+    popn_vasc_seasonal,
+    plot_rss_popn_seasonal(popn_vasc_summer, popn_vasc_winter, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'Population-level RSS for vascular %N')),
+  
+  tar_target(
+    popn_Clad_seasonal,
+    plot_rss_popn_seasonal(popn_Cladonia_summer, popn_Cladonia_winter, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'Population-level RSS for Cladonia %N'))
+  
   
 )
 # Targets: all ------------------------------------------------------------

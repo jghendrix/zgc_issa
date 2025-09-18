@@ -52,14 +52,14 @@ layers <- rast(raster('output/issa_surface.tif'))
 summary(winter_model)
 
 # ignoring the individual random effects, I suppose
-w.coefs <- c("log(sl_)" = -0.011359,
-           "cos(ta_)" = -0.005263,
-           "N_Cladonia_end" = -0.840131,
-           "N_vasc_end" = 0.352084,
-           "prop_forest_end" = 0.061596,
-           "log(sl_):prop_forest_end" = -0.437933,
-           "log(sl_):N_Cladonia_end" = 0.454820,
-           "log(sl_):N_vasc_end" = -0.048125
+w.coefs <- c("log(sl_)" = -0.02346,
+           "cos(ta_)" = -0.005796,
+           "N_Cladonia_end" = -0.76583,
+           "N_vasc_end" = 0.328766,
+           "prop_forest_end" = -0.04795,
+           "log(sl_):prop_forest_end" = -0.40646,
+           "log(sl_):N_Cladonia_end" = 0.42653,
+           "log(sl_):N_vasc_end" = -0.0412
 )
 # what were the parameters of the distribution we drew from?
 # each individual got its own distributions, but if we average those to the population for both seasons
@@ -232,11 +232,15 @@ hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
 begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5503000 & y1_ < 5505000)
 # 1887 options for starting points of a 50-step segment 
 rand <- begin %>% slice_sample(n = 1)
-# randomly choose one, turned out to be step_id_ 6895
-s.track <- sea %>% filter(step_id_ >= 6895 & step_id_ < (6895+120)) %>%
+# randomly choose one, turned out to be step_id_ 998
+s.track <- sea %>% filter(step_id_ >= 10967 & step_id_ < (10967+120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
-# ok that stepID got us a full 120 step segment
+
+# step id 998 only got us 108 steps... 
+# regenerated, 10967 got us the full 120
+s.track %>% summarise(xl = min(x_), xh = max(x_), yl = min(y_), yh = max(y_))
+
 
 ggplot() + 
   geom_spatraster(data = vasc_poly)  +
@@ -244,7 +248,7 @@ ggplot() +
             col= "red") +
   # facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
-  xlim(c(709000, 713000)) + 
+  xlim(c(708000, 713000)) + 
   # zoomed these out by an additional 1km on all sides to get better perspective on where we are
   ylim(c(5502000, 5506000)) +
   theme_bw()
@@ -255,14 +259,14 @@ ggplot() +
 # Building amt() version of summer_model
 summary(summer_model)
 
-s.coefs <- c("log(sl_)" = -0.097192,
-             "cos(ta_)" = -0.167543,
-             "N_Cladonia_end" = -0.310456,
-             "N_vasc_end" = 0.075547,
-             "prop_forest_end" = 0.556155,
-             "log(sl_):prop_forest_end" = -0.017874,
-             "log(sl_):N_Cladonia_end" = -0.093476,
-             "log(sl_):N_vasc_end" = 0.052240
+s.coefs <- c("log(sl_)" = -0.1033,
+             "cos(ta_)" = -0.20493,
+             "N_Cladonia_end" = -0.53259,
+             "N_vasc_end" = 0.091747,
+             "prop_forest_end" = 0.727411,
+             "log(sl_):prop_forest_end" = -0.04221,
+             "log(sl_):N_Cladonia_end" = -0.01271,
+             "log(sl_):N_vasc_end" = 0.046633
 )
 
 summ <- amt::make_issf_model(coefs = s.coefs,
@@ -275,7 +279,7 @@ n <- 19
 ssf_sim <-list()
 
 for(i in 1:n){
-  start <- make_start(c(runif(1, 710000, 712000), 
+  start <- make_start(c(runif(1, 709000, 711000), 
                         runif(1,5503000,5505000)), 
                       dt = hours(2),
                       crs = crs$wkt,
@@ -324,7 +328,7 @@ s_sim_on_vasc <- ggplot() +
   facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(705000, 715000)) + 
-  ylim(c(5499000, 5508000)) +
+  ylim(c(5500000, 5510000)) +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +

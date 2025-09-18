@@ -57,7 +57,7 @@ mean(all$doy)
 starts <- all %>% group_by(year) %>% summarise(ten = quantile(doy, 0.1),
                                      quart = quantile(doy, 0.25))
 mean(starts$ten) # 148 = May 27th
-mean(starts$quart) # 157 =June 6th
+mean(starts$quart) # 157 = June 6th
 
 
 ## What about initiation of greenup?
@@ -84,7 +84,7 @@ hist(start$init)
 
 ## What about senescence? ----
 
-## What about initiation of greenup?
+## What about end of the growing season?
 n <- c(2013:2022)
 end <- data.frame()
 
@@ -112,7 +112,18 @@ mean(end$doy) # 274, Oct 1st
 median(end$doy) # 274, Oct 1st
 
 
-ends <- end %>% group_by(year) %>% summarise(ten = quantile(doy, 0.1),
-                                               quart = quantile(doy, 0.25))
-mean(ends$ten) # 258 = Sept 15th
-mean(ends$quart) # 157 = Sept 23rd
+ends <- end %>% group_by(year) %>% summarise(ten = quantile(doy, 0.9),
+                                               quart = quantile(doy, 0.75))
+mean(ends$ten) # 291 = Oct 18th
+mean(ends$quart) # 283 = Oct 10th
+
+# What does this all tell us?? ----
+# Ok, so "spring", aka peak greenup, is around June 16th on average but could start as early as May 27th (10th %ile) or June 6th (25th %ile) 
+# the middle of the senescence phase is Oct 1st, but could go as late as Oct 10th (75th %ile) or 18th (90th %ile)
+
+# Winter?
+## the ice data from the antler github repo is giving me trouble
+# BUT Allegra's figure from that ms has % snow cover by date across years
+# Jan 1st - Mar 1st always has > 75% snow cover... feels legit to me?
+
+# for parallelism of 60 days, could do June 16th - August 16th?

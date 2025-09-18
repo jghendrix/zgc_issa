@@ -15,18 +15,20 @@ prepare_model <- function(DT, season) {
     filter(sl_ > 0)
   
   ## 12 September: these date ranges are all wrong?? WTF?
+  ## UPDATED 16 SEPTEMBER WITH BIOLOGICALLY MEANINGFUL DATES:
+  # "winter" = 1 Jan - 1 Mar (doy 1-61), period with > 75% snow cover in all years
+  # "summer" = 16 Jun (peak greenup date) - 16 August, so both can be same length (doy 167 - 228)
   
   if(season == "winter"){
     
-    DT %<>% filter(doy < 75 & doy > 14)
-  # winter = Jan 15th to March 3rd (Peignier et al 2019)
+    DT %<>% filter(doy < 61)
+
   }
   
   if(season == "summer"){
     
-  DT %<>% filter(doy > 181 & doy < 245)
-    # July 1st to Aug 31st?
-    # spring = 1 May - 19 June, summer = 15 July - 1 September
+  DT %<>% filter(doy >= 167 & doy <= 228)
+   
   }
   
   return(DT)

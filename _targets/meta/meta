@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|b3ad08a06afa9572|||||||||||||||
+.Random.seed|object|126b18a4aa2288aa|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 calc_rss|function|e5633c936e184a51|||||||||||||||
@@ -193,7 +193,7 @@ ids|stem|285fc3cfd543ac64|adf0c7f1fdfa8244|606335df22187110|127298475||t20301.62
 ids_file|stem|ac3bac5987a1c19f|3a3d993c7e2c1960|b8ba5de7aa5112bc|296387082|input/collar-animal-ids.csv|t20286.4927385765s|4764b896dcd0d132|527|file|local|vector|||0||
 indiv_estimates|function|b7badf70dff4eb70|||||||||||||||
 indiv_ratio_estimates|function|7872f3f66a8af5f9|||||||||||||||
-indiv_sum|function|772d86d233aa5eb9|||||||||||||||
+indiv_sum|function|1a319f3e14cb951f|||||||||||||||
 indiv_summer|stem|f74d0beffdcdebbb|01ecc433cdcf8fcc|54cfc913d83d81e1|-549763119||t20347.5932385212s|50fdb10cc3762e2a|6179|qs|local|vector|||46.33||
 indiv_summer_ratio|stem|b6666bb9a4577f32|98d169801385ce45|864d79e9a17a8dd4|-1924781991||t20334.8278569277s|75f0177333322a8c|6086|qs|local|vector|||30.88||
 indiv_ta_winter|stem|73bf0ddba99719f4|2947339847008fa0|360b2415c730c01c|-1754610180||t20314.9137758943s|8ca01f3153af6ca1|6623|qs|local|vector|||29.27||
@@ -378,7 +378,7 @@ summarise_model|function|bb9268f578a28bed|||||||||||||||
 summer_boxplot|stem|db0b50bc0cdc93c1|46cd9e54214089be|d5d7d1b2aa34f374|2039299276||t20334.8327650835s|2a2cf7cc27da171b|134564|qs|local|vector|||0.06||
 summer_model|stem|36d69b3bb5333876|9c1fad10ab496429|8ca2448f0e5ff6c7|-842982072||t20347.57751519s|7afe76743a0fda72|182601245|qs|local|vector|||1458.57||
 summer_model_check|stem|82c77e5042e8fd01|2b25b819aa8f096d|df3d1730bd671eb1|-536557083||t20334.8248060953s|8619def19bb20a44|79|qs|local|vector|||0||
-summer_N_avg|stem|cf4817a0febe5037|33c3b88bd7344f6b|98c9e87fb266c442|-1138591867||t20349.5639266155s|803b8a8786e07ea1|3815|qs|local|vector|||2.14||
+summer_N_avg|stem|b073bcdf5f72cb58|33c3b88bd7344f6b|675830a65f5ecf3f|-1138591867||t20349.6070623327s|09a8b58c9ac5ae74|3033|qs|local|vector|||2.25||
 summer_plots|stem|212fab019a1fc432|6eddd9422510cdec|087f6483cc3ce246|-1507927956||t20334.8329059611s|b3654bf3682c79ca|86|qs|local|vector|||1.57||
 summer_popn|stem|fee897199624428b|57132ea92be5f232|ef46db3751d8e999|-1677682759||t20347.7390054213s|d28fc81f291e367d|590|qs|local|vector|||0.34||
 summer_prep|stem|53f7d11760b65296|e1869eb8b97b0519|23b0662fdc716c5a|283385905||t20347.5605762641s|60de4ed2701012ca|34767834|qs|local|vector|||10.68||
@@ -388,7 +388,7 @@ summer_rss_plots|stem|aec73f9bcd08061a|40906099fe3dcf7d|1a08d05e563b851b|2021187
 summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|2342ce61fa590b4b|-1877487464||t20335.6384093206s|8619def19bb20a44|79|qs|local|vector|||3.21||
 summer_ta_model|stem|d94a3c7bb245cc01|19219cc4f3b6e3f8|747039096a26397b|519007553||t20314.6695362852s|8fd7d8f31c59c665|377277615|qs|local|vector|||3204||
 ta_model|function|7fa088bc171ed26c|||||||||||||||
-targets_average_N|object|6675636b26c439a0|||||||||||||||
+targets_average_N|object|2a4601b58a51c470|||||||||||||||
 targets_data|object|1911c7e941e68159|||||||||||||||
 targets_distributions|object|0f2f9fb3060e243d|||||||||||||||
 targets_extract|object|83dfdc9464575a1f|||||||||||||||
@@ -572,6 +572,7 @@ watercol|object|d911c2060b5709f1|||||||||||||||
 winter_boxplot|stem|173852a2235029f7|a42d0a2bffa6102a|47a0983407ca9dee|-645325001||t20334.8327290138s|930cd9f269251a60|133864|qs|local|vector|||0.06||
 winter_model|stem|32ee4f7b8524cd12|51b33bb18b290af3|e0615e0a04c89b27|1305816281||t20347.5553395555s|9ee7e3fac45ab6c9|164013241|qs|local|vector|||1276.21||
 winter_model_check|stem|82c77e5042e8fd01|c684f80cadcafbf8|1d20961b181472cb|-1077643462||t20334.8143011058s|8619def19bb20a44|79|qs|local|vector|||0||
+winter_N_avg|stem|1cd11c48b6bb9cf0|1eab7d57954585b6|d262107b75215a61|1351316929||t20349.6055750766s|c34d8dee2c259fb3|2594|qs|local|vector|||1.88||
 winter_plots|stem|4242350867828b4f|92e0bb66f1807667|3996a96ce646c5a8|-1624304466||t20334.8328869635s|b3654bf3682c79ca|86|qs|local|vector|||1.26||
 winter_popn|stem|843823bfc768231a|0af05601d3ca0619|ef46db3751d8e999|2114830086||t20347.7361875796s|b44c136b29c9a3ce|606|qs|local|vector|||0.41||
 winter_prep|stem|bc979ff34106b36f|ff5f63b2f00dfaa6|23b0662fdc716c5a|-1461948889||t20347.5405183359s|2c655e0ddc3bcff4|32828480|qs|local|vector|||11.78||

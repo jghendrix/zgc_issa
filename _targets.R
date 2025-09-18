@@ -971,7 +971,21 @@ targets_average_N <- c(
   tar_target(
     summer_N_avg,
     indiv_sum(summer_prep, 'vasc', plot_theme())
+  ),
+  
+  tar_target(
+    winter_N_avg,
+    indiv_sum(winter_prep, 'Cladonia', plot_theme())
   )
+  
+  ## Why don't we have any 2022 summer data???
+  ## Between 16 June and 4 October 2022, we don't have any steps... at all, really
+  
+  # Checked the original GPS data: for all our collars during that summer, they have fixes at 8:30 am & pm each day, but we don't have the two hour intervals. WTF.
+  
+  # Ignore summer 2022 for now!
+  
+  ## We do want some kind of social metric for these periods. average SRI, maybe?
   
   
 )

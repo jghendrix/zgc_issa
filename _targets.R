@@ -963,6 +963,18 @@ targets_rss_social_popn <- c(
   
   
 )
+
+## Average N experienced by indiv as a function of... sociality? -----
+
+targets_average_N <- c(
+  
+  tar_target(
+    summer_N_avg,
+    indiv_sum(summer_prep, 'vasc', plot_theme())
+  )
+  
+  
+)
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above
 lapply(grep('targets', ls(), value = TRUE), get)

@@ -976,6 +976,26 @@ targets_average_N <- c(
   tar_target(
     winter_N_avg,
     indiv_sum(winter_prep, 'Cladonia', plot_theme())
+  ),
+  
+  tar_target(
+    summer_SRI,
+    SRI_season(summer_prep)
+  ),
+  
+  tar_target(
+    winter_SRI,
+    SRI_season(winter_prep)
+  ),
+  
+  tar_target(
+    summer_by_SRI,
+    N_by_SRI(summer_N_avg, summer_SRI, "vasc")
+  ),
+  
+  tar_target(
+    winter_by_SRI,
+    N_by_SRI(winter_N_avg, winter_SRI, "Cladonia")
   )
   
   ## Why don't we have any 2022 summer data???

@@ -20,7 +20,9 @@ library(ggplot2)
 library(ggthemes)
 
 library(distanceto)
-#library(spatsoc)
+library(spatsoc)
+library(asnipe)
+library(igraph)
 
 library(glmmTMB)
 require(betareg)

@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|126b18a4aa2288aa|||||||||||||||
+.Random.seed|object|cf44e4ff3cd0a74c|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 calc_rss|function|e5633c936e184a51|||||||||||||||
@@ -184,6 +184,7 @@ generate_pts|function|7f751aef04cd03cd|||||||||||||||
 get_coastline|function|96a0de367da2d6ea|||||||||||||||
 get_lakes|function|d5a1c4c227255fb3|||||||||||||||
 get_roads|function|d961c7c048f0444c|||||||||||||||
+get_sri|function|b99be45d4a57483d|||||||||||||||
 gps_path|object|660b51fbcfdc0a10|||||||||||||||
 GPS_tidying|function|45e6b4f2aae9b4fc|||||||||||||||
 gridcol|object|a122eb0c01415da1|||||||||||||||
@@ -224,6 +225,7 @@ min_Cladonia_summer|stem|c185be64db06b5e1|518eba21708855fd|6d5f06941c70a4c7|-185
 min_vasc_summer|stem|c06658373d98b46c|592428ea61b20570|f52f005e20a175d9|-694841768||t20347.7390769445s|87c34c4e8b7e5cd8|2352|qs|local|vector|||0.01||
 min_vasc_winter|stem|1b290b8ecac0719e|735aa68a0cd25582|535178f4c3dd268d|-1107480859||t20347.7385020448s|7c10cefd0203d368|2260|qs|local|vector|||0||
 model_check|function|7ec6d14bc2ab9bd7|||||||||||||||
+N_by_SRI|function|d691384bc524396c|||||||||||||||
 n_random_steps|object|f3582cdc107e111b|||||||||||||||
 p_Clad_winter_plot|stem|c9f37f0e6ab13a63|160acfb9533e89df|b2c17d5f34398f03|634935958||t20347.7379202007s|b573965d2c0642d8|105596|qs|local|vector|||0.17|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 p_h1_Cladonia_summer|stem|8ef6657d01da1040|d07fdd8af9818369|3df05fe7524056d7|1261336620||t20347.7390495398s|ab3033ebbeba177e|3594|qs|local|vector|||0.58||
@@ -367,6 +369,7 @@ seasonal_split|object|9c939838458b7c1f|||||||||||||||
 speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|2df51daeec15ee01|-2012696440||t20335.6047976977s|8619def19bb20a44|79|qs|local|vector|||3.23||
 split_by|object|bc33c1349a78e0bd|||||||||||||||
 split_key|stem|67df7c06abbb83e2|9edc101637eaef5a|dccb2be78d8cce21|-2017162053||t20301.6209061008s|a0cdeb7a83ca634e|391|qs|local|vector|||0.01||
+SRI_season|function|e8bc1909e49ac2df|||||||||||||||
 stdm_model|function|927ba505c2e80223|||||||||||||||
 streamcol|object|460450e967eaebcd|||||||||||||||
 streampolcol|object|abae39a2c1f1c53c|||||||||||||||
@@ -376,6 +379,7 @@ sum_ta_winter|stem|2b8d9cf0b6735961|691f057f461d77ae|b0ee67d52ef97108|1393040399
 sum_winter|stem|203e12a9f9bc2570|97f2fb29e7c0ac2b|9f64dace5d8ea531|1988234938||t20347.5924038221s|3ec25986a9cf4621|143259|qs|local|vector|||6.96|Removed 86 rows containing missing values or values outside the scale rangegeom_segment.|
 summarise_model|function|bb9268f578a28bed|||||||||||||||
 summer_boxplot|stem|db0b50bc0cdc93c1|46cd9e54214089be|d5d7d1b2aa34f374|2039299276||t20334.8327650835s|2a2cf7cc27da171b|134564|qs|local|vector|||0.06||
+summer_by_SRI|stem|8f959a2134aa10b6|e24654230b38453b|353000afeb504f9b|1116766178||t20349.7175863582s|21c64f85d8c4a821|70|qs|local|vector|||1.1|Removed 14 rows containing nonfinite outside the scale rangestat_smooth.. Removed 14 rows containing missing values or values outside the scale rangegeom_pointrange.|
 summer_model|stem|36d69b3bb5333876|9c1fad10ab496429|8ca2448f0e5ff6c7|-842982072||t20347.57751519s|7afe76743a0fda72|182601245|qs|local|vector|||1458.57||
 summer_model_check|stem|82c77e5042e8fd01|2b25b819aa8f096d|df3d1730bd671eb1|-536557083||t20334.8248060953s|8619def19bb20a44|79|qs|local|vector|||0||
 summer_N_avg|stem|b073bcdf5f72cb58|33c3b88bd7344f6b|675830a65f5ecf3f|-1138591867||t20349.6070623327s|09a8b58c9ac5ae74|3033|qs|local|vector|||2.25||
@@ -386,24 +390,25 @@ summer_ratio|stem|c9eaf743a400f4f3|d426f0721d565e4a|76c3ad93954651fd|-2047373249
 summer_ratio_plots|stem|cebe277d270bda0b|4e4b00fa8d374e56|e570e65501c9dbd6|2125052850||t20334.8328719991s|ff026697d66e9a9f|75|qs|local|vector|||1.96||
 summer_rss_plots|stem|aec73f9bcd08061a|40906099fe3dcf7d|1a08d05e563b851b|2021187670||t20347.6453713749s|abbdb7fe746336f0|76|qs|local|vector|||5.28||
 summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|2342ce61fa590b4b|-1877487464||t20335.6384093206s|8619def19bb20a44|79|qs|local|vector|||3.21||
+summer_SRI|stem|4341f7b76022efd4|d1e1feba25aa0b73|0c6653a4cf696f37|-1677326071||t20349.7175731413s|f8506963f9eb5825|2148|qs|local|vector|||21.56||
 summer_ta_model|stem|d94a3c7bb245cc01|19219cc4f3b6e3f8|747039096a26397b|519007553||t20314.6695362852s|8fd7d8f31c59c665|377277615|qs|local|vector|||3204||
 ta_model|function|7fa088bc171ed26c|||||||||||||||
-targets_average_N|object|2a4601b58a51c470|||||||||||||||
-targets_data|object|1911c7e941e68159|||||||||||||||
-targets_distributions|object|0f2f9fb3060e243d|||||||||||||||
-targets_extract|object|83dfdc9464575a1f|||||||||||||||
+targets_average_N|object|2d5f64013ea7a0e0|||||||||||||||
+targets_data|object|b17ce7988e978752|||||||||||||||
+targets_distributions|object|07bcc3147f47b4c5|||||||||||||||
+targets_extract|object|7a83204adce8aa67|||||||||||||||
 targets_fire_effects|object|97dd94dda94b087e|||||||||||||||
-targets_prep|object|21b7e8960ffb8f63|||||||||||||||
-targets_rss_by_speed|object|6eece728dca488de|||||||||||||||
-targets_rss_social_popn|object|d189eff08f12dcae|||||||||||||||
-targets_rss_summer|object|3990660e6bd85a4f|||||||||||||||
-targets_rss_summer_ratio|object|063287d50d3beac6|||||||||||||||
-targets_rss_winter|object|e9970977beff926e|||||||||||||||
-targets_seasonal_effects|object|ca6e01d8250bb551|||||||||||||||
-targets_speed|object|2ccb36ac74a8f81f|||||||||||||||
-targets_tracks|object|70d045bb77e365e7|||||||||||||||
+targets_prep|object|776881115ec87f97|||||||||||||||
+targets_rss_by_speed|object|4f5f16a5715396d0|||||||||||||||
+targets_rss_social_popn|object|76efb427818276ee|||||||||||||||
+targets_rss_summer|object|76091ea3d8d4cd3f|||||||||||||||
+targets_rss_summer_ratio|object|361a846f43a92afe|||||||||||||||
+targets_rss_winter|object|3711cfe20e275f36|||||||||||||||
+targets_seasonal_effects|object|100feeb3b6f2a7d8|||||||||||||||
+targets_speed|object|f094d2c7ecaa356d|||||||||||||||
+targets_tracks|object|78dd64f458e583f4|||||||||||||||
 targets_turning_angle|object|e4e670e5b6d43a73|||||||||||||||
-targets_winter|object|ed21acb8e9008c0d|||||||||||||||
+targets_winter|object|f6250bc79156b063|||||||||||||||
 themeMap|object|1438d4b6b3ea898a|||||||||||||||
 tidy_GPS|stem|241420056bfb714a|25c9231d210b65e7|6e72f73336ee79ed|-1554542148||t20301.6203153158s|957298ec7d16fcf6|6367406|qs|local|vector|||1.49||
 tolerance|object|14ad31fbc077bf02|||||||||||||||
@@ -570,6 +575,7 @@ vascular_ratio_path|object|44c92f8c7622e5c2|||||||||||||||
 water|stem|0c1e7ec88df7a116|59b6770a8d8b78bf|8e73e726b97fe994|-2135480064||t20301.6202611061s|b35af125279470ce|269352|qs|local|vector|||3.33||
 watercol|object|d911c2060b5709f1|||||||||||||||
 winter_boxplot|stem|173852a2235029f7|a42d0a2bffa6102a|47a0983407ca9dee|-645325001||t20334.8327290138s|930cd9f269251a60|133864|qs|local|vector|||0.06||
+winter_by_SRI|stem|ae08aec49959072f|66db3185986145c0|7d9bb1ef24ce693d|-2014587171||t20349.717819172s|ff026697d66e9a9f|75|qs|local|vector|||1.36|Removed 1 row containing nonfinite outside the scale range stat_smooth.. Removed 1 row containing missing values or values outside the scale rangegeom_pointrange.|
 winter_model|stem|32ee4f7b8524cd12|51b33bb18b290af3|e0615e0a04c89b27|1305816281||t20347.5553395555s|9ee7e3fac45ab6c9|164013241|qs|local|vector|||1276.21||
 winter_model_check|stem|82c77e5042e8fd01|c684f80cadcafbf8|1d20961b181472cb|-1077643462||t20334.8143011058s|8619def19bb20a44|79|qs|local|vector|||0||
 winter_N_avg|stem|1cd11c48b6bb9cf0|1eab7d57954585b6|d262107b75215a61|1351316929||t20349.6055750766s|c34d8dee2c259fb3|2594|qs|local|vector|||1.88||
@@ -579,6 +585,7 @@ winter_prep|stem|bc979ff34106b36f|ff5f63b2f00dfaa6|23b0662fdc716c5a|-1461948889|
 winter_ratio|stem|523c8b2979812022|4249e1c7ddd34dd9|72cea26eb1084997|994097338||t20334.7566301364s|ee4cf196d3a47051|135070144|qs|local|vector|||3651.22|NANaN function evaluation. NANaN function evaluation. NANaN function evaluation. Model convergence problem nonpositivedefinite Hessian matrix. See vignettetroubleshooting. Model convergence problem false convergence 8. See vignettetroubleshooting, helpdiagnose|
 winter_rss_plots|stem|6925b79ededa1529|bc4f1fc7fa4d148e|b54aa20b97dfd0a7|632338834||t20347.6029109723s|abbdb7fe746336f0|76|qs|local|vector|||3.78||
 winter_speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|6e918dc35571b121|2054416414||t20347.6784588746s|8619def19bb20a44|79|qs|local|vector|||4.86||
+winter_SRI|stem|853a61846db801f2|fdb9009395901857|7fc31b826e3b1c63|296145730||t20349.7160032953s|ef4fd13b3d44973b|2072|qs|local|vector|||21.72||
 winter_ta_boxplot|stem|1ebd42e663a5bed9|9da52ff3c8798700|bdf071293fcde854|220504864||t20314.9139119199s|a05bd40045694929|136415|qs|local|vector|||0.05||
 winter_ta_model|stem|657cde89bd2466f0|e57dec7702f9e7bf|8e326adff22be0eb|-1792265813||t20314.8592175989s|f27e75dfe40f330e|389566007|qs|local|vector|||2699.36||
 winter_VIF|stem|6dd71d12008128c1|25b45147a53f4a26|e153f60326eaf2ef|1382937609||t20308.603526342s|de1c6d017cb4e8a8|38|qs|local|vector|||72.77||

@@ -236,29 +236,30 @@ targets_extract <- c(
       sdss, # this version of sdss is actually also down to 5m cells, same as the stoich layers... so if we x3, we aren't getting 30 -> 90, it's only doing a 15 x 15m pixel for forest, in fact. yikes. If we make this 20 it'll be a 100x100 cell, aka a 50ish m radius
       20
     )
-  ),
-  
-  tar_target(
-    tracks_clad_ratio,
-    extract_stoich(
-      tracks_lc,
-      crs,
-      lichen_ratio,
-      "CN_Cladonia",
-      6
-    )
-  ),
-  
-  tar_target(
-    tracks_vasc_ratio,
-    extract_stoich(
-      tracks_clad_ratio,
-      crs,
-      vascular_ratio,
-      "CN_vasc",
-      6
-    )
   )
+  # ,
+  # 
+  # tar_target(
+  #   tracks_clad_ratio,
+  #   extract_stoich(
+  #     tracks_lc,
+  #     crs,
+  #     lichen_ratio,
+  #     "CN_Cladonia",
+  #     6
+  #   )
+  # ),
+  # 
+  # tar_target(
+  #   tracks_vasc_ratio,
+  #   extract_stoich(
+  #     tracks_clad_ratio,
+  #     crs,
+  #     vascular_ratio,
+  #     "CN_vasc",
+  #     6
+  #   )
+  # )
 
 )
 
@@ -292,7 +293,7 @@ targets_distributions <- c(
 targets_winter <- c(
   tar_target(
     winter_prep,
-    prepare_model(tracks_vasc_ratio, "winter")
+    prepare_model(tracks_lc, "winter")
   ),
   
   ## Le Goff and Peignier both call winter 1 Jan - 16 March
@@ -309,7 +310,7 @@ targets_winter <- c(
   
   tar_target(
     summer_prep,
-    prepare_model(tracks_vasc_ratio, "summer")
+    prepare_model(tracks_lc, "summer")
   ),
   
   # Peignier calls summer 15 July - 1 Sept (with calving starting late May?)
@@ -320,19 +321,20 @@ targets_winter <- c(
   tar_target(
     summer_model_check,
     model_check(summer_model)
-  ),
-  
-  # Ratio models?
-  tar_target(
-    winter_ratio,
-    ratio_model(winter_prep)
-  ),
-  # winter model is giving NA for step length output... cannot trust this model
-  
-  tar_target(
-    summer_ratio,
-    ratio_model(summer_prep)
   )
+  # ,
+  # 
+  # # Ratio models?
+  # tar_target(
+  #   winter_ratio,
+  #   ratio_model(winter_prep)
+  # ),
+  # # winter model is giving NA for step length output... cannot trust this model
+  # 
+  # tar_target(
+  #   summer_ratio,
+  #   ratio_model(summer_prep)
+  # )
   # summer appears to be fine though?
 )
 
@@ -362,11 +364,11 @@ targets_seasonal_effects <- c(
   tar_target(
     sum_summer,
     sum_plot(indiv_summer, plot_theme(), "summer")
-  ),
-  
-  tar_target(
-    indiv_summer_ratio,
-    indiv_ratio_estimates(summer_ratio)
+  # ),
+  # 
+  # tar_target(
+  #   indiv_summer_ratio,
+  #   indiv_ratio_estimates(summer_ratio)
 )
 )
 # Targets: speed from seasonal models ------------------------------------------------------------
@@ -587,72 +589,72 @@ targets_rss_summer <- c(
 )
 
 
-# Targets: RSS from summer RATIO model -----------------------------------------------------------
-targets_rss_summer_ratio <- c(
-  tar_target(
-    pred_h1_Cladonia_r,
-    predict_h1_Cladonia_ratio(summer_prep, summer_ratio)
-  ),
-  
-  tar_target(
-    pred_h1_vasc_r,
-    predict_h1_vasc_ratio(summer_prep, summer_ratio)
-  ),
-  
-  tar_target(
-    pred_h1_forest_r,
-    predict_h1_forest_ratio(summer_prep, summer_ratio)
-),
-
-  tar_target(
-    pred_h2_r,
-    predict_h2_ratio(summer_prep, summer_ratio)
-  ),
-
-  tar_target(
-    rss_forest_r,
-    calc_rss(pred_h1_forest_r, 'h1_forest', pred_h2_r, 'h2')
-  ),
-  tar_target(
-    rss_Cladonia_r,
-    calc_rss(pred_h1_Cladonia_r, 'h1_Cladonia', pred_h2_r, 'h2')
-  ),
-  tar_target(
-    rss_vasc_r,
-    calc_rss(pred_h1_vasc_r, 'h1_vasc', pred_h2_r, 'h2')
-  ),
-  tar_target(
-    plot_rss_forest_r,
-    plot_rss(rss_forest_r, plot_theme()) +
-      labs(x = 'Proportion forested (100m)', y = 'logRSS',
-           title = 'summer - RSS compared to mean proportion forest')
-  ),
-  tar_target(
-    plot_rss_Cladonia_r,
-    plot_rss(rss_Cladonia_r, plot_theme()) +
-      labs(x = 'C:N in Cladonia', y = 'logRSS',
-           title = 'summer - RSS for Cladonia C:N relative to mean')
-  ),
-  tar_target(
-    plot_rss_vasc_r,
-    plot_rss(rss_vasc_r, plot_theme()) +
-      labs(x = 'C:N in vascular plants', y = 'logRSS',
-           title = 'summer - RSS for vascular plant C:N relative to mean')
-  ),
-  tar_target(
-    summer_ratio_plots,
-    save_rss_plot(plot_rss_forest_r, "rss_forest_ratio",
-                  plot_rss_Cladonia_r, "rss_Cladonia_ratio",
-                  plot_rss_vasc_r, "rss_vascular_ratio")
-  )
-)
-
-# Selection for ratio over summer: seems like they avoid 'high-quality' Cladonia, which aligns with the %N summer model. But they also select HIGHER C:N ratio during summer, at the same time they're selecting higher %N? How is this possible?
-
-
+# # Targets: RSS from summer RATIO model -----------------------------------------------------------
+# targets_rss_summer_ratio <- c(
+#   tar_target(
+#     pred_h1_Cladonia_r,
+#     predict_h1_Cladonia_ratio(summer_prep, summer_ratio)
+#   ),
+#   
+#   tar_target(
+#     pred_h1_vasc_r,
+#     predict_h1_vasc_ratio(summer_prep, summer_ratio)
+#   ),
+#   
+#   tar_target(
+#     pred_h1_forest_r,
+#     predict_h1_forest_ratio(summer_prep, summer_ratio)
+# ),
+# 
+#   tar_target(
+#     pred_h2_r,
+#     predict_h2_ratio(summer_prep, summer_ratio)
+#   ),
+# 
+#   tar_target(
+#     rss_forest_r,
+#     calc_rss(pred_h1_forest_r, 'h1_forest', pred_h2_r, 'h2')
+#   ),
+#   tar_target(
+#     rss_Cladonia_r,
+#     calc_rss(pred_h1_Cladonia_r, 'h1_Cladonia', pred_h2_r, 'h2')
+#   ),
+#   tar_target(
+#     rss_vasc_r,
+#     calc_rss(pred_h1_vasc_r, 'h1_vasc', pred_h2_r, 'h2')
+#   ),
+#   tar_target(
+#     plot_rss_forest_r,
+#     plot_rss(rss_forest_r, plot_theme()) +
+#       labs(x = 'Proportion forested (100m)', y = 'logRSS',
+#            title = 'summer - RSS compared to mean proportion forest')
+#   ),
+#   tar_target(
+#     plot_rss_Cladonia_r,
+#     plot_rss(rss_Cladonia_r, plot_theme()) +
+#       labs(x = 'C:N in Cladonia', y = 'logRSS',
+#            title = 'summer - RSS for Cladonia C:N relative to mean')
+#   ),
+#   tar_target(
+#     plot_rss_vasc_r,
+#     plot_rss(rss_vasc_r, plot_theme()) +
+#       labs(x = 'C:N in vascular plants', y = 'logRSS',
+#            title = 'summer - RSS for vascular plant C:N relative to mean')
+#   ),
+#   tar_target(
+#     summer_ratio_plots,
+#     save_rss_plot(plot_rss_forest_r, "rss_forest_ratio",
+#                   plot_rss_Cladonia_r, "rss_Cladonia_ratio",
+#                   plot_rss_vasc_r, "rss_vascular_ratio")
+#   )
+# )
+# 
+# # Selection for ratio over summer: seems like they avoid 'high-quality' Cladonia, which aligns with the %N summer model. But they also select HIGHER C:N ratio during summer, at the same time they're selecting higher %N? How is this possible?
+# 
+# 
 # Targets: seasonal models with ta_ interaction ----------------------------------------------------------
-
 # turning angle models have been added to example_targets.R in template code folder
+
 # Targets: RSS for stoich categorised out by speed ----------------------------------
 
 targets_rss_by_speed <- c(

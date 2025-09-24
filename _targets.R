@@ -504,19 +504,19 @@ targets_rss_winter <- c(
     plot_rss_forest_w,
     plot_rss(rss_forest_w, plot_theme()) +
       labs(x = 'Proportion forested (100m)', y = 'logRSS',
-           title = 'Winter - RSS compared to mean proportion forest')
+           title = 'Winter RSS for forest cover compared to mean')
   ),
   tar_target(
     plot_rss_Cladonia_w,
     plot_rss(rss_Cladonia_w, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
-           title = 'Winter - RSS for Cladonia %N relative to mean')
+           title = 'Winter RSS for Cladonia %N relative to mean')
   ),
   tar_target(
     plot_rss_vasc_w,
     plot_rss(rss_vasc_w, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
-           title = 'Winter - RSS for vascular plant %N relative to mean')
+           title = 'Winter RSS for vascular plant %N relative to mean')
   ),
   tar_target(
     winter_rss_plots,
@@ -566,19 +566,19 @@ targets_rss_summer <- c(
     plot_rss_forest_s,
     plot_rss(rss_forest_s, plot_theme()) +
       labs(x = 'Proportion forested (100m)', y = 'logRSS',
-           title = 'summer - RSS compared to mean proportion forest')
+           title = 'Summer RSS for forest cover compared to mean')
   ),
   tar_target(
     plot_rss_Cladonia_s,
     plot_rss(rss_Cladonia_s, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
-           title = 'summer - RSS for Cladonia %N relative to mean')
+           title = 'Summer RSS for Cladonia %N relative to mean')
   ),
   tar_target(
     plot_rss_vasc_s,
     plot_rss(rss_vasc_s, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
-           title = 'summer - RSS for vascular plant %N relative to mean')
+           title = 'Summer RSS for vascular plant %N relative to mean')
   ),
   tar_target(
     summer_rss_plots,
@@ -677,7 +677,7 @@ targets_rss_by_speed <- c(
     plot_rss_Cladonia_speed_w,
     plot_rss_speed(rss_Cladonia_byspeed_w, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
-           title = 'winter - RSS for Cladonia %N by speed')
+           title = 'Winter RSS for Cladonia %N by speed')
   ),
   
   tar_target(
@@ -694,7 +694,7 @@ targets_rss_by_speed <- c(
     plot_rss_vasc_speed_w,
     plot_rss_speed(rss_vasc_byspeed_w, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
-           title = 'winter - RSS for vascular %N by speed')
+           title = 'Winter RSS for vascular %N by speed')
   ),
   
   tar_target(
@@ -711,7 +711,7 @@ targets_rss_by_speed <- c(
     plot_rss_forest_speed_w,
     plot_rss_speed(rss_forest_byspeed_w, plot_theme()) +
       labs(x = '% forest cover (100m)', y = 'logRSS',
-           title = 'winter - RSS for forest cover')
+           title = 'Winter RSS for forest cover by speed')
   ),
   
   
@@ -742,7 +742,7 @@ targets_rss_by_speed <- c(
     plot_rss_Cladonia_speed_s,
     plot_rss_speed(rss_Cladonia_byspeed_s, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
-           title = 'summer - RSS for Cladonia %N by speed')
+           title = 'Summer RSS for Cladonia %N by speed')
   ),
   
   tar_target(
@@ -759,7 +759,7 @@ targets_rss_by_speed <- c(
     plot_rss_vasc_speed_s,
     plot_rss_speed(rss_vasc_byspeed_s, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
-           title = 'summer - RSS for vascular %N by speed')
+           title = 'Summer RSS for vascular %N by speed')
   ),
   
   tar_target(
@@ -776,7 +776,7 @@ targets_rss_by_speed <- c(
     plot_rss_forest_speed_s,
     plot_rss_speed(rss_forest_byspeed_s, plot_theme()) +
       labs(x = '% forest cover (100m)', y = 'logRSS',
-           title = 'summer - RSS for forest cover')
+           title = 'Summer RSS for forest cover by speed')
   ),
   
   tar_target(
@@ -961,12 +961,18 @@ targets_rss_social_popn <- c(
     popn_Clad_seasonal,
     plot_rss_popn_seasonal(popn_Cladonia_summer, popn_Cladonia_winter, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
-           title = 'Population-level RSS for Cladonia %N'))
+           title = 'Population-level RSS for Cladonia %N')),
+  
+  tar_target(
+    popn_RSS,
+    save_rss_plot(popn_vasc_seasonal, "popn/seasonal_vasc_rss",
+                  popn_Clad_seasonal, "popn/seasonal_Cladonia_rss")
+  )
   
   
 )
 
-## Average N experienced by indiv as a function of... sociality? -----
+# Average N experienced by indiv as a function of... sociality? -----
 
 targets_average_N <- c(
   
@@ -998,8 +1004,18 @@ targets_average_N <- c(
   tar_target(
     winter_by_SRI,
     N_by_SRI(winter_N_avg, winter_SRI, "Cladonia")
-  )
+  ),
   
+  tar_target(
+    winter_rss_by_SRI,
+    N_rss_by_SRI(rss_Cladonia_w, winter_SRI, "Cladonia")
+  ),
+  
+  
+  tar_target(
+    summer_rss_by_SRI,
+    N_rss_by_SRI(rss_vasc_s, summer_SRI, "vasc")
+  )
   ## Why don't we have any 2022 summer data???
   ## Between 16 June and 4 October 2022, we don't have any steps... at all, really
   

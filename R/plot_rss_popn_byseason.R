@@ -1,6 +1,6 @@
 #' @title Plot RSS for social interaction using population-level estimates
 #'
-plot_rss_popn_seasonal <- function(rss_summer, rss_winter, theme) {
+plot_rss_popn_seasonal <- function(rss_summer, rss_winter, theme, pred) {
   
   rss_summer %<>% mutate(season = "summer")
   rss_winter %<>% mutate(season = "winter")

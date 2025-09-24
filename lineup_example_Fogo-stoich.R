@@ -45,21 +45,21 @@ layers <- c(layers, vasc)
 writeRaster(layers, 'output/issa_preds.tif')
 
 ## WORKFLOW STARTS HERE-----
-layers <- rast(raster('output/issa_surface.tif'))
+#layers <- rast(raster('output/issa_surface.tif'))
 
 ## Winter comparisons of 19 simulations to one real ----
 # first need to make our amt() version of the model
 summary(winter_model)
 
 # ignoring the individual random effects, I suppose
-w.coefs <- c("log(sl_)" = -0.02346,
+w.coefs <- c("log(sl_)" = -0.023459,
            "cos(ta_)" = -0.005796,
-           "N_Cladonia_end" = -0.76583,
+           "N_Cladonia_end" = -0.765825,
            "N_vasc_end" = 0.328766,
-           "prop_forest_end" = -0.04795,
-           "log(sl_):prop_forest_end" = -0.40646,
-           "log(sl_):N_Cladonia_end" = 0.42653,
-           "log(sl_):N_vasc_end" = -0.0412
+           "prop_forest_end" = -0.047950,
+           "log(sl_):prop_forest_end" = -0.406460,
+           "log(sl_):N_Cladonia_end" = 0.426530,
+           "log(sl_):N_vasc_end" = -0.041197
 )
 # what were the parameters of the distribution we drew from?
 # each individual got its own distributions, but if we average those to the population for both seasons
@@ -68,8 +68,8 @@ w.coefs <- c("log(sl_)" = -0.02346,
 # scale 378.2702
 
 wint <- amt::make_issf_model(coefs = w.coefs,
-                             sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
-                             ta = make_vonmises_distr(kappa = 0.1634281)
+                       sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
+                       ta = make_vonmises_distr(kappa = 0.1634281)
 )
 
 
@@ -163,6 +163,21 @@ forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
 lich_poly <- crop(lich, fogo_poly, mask = TRUE)
 vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
 
+# Winter plots --------
+## on forest -----
+# We want to randomize the order of these facets, but make sure we know which is which
+# Randomize the order of the ids in w.comp
+w.comp$id <- as.factor(w.comp$id)
+levels(w.comp$id) <- sample(unique(w.comp$id))
+
+# then use this random order associated with the letter A through T
+w_text <- data.frame(
+  label = c(letters[seq(from = 1, to = 20)]),
+  id = as.factor(levels(w.comp$id))
+)
+
+# the real, non-simulated track will be the letter associated with id == 20 in w_text
+
 sim_on_forest <- ggplot() + 
   geom_spatraster(data = forest_poly)  +
   geom_path(data = w.comp, aes(x_, y_), 
@@ -174,18 +189,28 @@ sim_on_forest <- ggplot() +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
+  geom_text(data = w_text, 
+            mapping = aes(x = -Inf, y = -Inf, label = label),
+            hjust = -1, vjust = -5.5, size = 5
+  ) +
   theme_bw() +
   theme(strip.background = element_blank(),
         strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
-ggsave(filename = "graphics/validation/winter_forest_120.png",
+
+ggsave(filename = "graphics/validation/random_winter_forest_120.png",
        sim_on_forest,
        height = 2000,
        width = 2400,
        units = "px")
 
-# try it on the Cladonia map?
+
+
+
+
+
+# winter Cladonia plot?
 
 sim_on_Clad <- ggplot() + 
   geom_spatraster(data = lich_poly)  +
@@ -199,11 +224,15 @@ sim_on_Clad <- ggplot() +
   ylab("") +
   labs(fill = "%N in Cladonia") +
   theme_bw() +
+  geom_text(data = w_text, 
+            mapping = aes(x = -Inf, y = -Inf, label = label),
+            hjust = -1, vjust = -5.5, size = 5
+  ) +
   theme(strip.background = element_blank(),
         strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
-ggsave(filename = "graphics/validation/winter_sim120_Cladonia.png",
+ggsave(filename = "graphics/validation/random_winter_sim120_Cladonia.png",
        sim_on_Clad,
        height = 2000,
        width = 2400,
@@ -259,13 +288,13 @@ ggplot() +
 # Building amt() version of summer_model
 summary(summer_model)
 
-s.coefs <- c("log(sl_)" = -0.1033,
-             "cos(ta_)" = -0.20493,
-             "N_Cladonia_end" = -0.53259,
+s.coefs <- c("log(sl_)" = -0.103300,
+             "cos(ta_)" = -0.204928,
+             "N_Cladonia_end" = -0.532593,
              "N_vasc_end" = 0.091747,
              "prop_forest_end" = 0.727411,
-             "log(sl_):prop_forest_end" = -0.04221,
-             "log(sl_):N_Cladonia_end" = -0.01271,
+             "log(sl_):prop_forest_end" = -0.042207,
+             "log(sl_):N_Cladonia_end" = -0.012711,
              "log(sl_):N_vasc_end" = 0.046633
 )
 
@@ -321,6 +350,17 @@ s.comp %>% summarise(minx = min(x_), maxx = max(x_),
                    miny = min(y_), maxy = max(y_))
 # use these to trim down our plots slightly so you can actually see the trajectories
 
+# Summer plots ---
+
+# Randomize the order of the ids
+s.comp$id <- as.factor(s.comp$id)
+levels(s.comp$id) <- sample(unique(s.comp$id))
+# then use this random order associated with the letter A through T
+s_text <- data.frame(
+  label = c(letters[seq(from = 1, to = 20)]),
+  id = as.factor(levels(s.comp$id))
+)
+
 s_sim_on_vasc <- ggplot() + 
   geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
@@ -332,13 +372,17 @@ s_sim_on_vasc <- ggplot() +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +
+  geom_text(data = s_text, 
+            mapping = aes(x = -Inf, y = -Inf, label = label),
+            hjust = -1, vjust = -5.5, size = 5
+  ) +
   theme_bw() +
   theme(strip.background = element_blank(),
         strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/summer_sim120.png",
+ggsave(filename = "graphics/validation/random_summer_sim120_vasc.png",
        s_sim_on_vasc,
        height = 2000,
        width = 2400,
@@ -357,13 +401,57 @@ s_sim_on_forest <- ggplot() +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
+  geom_text(data = s_text, 
+            mapping = aes(x = -Inf, y = -Inf, label = label),
+            hjust = -1, vjust = -5.5, size = 5
+  ) +
   theme_bw() +
   theme(strip.background = element_blank(),
         strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/summer_sim120_forest.png",
+ggsave(filename = "graphics/validation/random_summer_sim120_forest.png",
        height = 2000,
        width = 2400,
        units = "px")
+
+saveRDS(w.comp, 'output/winter_sims.Rds')
+saveRDS(s.comp, 'output/summer_sims.Rds')
+
+# How to randomize order ----
+## We want to randomize the order of these plots tho, it shouldn't always be the last one
+
+# Try this new order out?
+
+# Ok, this randomization worked, BUT it's still identified as #20... if we remove the facet labels though, we have no way of knowing which is which
+# have to have duplicate copies with and without?
+# Or we can we add manual labels A through T, perhaps?
+
+dat_text <- data.frame(
+  label = c(letters[seq( from = 1, to = 20 )]),
+  id = as.factor(levels(w.comp$id))
+)
+
+rand_on_Clad <- ggplot() + 
+  geom_spatraster(data = lich_poly)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ id, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(700000, 710000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "%N in Cladonia") +
+  geom_text(data = dat_text, 
+            mapping = aes(x = -Inf, y = -Inf, label = label),
+            hjust = -0.5, vjust = -5
+            ) +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.text = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+
+rand_on_Clad

@@ -653,7 +653,38 @@ targets_rss_summer <- c(
 # 
 # 
 # Targets: seasonal models with ta_ interaction ----------------------------------------------------------
-# turning angle models have been added to example_targets.R in template code folder
+## Turning-angle centric models
+
+targets_turning_angle <- c(
+  tar_target(
+    winter_ta_model,
+    ta_model(winter_prep)
+  ),
+  tar_target(
+    summer_ta_model,
+    ta_model(summer_prep)
+  ),
+  
+  tar_target(
+    indiv_ta_winter,
+    indiv_ta_estimates(winter_ta_model)
+  ),
+  tar_target(
+    sum_ta_winter,
+    sum_ta_plot(indiv_ta_winter, plot_theme(), "winter")
+  ),
+  
+  tar_target(
+    indiv_ta_summer,
+    indiv_ta_estimates(summer_ta_model)
+  ),
+  tar_target(
+    sum_ta_summer,
+    sum_ta_plot(indiv_ta_summer, plot_theme(), "summer")
+  )
+  
+)
+
 
 # Targets: RSS for stoich categorised out by speed ----------------------------------
 

@@ -1,0 +1,36 @@
+#' @title Individual estimates from TA_ model
+#' @export
+#' @author Jack G Hendrix
+indiv_ta_estimates <- function(model) {
+
+	indiv <- as.data.table(
+		coef(model)$cond$id %>% rownames_to_column("id") %>%
+			pivot_longer(-id, names_to = "term", values_to = "estimate") %>%
+			mutate(method = "ME")
+	)
+
+	ran_vals.m <- broom.mixed::tidy(model, effect = 'ran_vals')
+	indiv.se.m <- setDT(ran_vals.m)[group == 'id', .(id = level, term, se = std.error)]
+	indiv <- left_join(indiv, indiv.se.m, by = c('id', 'term'))
+
+	# for whatever reason, it's including the random and population level step length - distance interactions separately... have to manually combine them
+
+	vasc_pop <- mean(subset(indiv, term == "I(cos(ta_)):N_vasc")$estimate)
+	clad_pop <- mean(subset(indiv, term == "I(cos(ta_)):N_Cladonia")$estimate)
+	for_pop <- mean(subset(indiv, term == "I(cos(ta_)):prop_forest")$estimate)
+
+	indiv %<>% mutate(estimate = ifelse(term == "N_vasc:I(cos(ta_))",
+																			estimate + vasc_pop, estimate),
+										estimate = ifelse(term == "N_Cladonia:I(cos(ta_))",
+																			estimate + clad_pop, estimate),
+										estimate = ifelse(term == "prop_forest:I(cos(ta_))",
+										                  estimate + for_pop, estimate)) %>%
+		filter(term != "I(cos(ta_)):N_vasc" & 
+		       term != "I(cos(ta_)):N_Cladonia" &
+		       term != "I(cos(ta_)):prop_forest")
+	
+	indiv %<>% filter(term != "(Intercept)")
+
+	return(indiv)
+
+}

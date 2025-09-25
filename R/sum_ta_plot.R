@@ -1,0 +1,36 @@
+#' @title Individual estimates w/ SE
+#'  @export
+#' @author Jack G Hendrix
+sum_ta_plot <- function(DT, theme, model) {
+
+fixed <- read.csv('output/seasonal_issa_fixed_output_ta.csv') %>%
+			filter(season == model) %>%
+			dplyr::select(popn = term, mean = estimate, mse = se)
+
+	gbox <-	ggplot(data = fixed, aes(x = popn, y = mean)) +
+			geom_pointrange(data = DT,
+											aes(x = term, y = estimate, 
+											    ymin = estimate - se, ymax = estimate + se,
+													colour = id, alpha = 0.5),
+											position = position_jitter(width = 0.3),
+											linetype = "dotted",
+											show.legend = F) +
+			geom_pointrange(aes(ymin = mean - mse, ymax = mean + mse)) +
+			geom_hline(yintercept = 0, lty = 'dashed') +
+			xlab("") +
+			ylab("Estimate ± SE") +
+			scale_color_viridis(discrete = "TRUE")  +
+			scale_fill_viridis(discrete = "TRUE") +
+			coord_flip() +
+			plot_theme()
+
+		ggsave(
+			paste0('graphics/summary/', model, '_ta_indiv_selection.png'),
+			gbox,
+			width = 10,
+			height = 10,
+			dpi = 320
+		)
+
+		return(gbox)
+}

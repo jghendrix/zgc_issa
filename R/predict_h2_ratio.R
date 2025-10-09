@@ -9,8 +9,8 @@ predict_h2_ratio <- function(DT, model) {
 		sl_ = mean(sl_),
 		ta_ = mean(ta_),
 		prop_forest = mean(prop_forest, na.rm = T),
-		CN_Cladonia = mean(CN_Cladonia, na.rm = T),
-		CN_vasc = mean(CN_vasc, na.rm = T),
+		N_Cladonia = mean(N_Cladonia, na.rm = T),
+		N_vasc = mean(N_vasc, na.rm = T),
 		indiv_step_id = NA,
 		yr = NA),
 		by = id]

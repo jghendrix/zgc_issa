@@ -27,6 +27,10 @@ vascular_ratio_path <- file.path('input', 'Vascular_CN.tif')
 gps_path <- file.path('input', 'all_Fogo_caribou_locs_20June2025.csv')
 id_path <- file.path('input', 'collar-animal-ids.csv')
 
+# Stoich samples path
+stoich_path <- file.path('input', 'sp_prep.csv')
+kernel_path <- file.path('output', 'all_years_kernel.tif')
+
 # Variables ---------------------------------------------------------------
 bb <- c(
   xmin = -54.3533,
@@ -116,6 +120,12 @@ targets_data <- c(
     vascular_ratio_path,
     raster(!!.x)
 ),
+  tar_file_read(
+    kernel,
+    kernel_path,
+    raster(!!.x)
+  ),
+
   tar_target(
     coast,
     get_coastline(bb, crs)
@@ -150,6 +160,31 @@ targets_prep <- c(
     unique(locs_prep[, .SD, .SDcols = c(split_by, 'tar_group')])
   )
   
+)
+
+# Targets: caribou kernel density vs. stoich (for appendix) -------------------------
+targets_kernel <- c(
+  tar_target(
+    w_fixes,
+    prepare_kernel(tidy_GPS, "winter", "yr")
+  ),
+  
+  tar_target(
+    w_kernel,
+    caribou_intensity(w_fixes)
+    #,    pattern = map(w_fixes)
+  ),
+  
+  tar_file_read(
+    stoich,
+    stoich_path,
+    fread(!!.x)
+  ),
+  
+  tar_target(
+    kernel_Clad,
+    kernel_stoich(stoich, kernel, crs)
+  )
 )
 
 # Targets: tracks ---------------------------------------------------------
@@ -684,9 +719,126 @@ targets_turning_angle <- c(
   )
   
 )
+# Targets: RSS from ta_ models -----------------------------------------------------------
+targets_rss_ta_summer <- c(
+  tar_target(
+    pred_h1_Cladonia_ta,
+    predict_h1_Cladonia(summer_prep, summer_ta_model)
+  ),
+
+  tar_target(
+    pred_h1_vasc_ta,
+    predict_h1_vasc(summer_prep, summer_ta_model)
+  ),
+
+  tar_target(
+    pred_h1_forest_ta,
+    predict_h1_forest(summer_prep, summer_ta_model)
+),
+
+  tar_target(
+    pred_h2_ta,
+    predict_h2(summer_prep, summer_ta_model)
+  ),
+
+  tar_target(
+    rss_forest_ta,
+    calc_rss(pred_h1_forest_ta, 'h1_forest', pred_h2_ta, 'h2')
+  ),
+  tar_target(
+    rss_Cladonia_ta,
+    calc_rss(pred_h1_Cladonia_ta, 'h1_Cladonia', pred_h2_ta, 'h2')
+  ),
+  tar_target(
+    rss_vasc_ta,
+    calc_rss(pred_h1_vasc_ta, 'h1_vasc', pred_h2_ta, 'h2')
+  ),
+  tar_target(
+    plot_rss_forest_ta,
+    plot_rss(rss_forest_ta, plot_theme()) +
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
+           title = 'summer - RSS compared to mean proportion forest (ta model)')
+  ),
+  tar_target(
+    plot_rss_Cladonia_ta,
+    plot_rss(rss_Cladonia_ta, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'summer - RSS for Cladonia %N relative to mean (ta model)')
+  ),
+  tar_target(
+    plot_rss_vasc_ta,
+    plot_rss(rss_vasc_ta, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'summer - RSS for vascular plant %N relative to mean (ta model)')
+  ),
+  tar_target(
+    summer_ta_plots,
+    save_rss_plot(plot_rss_forest_ta, "rss_forest_ta",
+                  plot_rss_Cladonia_ta, "rss_Cladonia_ta",
+                  plot_rss_vasc_ta, "rss_vascular_ta")
+  ),
+
+tar_target(
+  pred_h1_Cladonia_taw,
+  predict_h1_Cladonia(winter_prep, winter_ta_model)
+),
+
+tar_target(
+  pred_h1_vasc_taw,
+  predict_h1_vasc(winter_prep, winter_ta_model)
+),
+
+tar_target(
+  pred_h1_forest_taw,
+  predict_h1_forest(winter_prep, winter_ta_model)
+),
+
+tar_target(
+  pred_h2_taw,
+  predict_h2(winter_prep, winter_ta_model)
+),
+
+tar_target(
+  rss_forest_taw,
+  calc_rss(pred_h1_forest_taw, 'h1_forest', pred_h2_taw, 'h2')
+),
+tar_target(
+  rss_Cladonia_taw,
+  calc_rss(pred_h1_Cladonia_taw, 'h1_Cladonia', pred_h2_taw, 'h2')
+),
+tar_target(
+  rss_vasc_taw,
+  calc_rss(pred_h1_vasc_taw, 'h1_vasc', pred_h2_taw, 'h2')
+),
+tar_target(
+  plot_rss_forest_taw,
+  plot_rss(rss_forest_taw, plot_theme()) +
+    labs(x = 'Proportion forested (100m)', y = 'logRSS',
+         title = 'winter - RSS compared to mean proportion forest (ta model)')
+),
+tar_target(
+  plot_rss_Cladonia_taw,
+  plot_rss(rss_Cladonia_taw, plot_theme()) +
+    labs(x = '%N in Cladonia', y = 'logRSS',
+         title = 'winter - RSS for Cladonia %N relative to mean (ta model)')
+),
+tar_target(
+  plot_rss_vasc_taw,
+  plot_rss(rss_vasc_taw, plot_theme()) +
+    labs(x = '%N in vascular plants', y = 'logRSS',
+         title = 'winter - RSS for vascular plant %N relative to mean (ta model)')
+),
+tar_target(
+  winter_ta_plots,
+  save_rss_plot(plot_rss_forest_taw, "rss_forest_ta-winter",
+                plot_rss_Cladonia_taw, "rss_Cladonia_ta-winter",
+                plot_rss_vasc_taw, "rss_vascular_ta-winter")
+)
+)
 
 
-# Targets: RSS for stoich categorised out by speed ----------------------------------
+
+# Targets: RSS for stoich from base model categorised out by speed ----------------------------------
 
 targets_rss_by_speed <- c(
   

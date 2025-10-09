@@ -4,6 +4,28 @@ library(terra)
 library(raster)
 library(patchwork)
 library(tidyterra)
+library(sp)
+
+
+w.comp <- readRDS('output/winter_sims.Rds')
+s.comp <- readRDS('output/summer_sims.Rds')
+
+# Real data
+
+sim_s <- ggplot() + 
+  geom_path(data = subset(s.comp, id == 20), aes(x_, y_), 
+            col = "black") +
+ # xlim(c(700000, 710000)) + 
+  #ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  theme_bw()
+
+sim_w
+sim_s
+
+# THE ORDER WASN'T RANDOMIZED UGHHHH
+
 
 # This simulation system is built with amt... my model is glmmTMB
 
@@ -17,8 +39,9 @@ library(tidyterra)
 
 forest <- raster('output/prop_forest.tif')
 f.terra <- rast(forest)
-
+targets::tar_load(lichen)
 lich <- rast(lichen)
+targets::tar_load(vascular)
 vasc <- rast(vascular)
 
 # need the forest % back in 5m cells to match up with the stoich, though
@@ -28,6 +51,10 @@ fshift <- terra::shift(f5, dx = 5, dy = 115)
 # and match up the extents
 ftrim <- terra::crop(fshift, lich)
 # make sure all the CRS are good too
+epsg <- 32621
+crs <- st_crs(epsg)
+crs_sp <- CRS(crs$wkt)
+
 crs(lich) <- crs$wkt
 crs(vasc) <- crs$wkt
 crs(ftrim) <- crs$wkt
@@ -148,7 +175,11 @@ ggplot() +
   xlim(c(700000, 708000)) + 
   ylim(c(5505000, 5515000))
   theme_bw()
-
+  ggsave(filename = "graphics/validation/winter_real.png",
+         height = 2000,
+         width = 2400,
+         units = "px")
+  
 
 # now bring them all together
 w.comp <- rbind(ssf_simtr, w.track)
@@ -156,6 +187,7 @@ w.comp %>% summarise(minx = min(x_, na.rm = T), maxx = max(x_, na.rm = T),
                    miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
 # use these to trim down our plots slightly so you can actually see the trajectories
 
+# Crop raster to Fogo perimeter -----
 # Also want to include a perimeter of Fogo somehow
 # could use the shape file to mask the rasters to NA outside of the poly
 fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
@@ -167,46 +199,57 @@ vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
 ## on forest -----
 # We want to randomize the order of these facets, but make sure we know which is which
 # Randomize the order of the ids in w.comp
-w.comp$id <- as.factor(w.comp$id)
-levels(w.comp$id) <- sample(unique(w.comp$id))
+w.comp$rid <- as.factor(w.comp$id)
+levels(w.comp$rid) <- sample(unique(w.comp$id))
+
+#winter <- w.comp[order(levels(w.comp$rid)),]
 
 # then use this random order associated with the letter A through T
 w_text <- data.frame(
-  label = c(letters[seq(from = 1, to = 20)]),
-  id = as.factor(levels(w.comp$id))
+  rid = as.factor(levels(w.comp$rid)),
+  season = "W",
+  num = seq(from = 1, to = 20)
 )
+w_text %<>% mutate(label = paste0(season, num)) %>%
+  mutate(label = as.factor(label))
+labs <- w_text %>% dplyr::select(c(rid, label))
+w.comp <- left_join(w.comp, labs, by = "rid")
 
-# the real, non-simulated track will be the letter associated with id == 20 in w_text
+levels(w.comp$label) <- c("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12", "W13", "W14", "W15", "W16", "W17", 'W18', 'W19', 'W20')
+
+# the real, non-simulated track will be the letter associated with rid == 20 in w_text
+
+#winter <- left_join(w.comp, w_text, by = "id")
 
 sim_on_forest <- ggplot() + 
   geom_spatraster(data = forest_poly)  +
   geom_path(data = w.comp, aes(x_, y_), 
             col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
+  facet_wrap(~ label, nrow = 4
+             #, 
+             #as.table = FALSE, drop = FALSE
+             ) + 
   scale_fill_terrain_c() +
   xlim(c(700000, 710000)) + 
   ylim(c(5505000, 5515000)) +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
-  geom_text(data = w_text, 
-            mapping = aes(x = -Inf, y = -Inf, label = label),
-            hjust = -1, vjust = -5.5, size = 5
-  ) +
+ # geom_text(data = w_text, 
+#            mapping = aes(x = -Inf, y = -Inf, label = label),
+ #           hjust = -1, vjust = -5.5, size = 5
+#  ) +
   theme_bw() +
   theme(strip.background = element_blank(),
-        strip.text = element_blank(),
+        #strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/random_winter_forest_120.png",
+ggsave(filename = "graphics/validation/W_forest_120.png",
        sim_on_forest,
        height = 2000,
        width = 2400,
        units = "px")
-
-
-
 
 
 
@@ -216,7 +259,7 @@ sim_on_Clad <- ggplot() +
   geom_spatraster(data = lich_poly)  +
   geom_path(data = w.comp, aes(x_, y_), 
             col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
+  facet_wrap(~ label, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(700000, 710000)) + 
   ylim(c(5505000, 5515000)) +
@@ -224,15 +267,15 @@ sim_on_Clad <- ggplot() +
   ylab("") +
   labs(fill = "%N in Cladonia") +
   theme_bw() +
-  geom_text(data = w_text, 
-            mapping = aes(x = -Inf, y = -Inf, label = label),
-            hjust = -1, vjust = -5.5, size = 5
-  ) +
+  #geom_text(data = w_text, 
+  #          mapping = aes(x = -Inf, y = -Inf, label = label),
+  #          hjust = -1, vjust = -5.5, size = 5
+  #) +
   theme(strip.background = element_blank(),
-        strip.text = element_blank(),
+   #     strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
-ggsave(filename = "graphics/validation/random_winter_sim120_Cladonia.png",
+ggsave(filename = "graphics/validation/W_sim120_Cladonia.png",
        sim_on_Clad,
        height = 2000,
        width = 2400,
@@ -352,37 +395,48 @@ s.comp %>% summarise(minx = min(x_), maxx = max(x_),
 
 # Summer plots ---
 
-# Randomize the order of the ids
-s.comp$id <- as.factor(s.comp$id)
-levels(s.comp$id) <- sample(unique(s.comp$id))
-# then use this random order associated with the letter A through T
+s.comp$rid <- as.factor(s.comp$id)
+levels(s.comp$rid) <- sample(unique(s.comp$id))
+
 s_text <- data.frame(
-  label = c(letters[seq(from = 1, to = 20)]),
-  id = as.factor(levels(s.comp$id))
+  rid = seq(1:20),
+  season = "S"
 )
+
+s_text %<>% mutate(label = paste0(season, rid)) %>%
+  mutate(label = as.factor(label),
+         rid = as.factor(rid))
+labs <- s_text %>% dplyr::select(c(rid, label))
+s.comp <- left_join(s.comp, labs, by = "rid")
+
+levels(s.comp$label) <- c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", 'S18', 'S19', 'S20')
+
+
+
+
 
 s_sim_on_vasc <- ggplot() + 
   geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
             col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
+  facet_wrap(~ label, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(705000, 715000)) + 
   ylim(c(5500000, 5510000)) +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +
-  geom_text(data = s_text, 
-            mapping = aes(x = -Inf, y = -Inf, label = label),
-            hjust = -1, vjust = -5.5, size = 5
-  ) +
+  #geom_text(data = s_text, 
+  #          mapping = aes(x = -Inf, y = -Inf, label = label),
+  #          hjust = -1, vjust = -5.5, size = 5
+  #) +
   theme_bw() +
   theme(strip.background = element_blank(),
-        strip.text = element_blank(),
+   #     strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/random_summer_sim120_vasc.png",
+ggsave(filename = "graphics/validation/S_120_vasc.png",
        s_sim_on_vasc,
        height = 2000,
        width = 2400,
@@ -394,27 +448,35 @@ s_sim_on_forest <- ggplot() +
   geom_spatraster(data = forest_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
             col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
+  facet_wrap(~ label, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(705000, 715000)) + 
-  ylim(c(5499000, 5508000)) +
+  ylim(c(5500000, 5510000)) +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
-  geom_text(data = s_text, 
-            mapping = aes(x = -Inf, y = -Inf, label = label),
-            hjust = -1, vjust = -5.5, size = 5
-  ) +
+  #geom_text(data = s_text, 
+  #          mapping = aes(x = -Inf, y = -Inf, label = label),
+  #          hjust = -1, vjust = -5.5, size = 5
+  #) +
   theme_bw() +
   theme(strip.background = element_blank(),
-        strip.text = element_blank(),
+   #     strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/random_summer_sim120_forest.png",
+ggsave(filename = "graphics/validation/S_120_forest.png",
+       s_sim_on_forest,
        height = 2000,
        width = 2400,
        units = "px")
+
+
+
+
+
+
+
 
 saveRDS(w.comp, 'output/winter_sims.Rds')
 saveRDS(s.comp, 'output/summer_sims.Rds')

@@ -166,7 +166,7 @@ targets_prep <- c(
 targets_kernel <- c(
   tar_target(
     w_fixes,
-    prepare_kernel(tidy_GPS, "winter", "yr")
+    prepare_kernel(locs_prep, "winter", "yr")
   ),
   
   tar_target(

@@ -1,6 +1,6 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|e8a92659fdeb1e12|||||||||||||||
-akde|function|3074c0fd24018007|||||||||||||||
+.Random.seed|object|898c45786e8e182a|||||||||||||||
+akde|function|54b93ae4744cb145|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 calc_rss|function|e5633c936e184a51|||||||||||||||
@@ -21,6 +21,8 @@ caribou_intensity|function|1b8212ca7fd09b9e|||||||||||||||
 cfs_file|stem||545b17c1df2da766|fc13f092aa456596|1545548134|input/cfs.tif|t20301.6135090148s||0|file|local|vector|||||_paths_ missing files inputcfs.tif
 cfs_path|object|444ba31a286bf044|||||||||||||||
 Clad_by_kernel_density|function|c46a4cbac872a97c|||||||||||||||
+Clad_kernel|stem|a80161b516a491de|f25bc7dff8f50c36|9058ac047cdadf2d|1391916573||t20375.7416480259s|0cb9d1fcd730f3dc|1387|qs|local|vector|||24.53||
+Cladonia_sites|stem|e1ddd1a60e0d66f4|f16d0bf2ed2489da|aed53b93d20313b2|66094601||t20375.5395530929s|97a869c586cecf19|1227|qs|local|vector|||0.03||
 coast|stem|2c7ee4086586c347|f2ab58cd8b9609c7|fa2fc849419b9aba|1981904306||t20301.6202738279s|de5e0a3fe4349a5f|84821|qs|local|vector|||1.08||
 coastcol|object|e416ea227a7e3970|||||||||||||||
 crs|object|d5d359cacca24dfa|||||||||||||||
@@ -212,7 +214,8 @@ kernel_Clad|stem|cffb7a40c73b78bd|55a7c3ab8dcc5c82|f6887d9e146ae72b|-1478948103|
 kernel_file|stem|0ab271cd55fa78f3|d6e12f9bdae42b00|ed0ad70f213e4ba7|-76844221|output/all_years_kernel.tif|t20369.7209369241s|331b46fe91331920|163216|file|local|vector|||0||
 kernel_path|object|f74673222235bc9c|||||||||||||||
 kernel_stacking|function|b5ba0a09fea0eed8|||||||||||||||
-kernel_stoich|function|63be0dc4ac75c1f2|||||||||||||||
+kernel_stoich|function|7f81eb39fff1142f|||||||||||||||
+kernels|stem||f0328a30e91dc41c|9227d637590b068e|541320360||t20371.56936114s||0|qs|local|vector|||4372.05|Times might be out of order or duplicated in FO2016002. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016004. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016005. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016012. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016013. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016015. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2017001. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2017007. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2017008. Make sure that timeformat and timezone are correctly specified.|unused argument FITS
 landcol|object|6b3530b15d4ff28a|||||||||||||||
 legend_path|object|3caba3b684fb69ee|||||||||||||||
 levels|object|7d425057f118a0b3|||||||||||||||
@@ -394,6 +397,7 @@ rss_vasc_taw|stem|86707f695b8e7f8f|547ddc9d5c4ae9f2|382e9690904d1ce1|-1377066736
 rss_vasc_w|stem|7610ac9b8e4199db|d10f60db84124285|8276aa34f712963a|942298831||t20347.6028533346s|60fafc3006e9ce96|55900|qs|local|vector|||0.05||
 save_plot|function|0bdfbb6d83df4dd9|||||||||||||||
 save_rss_plot|function|17b2538f4255a538|||||||||||||||
+scale_kernel|function|7ceb6d8a801336c3|||||||||||||||
 sdss|stem|662758136f2204fd|2b5dd8b70980492f|3cd9f004277b5ceb|1294151837||t20301.6202955584s|7769978a1e72a4db|788|qs|local|vector|||0.15||
 sdss_file|stem|24b513a650e7d518|f253576d8c386383|45ead7df1b245dbd|49310699|input/sdss.tif|t20231.6951581949s|7798bf3026c5c04f|193412566|file|local|vector|||0||
 sdss_legend|stem|7a51a65acbe3614e|ffbf8d8d05743fa8|062cb9d639d2d3d7|-1648936476||t20301.6202780109s|bf1a1ce7cd804ab5|251|qs|local|vector|||0||
@@ -401,6 +405,7 @@ sdss_legend_file|stem|0c056c65d44e3966|c930bb10580bfb89|63e22de26eacaa8d|1073122
 sdss_legend_path|object|86f6275b9997cb12|||||||||||||||
 sdss_path|object|63e3b3dc6a50d454|||||||||||||||
 seasonal_split|object|9c939838458b7c1f|||||||||||||||
+site_extract|function|ceecb827b48d89c5|||||||||||||||
 speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|2df51daeec15ee01|-2012696440||t20335.6047976977s|8619def19bb20a44|79|qs|local|vector|||3.23||
 split_by|object|bc33c1349a78e0bd|||||||||||||||
 split_key|stem|67df7c06abbb83e2|9edc101637eaef5a|dccb2be78d8cce21|-2017162053||t20301.6209061008s|a0cdeb7a83ca634e|391|qs|local|vector|||0.01||
@@ -435,24 +440,24 @@ summer_SRI|stem|4341f7b76022efd4|d1e1feba25aa0b73|77f17801160799c0|-1677326071||
 summer_ta_model|stem|8234445fedb11631|19219cc4f3b6e3f8|58589f318b13a053|519007553||t20356.5237768879s|0359b01089f095cf|178535152|qs|local|vector|||1054.13||
 summer_ta_plots|stem|0ff88d9401370536|b5c84c009530559f|8efcd01bdcd38e8b|52496615||t20356.6592213211s|c6fbfb9abe15abfd|72|qs|local|vector|||3.33||
 ta_model|function|7fa088bc171ed26c|||||||||||||||
-targets_average_N|object|082bc761d55c737e|||||||||||||||
-targets_data|object|9b6b0624ccb6eed8|||||||||||||||
-targets_distributions|object|0e7c3f4be7af50a6|||||||||||||||
-targets_extract|object|e358b40d5b2a16a3|||||||||||||||
+targets_average_N|object|97a656f376704fcd|||||||||||||||
+targets_data|object|ad49d56168b95085|||||||||||||||
+targets_distributions|object|931dbd09ef2c9a64|||||||||||||||
+targets_extract|object|35bf17ec1296cb8d|||||||||||||||
 targets_fire_effects|object|97dd94dda94b087e|||||||||||||||
-targets_kernel|object|d646468486169421|||||||||||||||
-targets_prep|object|65d3c4a7d286fe93|||||||||||||||
-targets_rss_by_speed|object|90684c1d2e641b5d|||||||||||||||
-targets_rss_social_popn|object|a07dccc516918c47|||||||||||||||
-targets_rss_summer|object|1b6ff10604169d34|||||||||||||||
+targets_kernel|object|86f9e023a9eb38b4|||||||||||||||
+targets_prep|object|dfc94a2dd104f47f|||||||||||||||
+targets_rss_by_speed|object|029ab7e7678ba3c0|||||||||||||||
+targets_rss_social_popn|object|b5c53d0b437112df|||||||||||||||
+targets_rss_summer|object|3118c132017280cb|||||||||||||||
 targets_rss_summer_ratio|object|361a846f43a92afe|||||||||||||||
-targets_rss_ta_summer|object|aba2a26c57f9b81d|||||||||||||||
-targets_rss_winter|object|6680e2e95e65025d|||||||||||||||
-targets_seasonal_effects|object|9bab0a1c6f7a5e53|||||||||||||||
-targets_speed|object|d324b216b4e71414|||||||||||||||
-targets_tracks|object|9f1f7977cf0de31a|||||||||||||||
-targets_turning_angle|object|bc75301dd413bc79|||||||||||||||
-targets_winter|object|68c6cb06a897b94a|||||||||||||||
+targets_rss_ta_summer|object|b1d3ba2165a87c40|||||||||||||||
+targets_rss_winter|object|946b25dbbe0b4597|||||||||||||||
+targets_seasonal_effects|object|4b2788682e38706f|||||||||||||||
+targets_speed|object|e7fcb4ec967b01a9|||||||||||||||
+targets_tracks|object|9be43c9c3528d46d|||||||||||||||
+targets_turning_angle|object|6248a0e7f5344a66|||||||||||||||
+targets_winter|object|02984c91ed627511|||||||||||||||
 themeMap|object|1438d4b6b3ea898a|||||||||||||||
 tidy_GPS|stem|241420056bfb714a|25c9231d210b65e7|6e72f73336ee79ed|-1554542148||t20301.6203153158s|957298ec7d16fcf6|6367406|qs|local|vector|||1.49||
 tolerance|object|14ad31fbc077bf02|||||||||||||||

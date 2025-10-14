@@ -169,11 +169,15 @@ targets_kernel <- c(
     prepare_kernel(locs_prep, "winter", "yr")
   ),
   
-  tar_target(
-    w_kernel,
-    caribou_intensity(w_fixes)
+ # tar_target(
+  #  kernels,
+  #  akde(w_fixes)
+  #),
+  #tar_target(
+  #  w_kernel,
+  #  caribou_intensity(w_fixes)
     #,    pattern = map(w_fixes)
-  ),
+  #),
   
   tar_file_read(
     stoich,
@@ -182,8 +186,13 @@ targets_kernel <- c(
   ),
   
   tar_target(
-    kernel_Clad,
-    kernel_stoich(stoich, kernel, crs)
+    Cladonia_sites,
+    site_extract(stoich)
+  ),
+  
+  tar_target(
+    Clad_kernel,
+    kernel_stoich(Cladonia_sites, crs)
   )
 )
 

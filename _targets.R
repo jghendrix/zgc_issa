@@ -193,7 +193,22 @@ targets_kernel <- c(
   tar_target(
     Clad_kernel,
     kernel_stoich(Cladonia_sites, crs)
-  )
+  ),
+ 
+ tar_target(
+   s_fixes,
+   prepare_kernel(locs_prep, "summer", "yr")
+ )
+ 
+ # tar_target(
+ #  kernels,
+ #  akde(w_fixes)
+ #),
+ #tar_target(
+ #  w_kernel,
+ #  caribou_intensity(w_fixes)
+ #,    pattern = map(w_fixes)
+ #),
 )
 
 # Targets: tracks ---------------------------------------------------------

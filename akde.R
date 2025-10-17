@@ -12,6 +12,8 @@ akde <- function(DT) {
   conflicts_prefer(ctmm::head)
   
   DTt <- as.telemetry(DT, projection = crs("epsg:32621")) 
+  
+  
   # check what it's projected as...
   ctmm::projection(DTt)
   # ok, good to go
@@ -33,7 +35,7 @@ akde <- function(DT) {
   
   AKDES <- akde(DTt, FITS)
   
-  saveRDS(AKDES, 'output/akdes.Rds')
+  saveRDS(AKDES, 'output/summer_akdes.Rds')
   
   # color to be spatially distinct
  # COL <- color(AKDES, by='individual')
@@ -44,11 +46,11 @@ akde <- function(DT) {
   return(AKDES)
 
 }
-AKDES <- readRDS('output/akdes.Rds')
+AKDES <- readRDS('output/summer_akdes.Rds')
 
 pop.ud <- mean(AKDES)
 
-writeRaster(pop.ud, 'output/population_UD.tif', format = "GTiff", DF = "PDF")
+writeRaster(pop.ud, 'output/summer_population_UD.tif', format = "GTiff", DF = "PDF")
 
 #ctmm::plot(AKDES[[1]], cont=50)
 #adf <- data.frame(AKDES[[1]])

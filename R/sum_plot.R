@@ -1,9 +1,9 @@
 #' @title Individual estimates w/ SE
 #'  @export
 #' @author Jack G Hendrix
-sum_ta_plot <- function(DT, theme, model) {
+sum_plot <- function(DT, theme, model) {
 
-fixed <- read.csv('output/seasonal_issa_fixed_output_nogram.csv') %>%
+fixed <- read.csv('output/north_half_coefs.csv') %>%
 			filter(season == model) %>%
 			dplyr::select(popn = term, mean = estimate, mse = se)
 

@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|1130d7144c4e8d42|||||||||||||||
+.Random.seed|object|1c0f7857336784c7|||||||||||||||
 akde|function|54b93ae4744cb145|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
@@ -226,33 +226,33 @@ lichen_ratio|stem|2cd32ae481c83fd5|dd45038708ed2bdc|64d2d54063eb73d5|1930540829|
 lichen_ratio_file|stem|67e926cecf9a2c96|4b739416a223c99e|871c995f1add6b1e|-743853060|input/Cladonia_CN.tif|t20314.5422378723s|fe4cbfd04b49f805|34378696|file|local|vector|||0||
 lichen_ratio_path|object|42e97a685590f5fa|||||||||||||||
 locs_prep|stem|29ef44cb927f9c41|586ba5f203abcd61|b2acd627894fcef2|-631140334||t20301.6207865852s|513de9ffc8aebf2d|6499656|qs|local|group||locs_prep_c2e50061*locs_prep_6d89cd25*locs_prep_ea522d1e*locs_prep_d8f6645f*locs_prep_1a1a93ae*locs_prep_54afa3fc*locs_prep_d5fee30c*locs_prep_1bf20c8d*locs_prep_50de6a73*locs_prep_aa567e08*locs_prep_5d88c74f*locs_prep_8f5d23c7*locs_prep_04f61322*locs_prep_adcdf573*locs_prep_3d8f664f*locs_prep_b4556d5c*locs_prep_fdde062f*locs_prep_7d0e5431*locs_prep_23b709a2*locs_prep_887c18c3*locs_prep_62e41981*locs_prep_6bef87f2*locs_prep_46b03be9*locs_prep_56bdd69b*locs_prep_d20e6349*locs_prep_72495a56*locs_prep_9798a188*locs_prep_12bde595*locs_prep_fa2b24cd*locs_prep_a567d34d*locs_prep_5bcd9778*locs_prep_cda8a196*locs_prep_d7e6d8aa*locs_prep_e05aeea7*locs_prep_e830e955*locs_prep_9d608d44*locs_prep_8160e653*locs_prep_af10e31e*locs_prep_f1313b66*locs_prep_6d315876*locs_prep_0c9bc0f1*locs_prep_f29b7c85*locs_prep_d2ba80d6*locs_prep_fe3bd74c*locs_prep_8454cdac*locs_prep_3f37dda3*locs_prep_b30ff40c|40.52||
-max_Clad_winter|stem|6d3f7d8034828842|27bd69f8748146d7|5b0a33a6caacbff4|-743512432||t20347.7379152561s|2edc30a4cc2ce682|2328|qs|local|vector|||0.3|Using an external vector in selections was deprecated in tidyselect 1.1.0.ℹ Please use all_of or any_of instead.   Was  data  selecth2_col   Now  data  selectall_ofh2_colSee httpstidyselect.rlib.orgreferencefaqexternalvector.html.|
-max_Cladonia_summer|stem|5764f187a0002139|02d320da58662a6c|6d5f06941c70a4c7|1394528760||t20347.739075676s|ba5ccc799e37b5a1|2273|qs|local|vector|||0.01||
-max_vasc_summer|stem|75d3fee4a7d07001|c554e1f80fe41ce7|f52f005e20a175d9|-213969975||t20347.7390765829s|d79493b458354c57|2270|qs|local|vector|||0.02||
-max_vasc_winter|stem|c5044a6994448342|dc096325c0b5cf16|535178f4c3dd268d|1127606196||t20347.7385016047s|1f28837014cbc95c|2320|qs|local|vector|||0.03||
-mean_Clad_winter|stem|a7435b34ba27a282|566ddaf567b38c2d|5b0a33a6caacbff4|-1009750847||t20347.737915982s|6a830c88bcf2473e|2268|qs|local|vector|||0.03||
-mean_Cladonia_summer|stem|a55a5523b72c0cc2|af553cfc073123d1|6d5f06941c70a4c7|-498180567||t20347.7390744361s|38698b2dd0294d4b|2281|qs|local|vector|||0.19|Using an external vector in selections was deprecated in tidyselect 1.1.0.ℹ Please use all_of or any_of instead.   Was  data  selecth2_col   Now  data  selectall_ofh2_colSee httpstidyselect.rlib.orgreferencefaqexternalvector.html.|
-mean_vasc_summer|stem|2dd198b342078e15|a159f9c1501bfa18|f52f005e20a175d9|-939589631||t20347.7390760707s|bdc1b157e6cc1be9|2323|qs|local|vector|||0.01||
-mean_vasc_winter|stem|3e8dbfa99a57ebe1|5502edf39136aba7|535178f4c3dd268d|1849595468||t20347.7385010623s|15ca29c9c58d3222|2330|qs|local|vector|||0.26|Using an external vector in selections was deprecated in tidyselect 1.1.0.ℹ Please use all_of or any_of instead.   Was  data  selecth2_col   Now  data  selectall_ofh2_colSee httpstidyselect.rlib.orgreferencefaqexternalvector.html.|
-min_Clad_winter|stem|063757c72f456194|9b61dbdfe58989c7|5b0a33a6caacbff4|1834523957||t20347.7379163436s|aef3f6f37933f556|2274|qs|local|vector|||0.01||
-min_Cladonia_summer|stem|c185be64db06b5e1|518eba21708855fd|6d5f06941c70a4c7|-1856112911||t20347.7390751593s|560118709b1e7b14|2249|qs|local|vector|||0.05||
-min_vasc_summer|stem|c06658373d98b46c|592428ea61b20570|f52f005e20a175d9|-694841768||t20347.7390769445s|87c34c4e8b7e5cd8|2352|qs|local|vector|||0.01||
-min_vasc_winter|stem|1b290b8ecac0719e|735aa68a0cd25582|535178f4c3dd268d|-1107480859||t20347.7385020448s|7c10cefd0203d368|2260|qs|local|vector|||0||
+max_Clad_winter|stem|a0a6f0493150c33e|27bd69f8748146d7|f19aa7e5cf413079|-743512432||t20378.6767297666s|9a602a23812a71da|2294|qs|local|vector|||0||
+max_Cladonia_summer|stem|d47ce02d03d64cd3|02d320da58662a6c|b443ef03499bed87|1394528760||t20378.6767267283s|dba4431b618a9291|2334|qs|local|vector|||0.02||
+max_vasc_summer|stem|1d61480cf1762afd|c554e1f80fe41ce7|fb2b45bc18f21d29|-213969975||t20378.676725293s|93a6f8a308de26e8|2252|qs|local|vector|||0.05||
+max_vasc_winter|stem|93e9f308883cc0be|dc096325c0b5cf16|e4c6b3aea8763769|1127606196||t20378.6767277672s|85dafdfe5bd19386|2307|qs|local|vector|||0.01||
+mean_Clad_winter|stem|5468fe0119ca5127|566ddaf567b38c2d|f19aa7e5cf413079|-1009750847||t20378.6767292587s|8f6f8cd693815c9f|2269|qs|local|vector|||0||
+mean_Cladonia_summer|stem|8505b397989e8ad5|af553cfc073123d1|b443ef03499bed87|-498180567||t20378.6767272478s|b465b81f2b331dd9|2290|qs|local|vector|||0.01||
+mean_vasc_summer|stem|37742534ed069427|a159f9c1501bfa18|fb2b45bc18f21d29|-939589631||t20378.6767257445s|a56ddf54d100131e|2324|qs|local|vector|||0.02||
+mean_vasc_winter|stem|0feff3aa0d369861|5502edf39136aba7|e4c6b3aea8763769|1849595468||t20378.6767283097s|d7151b279c9c2137|2301|qs|local|vector|||0.02||
+min_Clad_winter|stem|59b5d69c906edb74|9b61dbdfe58989c7|f19aa7e5cf413079|1834523957||t20378.6767303002s|0b64553aa1b01bc1|2259|qs|local|vector|||0.02||
+min_Cladonia_summer|stem|e0b1dfcc798e12a9|518eba21708855fd|b443ef03499bed87|-1856112911||t20378.6767262301s|4c5c74c9b212ec9d|2239|qs|local|vector|||0.02||
+min_vasc_summer|stem|8abea141fd464db1|592428ea61b20570|fb2b45bc18f21d29|-694841768||t20378.6767246013s|a56ddf54d100131e|2324|qs|local|vector|||0.19|Using an external vector in selections was deprecated in tidyselect 1.1.0.ℹ Please use all_of or any_of instead.   Was  data  selecth2_col   Now  data  selectall_ofh2_colSee httpstidyselect.rlib.orgreferencefaqexternalvector.html.|
+min_vasc_winter|stem|88cbaf8e23038506|735aa68a0cd25582|e4c6b3aea8763769|-1107480859||t20378.6767287945s|ba5ccc799e37b5a1|2273|qs|local|vector|||0.01||
 model_check|function|7ec6d14bc2ab9bd7|||||||||||||||
 N_by_SRI|function|d691384bc524396c|||||||||||||||
 n_random_steps|object|f3582cdc107e111b|||||||||||||||
 N_rss_by_SRI|function|23845819f25fa6df|||||||||||||||
 p_Clad_winter_plot|stem|c9f37f0e6ab13a63|160acfb9533e89df|b2c17d5f34398f03|634935958||t20347.7379202007s|b573965d2c0642d8|105596|qs|local|vector|||0.17|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 p_Cladonia_summer_plot|stem|16ad5ab1638cdb0c|c57d007b8a80adf4|8058d07f51b7aaf6|1497217166||t20351.4454994546s|18f77afae7c22016|105631|qs|local|vector|||0.14|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
-p_h1_Cladonia_summer|stem|8ef6657d01da1040|d07fdd8af9818369|deec425315dab404|1261336620||t20350.8240009636s|ab3033ebbeba177e|3594|qs|local|vector|||0.61||
-p_h1_Cladonia_winter|stem|92e59cecb2c04a47|b642e081c9b710e6|5513b0ca21e8bbd4|-704220643||t20350.8247335728s|f4ad91fc235e1932|3641|qs|local|vector|||0.04||
-p_h1_vasc_summer|stem|b5e28e5fb6b13737|a87ee75f5e20201a|443d414c2b882492|1564738723||t20350.8240067517s|56b817ae0be3c256|3610|qs|local|vector|||0.2||
-p_h1_vasc_winter|stem|7521cea48a72128a|686e0d1b1f1352b5|1fd1350cba8c12bd|-540635314||t20350.8244502441s|8f8cde31bacc1801|3559|qs|local|vector|||0.7||
-p_h2_summer_Cladonia|stem|70c1e7cc28eb07b8|04bbff7e73d4fb65|574db7a7138af0a0|962582530||t20350.8240039426s|ac97588bafa2c221|614|qs|local|vector|||0.2||
-p_h2_summer_vasc|stem|82f354a96cc61a2d|7becd291b2226f85|574db7a7138af0a0|-770569439||t20350.8240078487s|ac97588bafa2c221|614|qs|local|vector|||0.06||
+p_h1_Cladonia_summer|stem|d201453d23229353|d07fdd8af9818369|186a9ca3edde3199|1261336620||t20378.6767024896s|4da5b2acca07b467|3604|qs|local|vector|||0.64||
+p_h1_Cladonia_winter|stem|2a28854b674d33c3|b642e081c9b710e6|993c6e91547ba598|-704220643||t20378.6767214826s|2b1294cd50b2c44f|3633|qs|local|vector|||0.44||
+p_h1_vasc_summer|stem|fd645584bd4c78c0|a87ee75f5e20201a|8a484ae045fac518|1564738723||t20378.6766916152s|30ea1ac191f773c8|3620|qs|local|vector|||0.18||
+p_h1_vasc_winter|stem|923d88346bda8d89|686e0d1b1f1352b5|70263e56d923bc10|-540635314||t20378.676713871s|585b74f466c2e183|3537|qs|local|vector|||0.03||
+p_h2_summer_Cladonia|stem|c479c107a49e66e8|04bbff7e73d4fb65|6884ecca82a4b253|962582530||t20378.6767041394s|ac97588bafa2c221|614|qs|local|vector|||0.07||
+p_h2_summer_vasc|stem|5a63277893a7ac4c|7becd291b2226f85|6884ecca82a4b253|-770569439||t20378.676694567s|ac97588bafa2c221|614|qs|local|vector|||0.23||
 p_h2_winter|stem|33e3d700ece37078|824e769c41388a41|de69f6f63e499a4c|-2059554132||t20347.6864266852s|49b5fca74495725e|564|qs|local|vector|||0.13||
-p_h2_winter_clad|stem|946c60e0df0b2b4b|94484cf4bc457bdb|14fc3326ce9fc328|-62387237||t20350.8244414964s|d902a50fb830bc79|627|qs|local|vector|||0.08||
-p_h2_winter_vasc|stem|6bca0613cad6c36d|fce490d1f21136f5|14fc3326ce9fc328|1980196951||t20350.8244400432s|d902a50fb830bc79|627|qs|local|vector|||0.05||
+p_h2_winter_clad|stem|61a51c4dcadf3f64|94484cf4bc457bdb|44548d0e852bb081|-62387237||t20378.6767222532s|d902a50fb830bc79|627|qs|local|vector|||0.04||
+p_h2_winter_vasc|stem|6469a5a621bd3ee2|fce490d1f21136f5|44548d0e852bb081|1980196951||t20378.6767158701s|d902a50fb830bc79|627|qs|local|vector|||0.14||
 p_vasc_summer_plot|stem|a4bd3ba3886e3703|fc717d72112c58f9|0329c6acfb68450b|-1274943528||t20347.6929354228s|c84623066b23601c|105540|qs|local|vector|||0.14|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 p_vasc_winter_plot|stem|f1eacaa7c88036e1|4d684a200873ffc1|ba5b3f48a659bc82|-623643817||t20347.7385058062s|1eda3d2bf89b813a|105617|qs|local|vector|||0.17|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 parkboundcol|object|58a7d971c943be55|||||||||||||||
@@ -263,30 +263,30 @@ plot_distributions|function|f252665e371e33d2|||||||||||||||
 plot_map|function|ce5deb01c4b0c05d|||||||||||||||
 plot_rss|function|c33723c1281f7898|||||||||||||||
 plot_rss_Cladonia_r|stem|abdaafd8bb9e6ae2|755c75086499e40b|026c86630d307655|1254705984||t20334.832799858s|8554ba29d98b89a5|300859|qs|local|vector|||0.06||
-plot_rss_Cladonia_s|stem|290631d70bf3ed43|d543d06dae2e373b|9a67800120aa200a|1333794602||t20353.7105911316s|aa23d7054f0722da|315851|qs|local|vector|||0.05||
+plot_rss_Cladonia_s|stem|a2282c3a4d5ff835|d543d06dae2e373b|2bc494577b6a7814|1333794602||t20378.6265054035s|6b594c1c398428ec|297215|qs|local|vector|||0.09||
 plot_rss_Cladonia_speed|stem|e26aee33faab53d2|07af49223031d765|0530acde77ffc3ae|2083774688||t20334.8328164516s|60f13f92d712be06|820429|qs|local|vector|||0.39|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
-plot_rss_Cladonia_speed_s|stem|ee8c132de5ea324a|d2ae30ac2742e16f|9bf593baf0d5b357|-1204600901||t20353.7135054822s|db1eb30074381d45|865314|qs|local|vector|||0.14||
-plot_rss_Cladonia_speed_w|stem|8583707163c02737|5799e1eb83b13c15|07f90fea57cae90f|1984793748||t20353.7135134849s|f26ee0a9296466f3|809553|qs|local|vector|||0.04||
+plot_rss_Cladonia_speed_s|stem|ef4dd267e6945a3a|d2ae30ac2742e16f|fd164a84be734a68|-1204600901||t20378.670163706s|7e9304ff0833d691|806752|qs|local|vector|||0.07||
+plot_rss_Cladonia_speed_w|stem|81cf0eaf83704d32|5799e1eb83b13c15|bc2cdc5b9171546b|1984793748||t20378.6701803616s|e88293dcf61e8bdc|780908|qs|local|vector|||0.74||
 plot_rss_Cladonia_ta|stem|f6a4e4473eab8b89|f6bbe36e8033c618|d690c31f023393a8|-1614065702||t20356.6591789952s|9ba56b0ba8283749|323103|qs|local|vector|||0.08||
 plot_rss_Cladonia_taw|stem|b5cc38cc0e96cd5d|a0df54a3f5c40265|430b9545b4b82b67|-1690535018||t20356.7192042219s|1392ac52846ed891|298064|qs|local|vector|||0.05||
-plot_rss_Cladonia_w|stem|49f889dedfbc866d|3a408a7806cdfed1|3b67552ae9a0f773|385184317||t20353.7102186391s|8ec449c604564edb|298108|qs|local|vector|||0.06||
+plot_rss_Cladonia_w|stem|407eb966546b2440|3a408a7806cdfed1|9d9f2dc2dbe62e1c|385184317||t20378.6171693037s|c8555ab1a1046301|294290|qs|local|vector|||0.07||
 plot_rss_forest_r|stem|bc605392c1d99ca0|df1ff198856c1712|d324802d99106380|-1274454037||t20334.8327958171s|cd22ddd8807c2938|299440|qs|local|vector|||0.06||
-plot_rss_forest_s|stem|2dae646f197cc489|5009939ff80fc744|fd2a38b32a9c624f|558072572||t20353.710585029s|4132a0c45cf90bae|317846|qs|local|vector|||0.14||
-plot_rss_forest_speed_s|stem|bc6f49669f15271b|d08543f0aa9c868d|2f778d407dbe3909|-576804929||t20353.7135080874s|176a41e7eb1ffb1d|859035|qs|local|vector|||0.08||
-plot_rss_forest_speed_w|stem|f688053ff46ad8fa|21e91c43dd879ec9|e002618ceedf030c|379344128||t20353.713516152s|b5b22498eb0b3a70|806153|qs|local|vector|||0.06||
+plot_rss_forest_s|stem|6f07a5ef6a73b8fe|5009939ff80fc744|ca381c5d7c984768|558072572||t20378.6265085617s|f62f0aa1e912d9ed|298031|qs|local|vector|||0.06||
+plot_rss_forest_speed_s|stem|2e7cc225b2300f41|d08543f0aa9c868d|ca3db587ad70a1fa|-576804929||t20378.6701605055s|892e8386067d0679|800969|qs|local|vector|||0.22||
+plot_rss_forest_speed_w|stem|6baf4c5489be3f45|21e91c43dd879ec9|c8a7c5bacfc05ace|379344128||t20378.6701696574s|e35ddccdebd2a93a|794638|qs|local|vector|||0.08||
 plot_rss_forest_ta|stem|807d1bcdccd3a5a9|855d2a3ec2a307fc|070f8bae39202443|347497241||t20356.6591821615s|25a9676ccf69a2db|315789|qs|local|vector|||0.06||
 plot_rss_forest_taw|stem|ae707f58a47ab62d|80df00b1dc445efc|5861dbbf34dba891|1025877484||t20356.7192001885s|127e7cdc82bf0a73|300281|qs|local|vector|||0.09||
-plot_rss_forest_w|stem|3aaf254abeaa81fa|e0eae23fddb12d04|a578e9bcefa21552|1125815976||t20353.7102131909s|0ae2e737d99a0abf|302884|qs|local|vector|||0.12||
+plot_rss_forest_w|stem|e08f73d0356c7f81|e0eae23fddb12d04|33cafea8f3e75781|1125815976||t20378.6171713122s|ab1c6edf50bc5291|295652|qs|local|vector|||0.04||
 plot_rss_popn|function|50c85a1dddbf901a|||||||||||||||
 plot_rss_popn_seasonal|function|d709601897dd1db5|||||||||||||||
 plot_rss_speed|function|e51145621692efd5|||||||||||||||
 plot_rss_vasc_r|stem|236ca6cec9ef89e9|9ffb1f9bcf792e05|4cbfcd0daeca474e|1365775348||t20334.8327925457s|2f4ac1f071d28123|302770|qs|local|vector|||0.06||
-plot_rss_vasc_s|stem|384d54ba8cc77600|7da0424dd7e8c765|443c2348e2d93908|220705782||t20353.710588428s|69dbd8adbd6a7654|322194|qs|local|vector|||0.08||
-plot_rss_vasc_speed_s|stem|fce4e5914a7dab8b|be6cda2e74e99c65|1d69c28287e83f47|-1458035418||t20353.713510755s|33ce9638ae7a125e|876550|qs|local|vector|||0.05||
-plot_rss_vasc_speed_w|stem|e20cf74d2b85fef8|164f18a6c32810f1|a8e0af978b682bf7|-1286997323||t20353.713518526s|e7624b37eeb8c275|820707|qs|local|vector|||0.06||
+plot_rss_vasc_s|stem|2dbf3c2a926c5cad|7da0424dd7e8c765|38f0e5b310ce9d3d|220705782||t20378.626502229s|b684ccf9a109ee1a|299808|qs|local|vector|||0.14||
+plot_rss_vasc_speed_s|stem|e86fc23e6f524c84|be6cda2e74e99c65|6f4b1085ddf98f8c|-1458035418||t20378.6701667124s|9a7330b1093b4252|836723|qs|local|vector|||0.07||
+plot_rss_vasc_speed_w|stem|b127ea5c4ee70721|164f18a6c32810f1|a9e80439f61900f2|-1286997323||t20378.6701830147s|5930f7cffc9f555d|784255|qs|local|vector|||0.08||
 plot_rss_vasc_ta|stem|acdd2852c2562d28|f152d52a74b288b1|f2a81188cbfa95ec|10237040||t20356.6591755769s|2b818a96e4ec1caa|320892|qs|local|vector|||0.18||
 plot_rss_vasc_taw|stem|182fa2e398ba1b61|2b6aa2518a855193|ebe3df306714e116|-80072862||t20356.7191968562s|fdffb55bec592544|297540|qs|local|vector|||0.2||
-plot_rss_vasc_w|stem|7f0f9164c8639538|b5519d699c11b1de|cb4e924c9143431a|1676674963||t20353.7102159539s|282b9b926a600fc3|305128|qs|local|vector|||0.04||
+plot_rss_vasc_w|stem|9a9e227c494d3ff2|b5519d699c11b1de|0e1ab85b53f03c62|1676674963||t20378.6171668911s|0981c7a21673b10c|292645|qs|local|vector|||0.14||
 plot_speed_Cladonia_s|stem|fe5be030d3dcc080|62735216e7b3885e|eee4ea5c74223785|-1104860542||t20351.4455041632s|06d034d124e9a6ff|213848|qs|local|vector|||0.06||
 plot_speed_Cladonia_w|stem|68ebb1ecd97cf6b0|e7274fbe41ce80d7|81109f729b746a03|987920595||t20351.4455427841s|39dd20bae1c3a33a|209413|qs|local|vector|||0.04||
 plot_speed_forest_s|stem|8d6272af3cfad283|4443606a6cde34f4|0921c0ac37e3e0ac|-1603522649||t20351.4455069988s|35ddd09cd7b42ec1|130639|qs|local|vector|||0.11||
@@ -295,48 +295,48 @@ plot_speed_forest_winter|stem|3ff999cea8f9673a|f4d4078905a7485b|d02d6f563fe4de2c
 plot_speed_vasc_s|stem|082e133a6ef9dc2e|0ffd4e962b1d114d|9d1b91187e940b6e|-733896896||t20351.4455091138s|4dfcf8f0edbb2eea|213677|qs|local|vector|||0.07||
 plot_speed_vasc_w|stem|7180da932d02c817|b117e86115b1e011|c1c782c35d556871|853634825||t20351.4455462945s|2e92dc2ce28ce88a|211611|qs|local|vector|||0.04||
 plot_theme|function|6bd6c6c6f643e216|||||||||||||||
-popn_Clad_seasonal|stem|50f0744eebf12c27|8608cf167ba6e2f8|4cd6f6e096eb1a01|755369350||t20354.5544811981s|094d393a6f50adf3|149783|qs|local|vector|||0.26|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
-popn_Cladonia_summer|stem|5cf4deb07d9345ac|ddde24dea7629096|a82ec46260d97ddb|653987169||t20347.7390777412s|d2801ce5f86d53e1|2987|qs|local|vector|||0.01||
-popn_Cladonia_winter|stem|f64da58ab7f2b379|9310f42790a92dbe|73b644bfcb894035|-1589270357||t20347.7379170308s|114bbb33a88bd5b3|2965|qs|local|vector|||0.03||
-popn_RSS|stem|56031996ac896326|ff1e000fc5723f1e|529e4353299cc025|-1579191376||t20354.5550110062s|9064907978062c20|56|qs|local|vector|||1.8||
-popn_vasc_seasonal|stem|a3134650e3027de8|f05496158a43e493|001b3547e5dcafa0|705176567||t20354.5544837279s|0773e83b8bdc578f|149900|qs|local|vector|||0.04||
-popn_vasc_summer|stem|3ae996aec8384b12|3116da1054df60a7|09658b4a5bb7ed2d|1111242405||t20347.6929327852s|0386712f07a35523|2957|qs|local|vector|||0.05||
-popn_vasc_winter|stem|59a10941ceabb8e6|f659fa3b80d924ca|693590e72bad830e|-1517519797||t20347.738502768s|917836ac7f937548|3006|qs|local|vector|||0.03||
-pred_h1_Cladonia_byspeed_s|stem|27caaa1932830c17|dabed86664d103c0|edfc7567493743dd|-627184711||t20350.839096384s|7f1a835174fa97ce|97001|qs|local|vector|||585.81||
-pred_h1_Cladonia_byspeed_w|stem|1636bbb8fd9fee9e|7618465781bb7a84|82b4854177509dc8|1232405599||t20350.8685523876s|7b5d0ad18b7c8ed6|89273|qs|local|vector|||410.57||
+popn_Clad_seasonal|stem|ff545ce13eed636a|8608cf167ba6e2f8|1cf9b9ee98a6f4c7|755369350||t20378.6767398276s|018ee5a09d784227|149823|qs|local|vector|||0.06||
+popn_Cladonia_summer|stem|931482abf02dddf8|ddde24dea7629096|1a1b1998330eb3ff|653987169||t20378.6767317204s|7476e099b1770598|2980|qs|local|vector|||0.04||
+popn_Cladonia_winter|stem|9d810c3d8e9f4a4e|9310f42790a92dbe|61ed0c0cb56c2415|-1589270357||t20378.6767328284s|46e0562bede3a739|2967|qs|local|vector|||0.02||
+popn_RSS|stem|56031996ac896326|ff1e000fc5723f1e|fa974d3e67303e2f|-1579191376||t20378.6767593229s|9064907978062c20|56|qs|local|vector|||1.66||
+popn_vasc_seasonal|stem|83a8d5bf12aabe0b|f05496158a43e493|1968eec1fd98d014|705176567||t20378.6767377435s|1ceeb46ba08e06ea|149938|qs|local|vector|||0.25|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
+popn_vasc_summer|stem|5dd1d492d3d95303|3116da1054df60a7|c66d512e647f860b|1111242405||t20378.6767309094s|4906a597eccf7f0f|2958|qs|local|vector|||0.03||
+popn_vasc_winter|stem|2c9464f6d1e91e46|f659fa3b80d924ca|706c80c6dcfdec9e|-1517519797||t20378.6767322975s|c10fad1e35c4e454|3012|qs|local|vector|||0.01||
+pred_h1_Cladonia_byspeed_s|stem|df9d3174b7af8572|dabed86664d103c0|5517a471c67f4b9b|-627184711||t20378.6427879327s|cdf5e159db807337|87681|qs|local|vector|||477.87||
+pred_h1_Cladonia_byspeed_w|stem|437669398ad95f81|7618465781bb7a84|5e61b25de999a5f8|1232405599||t20378.6639426642s|e5808a7ee187e52f|86151|qs|local|vector|||475.91||
 pred_h1_Cladonia_fast|stem|641c31f291661efc|7e60ec25e6ec38a9|8ac51a65e6e8cef8|1193402174||t20334.8098861787s|6e37caab0c26f4d8|32537|qs|local|vector|||210.83||
 pred_h1_Cladonia_med|stem|d576e60826e64919|39aa245d0d83fd8a|8ac51a65e6e8cef8|593492356||t20334.8074454438s|9996c54f3fce0e97|31046|qs|local|vector|||192.11||
 pred_h1_Cladonia_r|stem|a4f66dea270f5c93|de92368bb43e6ab8|8b70ec29c20d5f32|-619452208||t20334.8326111798s|31ad72d92ffc2b5e|30583|qs|local|vector|||209.15||
-pred_h1_Cladonia_s|stem|6490e3b8c8c9bd1e|8cb45ce76185375e|38ed70b1356e780c|-788620889||t20350.8587615445s|e7b0d8053d9917e1|34793|qs|local|vector|||181.81||
+pred_h1_Cladonia_s|stem|01e29cf57fd78729|8cb45ce76185375e|3392b408546bb634|-788620889||t20378.6212851857s|e9618eb84d122a6d|31219|qs|local|vector|||145.31||
 pred_h1_Cladonia_slow|stem|38df7eec8dd524ff|2d643bb1fea86bc7|8ac51a65e6e8cef8|636289017||t20334.8186550202s|16d2a6645df9934e|30277|qs|local|vector|||176.56||
 pred_h1_Cladonia_ta|stem|2689e6196004a123|48026cc16838495b|bf4ab7b902e7f606|241149965||t20356.6561459388s|9f67c94a1cbd4e46|35172|qs|local|vector|||239.94||
 pred_h1_Cladonia_taw|stem|ae423df06e1dd0a5|99ec87d07b3c442c|88dfc83c2702e8a9|-136427307||t20356.7137903233s|e7affe787d58be00|30537|qs|local|vector|||230.55||
-pred_h1_Cladonia_w|stem|192feea41735ae69|35b7e932c2101803|88b0c7bf58f161b0|-1890049939||t20350.884906737s|5dd71e6021f4e062|31051|qs|local|vector|||137.33||
-pred_h1_forest_byspeed_s|stem|5bbe36b2a844f6b2|1297dccdb0cc2336|36bfc9ebbf981bc8|-989019701||t20350.8472199228s|93202245bb9138fa|98104|qs|local|vector|||508.26||
-pred_h1_forest_byspeed_w|stem|ad4bfab78562881f|cdf3f318a7a1d818|94c22efde162f7f5|1183069127||t20350.8753548625s|f21c14c4c2d67735|93889|qs|local|vector|||413.36||
+pred_h1_Cladonia_w|stem|d5b7e800a12028f1|35b7e932c2101803|a429ae9ca0e67d87|-1890049939||t20378.5788236031s|85838ae325d06377|29875|qs|local|vector|||159.8||
+pred_h1_forest_byspeed_s|stem|b40760d56e867d7c|1297dccdb0cc2336|305be1a5efabf273|-989019701||t20378.6320987849s|3ec3ca7ca7ee76a7|90690|qs|local|vector|||445.21||
+pred_h1_forest_byspeed_w|stem|386fc67ecbd7faff|cdf3f318a7a1d818|33da03178284f318|1183069127||t20378.653571831s|e3bd4b95de964dbd|88112|qs|local|vector|||494.3||
 pred_h1_forest_r|stem|fa1da91e880a95cf|361c59810570122c|d054800434f7fab8|-343105481||t20334.8262181753s|66be18d70c22193e|30263|qs|local|vector|||112.19||
-pred_h1_forest_s|stem|823cabc545131065|6f099be9c9fa994b|5f2e3cebbcacd2bd|-1086134866||t20350.8547532102s|35d50a8a0d21bb0e|34481|qs|local|vector|||163.89||
+pred_h1_forest_s|stem|2a24645c519e6a66|6f099be9c9fa994b|48feb8d0bd26528a|-1086134866||t20378.6264956435s|b8b7d4e0ef1f3a44|31220|qs|local|vector|||165.49||
 pred_h1_forest_ta|stem|e7b3a2766fd962e9|056c22bafd414a93|cc9a5720b5083e31|508155238||t20356.6591687163s|d3ee862c3a340a0d|33126|qs|local|vector|||261.11||
 pred_h1_forest_taw|stem|b47b62ab5519a12d|a11fa7d878f6dc4c|8fa905ac7b7e981a|1306813662||t20356.7164884372s|0a08a1ed4a9d0ca4|31900|qs|local|vector|||233.06||
-pred_h1_forest_w|stem|d08d2420eb33c97e|bac7791192adfb8b|2f667f6917562ca3|689439547||t20350.8817161225s|5a3dc9be43803834|31759|qs|local|vector|||140.72||
-pred_h1_vasc_byspeed_s|stem|ae7f2c2f4fd7cd6e|4acdb72d1ee58502|e043b271eefecd50|848291648||t20350.8317492651s|7d1bebd6a96c9873|102183|qs|local|vector|||602.86||
-pred_h1_vasc_byspeed_w|stem|05fac87d55a76e8e|ac7df4346acd04bb|1ba6f8c5f18c566e|796673512||t20350.8637998571s|84e13e6e2df329c4|86463|qs|local|vector|||433.17||
+pred_h1_forest_w|stem|877753f3d70b9393|bac7791192adfb8b|b2dab046df059958|689439547||t20378.617160577s|f5daefb25cd12774|30337|qs|local|vector|||174.75||
+pred_h1_vasc_byspeed_s|stem|6e605f836da1fa57|4acdb72d1ee58502|a22507736a337222|848291648||t20378.6478047123s|5e7bbee1c9b9774a|92933|qs|local|vector|||433.4||
+pred_h1_vasc_byspeed_w|stem|8bac7f51559d000c|ac7df4346acd04bb|1ea025d34a93f25c|796673512||t20378.6701480098s|9ba266fa2762a9cf|85432|qs|local|vector|||536.06||
 pred_h1_vasc_r|stem|dcb396edc2ac720e|fd5cd72a30fb415c|8c0e77cfa9c659c4|-1274206490||t20334.8274992617s|1b429c8ed5ce265c|30367|qs|local|vector|||110.64||
-pred_h1_vasc_s|stem|2963a6f2c529111c|8f5a75fbeff38ae5|5a1fa37efcb08eeb|-225845593||t20350.8413366071s|f5da619eed758eca|34645|qs|local|vector|||193.52||
+pred_h1_vasc_s|stem|156ff2fa76e7e426|8f5a75fbeff38ae5|a7525e41838575d0|-225845593||t20378.6229366871s|064be3e698551e4b|31180|qs|local|vector|||142.63||
 pred_h1_vasc_ta|stem|eca27dc48245fc9f|f82f8e71d0012c8a|2873e02b0fcf1ca4|1345478244||t20356.6533685077s|cd0842a10ae9a7c3|36139|qs|local|vector|||200.55||
 pred_h1_vasc_taw|stem|fbce9c463fe9919d|ec837bc24e2d4be0|0fe9f7c5d34a270f|-1973981247||t20356.711121053s|4aac1ee4e2528511|30172|qs|local|vector|||208.45||
-pred_h1_vasc_w|stem|f1b41b07c6bcfae6|9260c87097cbe355|2b9fe59965275b79|-328925325||t20350.8705700646s|bf9a4a5707587293|30608|qs|local|vector|||138.62||
-pred_h2_byspeed_s|stem|d9c516549bff1846|390bf3e04dbdc986|8789f84f0ef2282e|1249928763||t20350.8528559619s|2349bb3869fe7495|3864|qs|local|vector|||486.9||
-pred_h2_byspeed_w|stem|03b48129e4d888f6|f072f52fcc7b87e9|62deeca072c2b4a2|222795121||t20350.880086662s|510f35e8935b9d22|3590|qs|local|vector|||408.77||
+pred_h1_vasc_w|stem|53f51fd21c51f458|9260c87097cbe355|8bc4d5332e1e3403|-328925325||t20378.6135821344s|9b6e8ad9969ebd2e|28735|qs|local|vector|||167.52||
+pred_h2_byspeed_s|stem|3ecc8cbe115d7f01|390bf3e04dbdc986|70e18aee3844f535|1249928763||t20378.6372557687s|5db149cd8b50ccdc|3554|qs|local|vector|||445.5||
+pred_h2_byspeed_w|stem|071526c51af4fbad|f072f52fcc7b87e9|73116846d4ae8084|222795121||t20378.6584339369s|a46fd9b4983e1ce0|3441|qs|local|vector|||420.06||
 pred_h2_fast|stem|954c848c57aca6f7|1bdf75b350150edb|a684688efc518d27|1669935133||t20334.8122741266s|bb91a56e7bea44ff|2309|qs|local|vector|||206.26||
 pred_h2_med|stem|64df679cc1bbb314|3f7610792d234192|a684688efc518d27|1606019725||t20334.8050820501s|85dafdfe5bd19386|2307|qs|local|vector|||210.95||
 pred_h2_r|stem|e368e5c0ebab0944|032df278e89e7020|5da03389502eb4ea|-578177975||t20334.8301894264s|31dab044e44f5903|2373|qs|local|vector|||201.47||
-pred_h2_s|stem|6346393c42d1b354|894a9ab1fc8c7032|62ed6e9e03514190|-71171309||t20350.8566565423s|664d8d08489d3b95|2449|qs|local|vector|||164.41||
+pred_h2_s|stem|1bdb8a03c58230ff|894a9ab1fc8c7032|928ea90c1969b484|-71171309||t20378.6245797341s|30ec9e3788aa10e4|2261|qs|local|vector|||141.91||
 pred_h2_slow|stem|66d8baf61bfd61be|5c1b220508734f04|a684688efc518d27|-121545755||t20334.8207056406s|b66a4826f81006ad|2312|qs|local|vector|||177.14||
 pred_h2_ta|stem|a6c8f457420f982d|995b5644fc420534|f9e0de31cd8dac47|-863934198||t20356.6510470153s|cc58a92a32d53199|2452|qs|local|vector|||227.37||
 pred_h2_taw|stem|9f40d2dc0830418f|8984a6c9fa128aa5|c3b9c493d5867915|-1383565395||t20356.7191886677s|b20e7edaa0a1744c|2278|qs|local|vector|||233.23||
-pred_h2_w|stem|e11e9947ae26e02f|f2cc42c5aa5fd11d|3aeed9167bf97b6a|-1385521764||t20350.8833164786s|b20e7edaa0a1744c|2278|qs|local|vector|||138.21||
-predict_h1_Cladonia|function|f54554e37d33c5e7|||||||||||||||
+pred_h2_w|stem|ce49e9d32eb06952|f2cc42c5aa5fd11d|271d9b288fb35fa4|-1385521764||t20378.6151366162s|5fc97845fc7a775b|2186|qs|local|vector|||134.3||
+predict_h1_Cladonia|function|983902c0255f62b5|||||||||||||||
 predict_h1_Cladonia_popn|function|75bcc91199c5d5ae|||||||||||||||
 predict_h1_Cladonia_ratio|function|80d9b3dd88d5ff6d|||||||||||||||
 predict_h1_Cladonia_speed|function|a56f76e189b383e8|||||||||||||||
@@ -371,30 +371,30 @@ roadlevels|object|641409c2c2b0f2e9|||||||||||||||
 roadpal|object|9d77e06805624bdb|||||||||||||||
 roads|stem|898de68ea2a9fa90|dc95f35a20eff49e|8b142870601533bc|1038729194||t20301.6202205267s|cb62f1ec814f20de|30558|qs|local|vector|||6.42||
 rss_Cladonia_by_speed|stem|3be3951df53bbc27|d644fcaa35e81455|25fb756b0a684426|244323961||t20334.8327725856s|13f8aaa0d7e090e9|169250|qs|local|vector|||0.01||
-rss_Cladonia_byspeed_s|stem|65f0f4edd70fcec1|ac2d06805cad0bbe|81a6f6cb846eb18f|-679829545||t20351.445431359s|5298e3fb64ab69e9|178988|qs|local|vector|||0.02||
-rss_Cladonia_byspeed_w|stem|bf55fd651633152d|d3aa949b0b78722b|329f4da3df9e5530|-1079297488||t20347.678391807s|cbac31c134df7886|166369|qs|local|vector|||0.04||
+rss_Cladonia_byspeed_s|stem|6a12685265d60e49|ac2d06805cad0bbe|9f7681bb3a2c6f5b|-679829545||t20378.6701514575s|2d8d4afc743dba98|163783|qs|local|vector|||0.16||
+rss_Cladonia_byspeed_w|stem|c4603f1ab384bd04|d3aa949b0b78722b|a350fb4589705a45|-1079297488||t20378.6701546523s|844b95af37c4ead7|160902|qs|local|vector|||0.06||
 rss_Cladonia_fast|stem|e03f72ecaff589a4|44c9ab8a44cc2560|4cbd3ac4fb515dc0|-804621891||t20334.8327312327s|eb4a2726a4d6095f|55603|qs|local|vector|||0.08||
 rss_Cladonia_med|stem|993d3cd7a773dc4b|5b6807fea7206972|ecf51e954cd8cd4c|1753525477||t20334.8327299419s|2e9fa7b92fce16f2|55233|qs|local|vector|||0.05||
 rss_Cladonia_r|stem|0d65f40f08b4b8de|19c43523f4bf10f2|fc50cf6940663921|1456263432||t20334.8327678818s|30ea9bd173d231da|55143|qs|local|vector|||0.05||
-rss_Cladonia_s|stem|fb90ca41abffbf88|d4e334d25bd7dfc3|f8ca0c9ce90afa4d|815086877||t20347.6452940639s|c3e00fe28580fb31|59765|qs|local|vector|||0.05||
+rss_Cladonia_s|stem|18eb30b59700d74b|d4e334d25bd7dfc3|d15aa7852f0ea6f4|815086877||t20378.626497248s|5962e6fecabf8c9f|54977|qs|local|vector|||0.05||
 rss_Cladonia_slow|stem|cafc8be2b15b9d44|24565dac4fccc218|d358c46d92ddc7a4|292277340||t20334.832732184s|7eed79347786ebd0|55024|qs|local|vector|||0.05||
 rss_Cladonia_ta|stem|e90ba26afdcb9630|90d74511fe525a10|7230674cf1161b99|953543153||t20356.6591703909s|9ed046f744816bbe|60561|qs|local|vector|||0.04||
 rss_Cladonia_taw|stem|4e6133eb41994040|3dee85aa56326408|7808c99fa914c186|-1891495554||t20356.7191920216s|b00d00294720e745|55282|qs|local|vector|||0.03||
-rss_Cladonia_w|stem|69c010727ee7ed0b|379268c38530be6f|91f1072fed74462c|1829583033||t20347.6028522682s|3133fb07169c14c4|55545|qs|local|vector|||0.07||
-rss_forest_byspeed_s|stem|9e5208c9619d72bd|d54285fa4c2df6ba|1e0a2632898705cf|-1430305983||t20351.4454324926s|0908f0c4308ed704|178287|qs|local|vector|||0.03||
-rss_forest_byspeed_w|stem|6c36d5a66dc8947b|67db196fdcd9e694|64a172154e590c02|-1847359064||t20347.6783934801s|f9e379248e7d03db|166243|qs|local|vector|||0.03||
+rss_Cladonia_w|stem|85c48f53b7b3591f|379268c38530be6f|2ea8ed2958c7207f|1829583033||t20378.6171620201s|7c707f0d318ca9ce|52993|qs|local|vector|||0.03||
+rss_forest_byspeed_s|stem|f09433685c541859|d54285fa4c2df6ba|803e62e09cd0fdfd|-1430305983||t20378.6701491553s|b7d4f62a16338c68|164282|qs|local|vector|||0.06||
+rss_forest_byspeed_w|stem|d23a49501f160cdc|67db196fdcd9e694|9cca742aebbaa48a|-1847359064||t20378.6701533604s|345145cd29ab82bb|161488|qs|local|vector|||0.03||
 rss_forest_r|stem|b25033f498c9f0d2|11183029e3c23263|54301634b2f545d3|-697796262||t20334.8327668364s|d5f76b5ca8c6ccc1|53055|qs|local|vector|||0.03||
-rss_forest_s|stem|c2b2eb03ef102a79|b842152fe1c86451|fc5df9d89169b9c5|-954482025||t20347.6452918355s|ab4b13360ed74968|60343|qs|local|vector|||0.06||
+rss_forest_s|stem|6a0ed7e1dac32aa2|b842152fe1c86451|fb3a1c38f1a15541|-954482025||t20378.6264979868s|00b2c91bfb6cbef1|54953|qs|local|vector|||0.03||
 rss_forest_ta|stem|d515aff3f2cbb91a|3baaf9a507fb62bb|d60db8d319de2ea2|204826097||t20356.6591714247s|5db2a662455c0d97|59412|qs|local|vector|||0.05||
 rss_forest_taw|stem|6798a77ec0d29840|5b0d8e36e101c14f|378c2000542bba10|310779487||t20356.7191911528s|e898fab691e3896e|56365|qs|local|vector|||0.06||
-rss_forest_w|stem|72438c09fb42ce87|e2a85d5d4491e955|0d3fff0f0fb75630|1421750474||t20347.6028540867s|22c7165f7638f705|56252|qs|local|vector|||0.01||
-rss_vasc_byspeed_s|stem|bd2eb0314e03ad0e|cfed93da9f6c3352|f25e4c866778af5e|-182172561||t20351.4454335374s|2a59ef45b189ed13|181290|qs|local|vector|||0.03||
-rss_vasc_byspeed_w|stem|e9f65686b3243d68|c1c5ac59c4cac90d|ccecc7968a28dfe2|-1205766216||t20347.6783926838s|2d077eb58b844733|168765|qs|local|vector|||0.04||
+rss_forest_w|stem|258427ce27370781|e2a85d5d4491e955|29b014892951e415|1421750474||t20378.6171630819s|8d5ee7ff97a181ba|53579|qs|local|vector|||0.05||
+rss_vasc_byspeed_s|stem|1501962695e96269|cfed93da9f6c3352|79d2386cf8a30ad3|-182172561||t20378.6701524777s|5756b55680c1c080|173165|qs|local|vector|||0.05||
+rss_vasc_byspeed_w|stem|7ffa05f1b64fe9b8|c1c5ac59c4cac90d|c2cbe351de373c9a|-1205766216||t20378.6701555322s|9cbdd1cc3b611635|163805|qs|local|vector|||0.04||
 rss_vasc_r|stem|3b0a65b86d9a7b45|3fdadf4ee5e9e7a2|994c711e39c47274|1497253598||t20334.8327659417s|5606a690f5ccfccb|56151|qs|local|vector|||0.05||
-rss_vasc_s|stem|638a5baba1999436|46ff24b6329b17a1|64855aefea2c587a|-1220762161||t20347.6452930412s|e2b27ad3e66dd19e|60613|qs|local|vector|||0.07||
+rss_vasc_s|stem|d5bd2644abf3aed5|46ff24b6329b17a1|f07c7b9c991587ec|-1220762161||t20378.626496313s|a8a35c23e391a2e9|55680|qs|local|vector|||0.02||
 rss_vasc_ta|stem|c1fb45eb9c82e46b|b01ef18ad2bf63f3|c1ca377c19abe91e|-551456761||t20356.6591694302s|37088d6fc25896e3|60423|qs|local|vector|||0.02||
 rss_vasc_taw|stem|86707f695b8e7f8f|547ddc9d5c4ae9f2|382e9690904d1ce1|-1377066736||t20356.7191899407s|4cdb027b1266131a|55525|qs|local|vector|||0.05||
-rss_vasc_w|stem|7610ac9b8e4199db|d10f60db84124285|8276aa34f712963a|942298831||t20347.6028533346s|60fafc3006e9ce96|55900|qs|local|vector|||0.05||
+rss_vasc_w|stem|de4d1f1922c10d25|d10f60db84124285|607438657e745be8|942298831||t20378.6171612927s|a04ce333de57298d|52838|qs|local|vector|||0.03||
 s_fixes|stem|a9314fa26de6fb71|fb8bf64b02e955d1|95b90871cc5d6d95|-1343072823||t20377.735872077s|43fd6819a33bdd7d|1013255|qs|local|vector|||0.47||
 save_plot|function|0bdfbb6d83df4dd9|||||||||||||||
 save_rss_plot|function|17b2538f4255a538|||||||||||||||
@@ -417,12 +417,12 @@ stoich_file|stem|f369f4ec31a605ff|93bc623973cb57df|ee51c7a96e16aaf4|2060235775|i
 stoich_path|object|585b36110c5739d5|||||||||||||||
 streamcol|object|460450e967eaebcd|||||||||||||||
 streampolcol|object|abae39a2c1f1c53c|||||||||||||||
-sum_plot|function|aec9a04a7fbdb726|||||||||||||||
-sum_summer|stem|99a546b494be2447|07aa191aed62cd76|539c78c10046d4c3|-2051131093||t20351.44542921s|2b70a3f63be0600f|143706|qs|local|vector|||8.43|Removed 92 rows containing missing values or values outside the scale rangegeom_segment.|
+sum_plot|function|cf5a93d3bf443725|||||||||||||||
+sum_summer|stem|f67ef67c6c4e3249|07aa191aed62cd76|377d17f66b1e481c|-2051131093||t20378.5737133092s|b559a43b52348784|143131|qs|local|vector|||3.5|Removed 84 rows containing missing values or values outside the scale rangegeom_segment.|
 sum_ta_plot|function|4c0abca9550a8161|||||||||||||||
 sum_ta_summer|stem|91ecb4d14f3f6c00|1fba900aab28d9cf|4ea728de4748ec82|-974638153||t20356.6428783163s|a16b537b2c8da617|143038|qs|local|vector|||1.47|Removed 46 rows containing missing values or values outside the scale rangegeom_segment.|
 sum_ta_winter|stem|6d257d6dda0941d1|3055c47e66edd2aa|78adb4b42bf2221e|1393040399||t20356.6428891163s|0997cc81d3bc242e|142719|qs|local|vector|||0.83|Removed 43 rows containing missing values or values outside the scale rangegeom_segment.|
-sum_winter|stem|4c78ac46cbe9b7da|97f2fb29e7c0ac2b|759227b1b923ffd2|1988234938||t20351.4454776398s|1d52a6b54f96b349|143260|qs|local|vector|||0.95|Removed 86 rows containing missing values or values outside the scale rangegeom_segment.|
+sum_winter|stem|fb8917203b860d8e|97f2fb29e7c0ac2b|5557aed6b4495d59|1988234938||t20378.5737254061s|4c9feb5411d18003|142956|qs|local|vector|||0.89|Removed 82 rows containing missing values or values outside the scale rangegeom_segment.|
 summarise_model|function|bb9268f578a28bed|||||||||||||||
 summer_boxplot|stem|d285ae18a0e5c25c|46cd9e54214089be|0d6ddabe6b106594|2039299276||t20351.4454302999s|25b64737c58566f2|135007|qs|local|vector|||0.03||
 summer_by_SRI|stem|8f959a2134aa10b6|e24654230b38453b|353000afeb504f9b|1116766178||t20349.7175863582s|21c64f85d8c4a821|70|qs|local|vector|||1.1|Removed 14 rows containing nonfinite outside the scale rangestat_smooth.. Removed 14 rows containing missing values or values outside the scale rangegeom_pointrange.|
@@ -434,10 +434,10 @@ summer_popn|stem|fee897199624428b|57132ea92be5f232|ef46db3751d8e999|-1677682759|
 summer_prep|stem|854300d2e60fa52e|dd479a5ecc504edc|7236791a1677c952|283385905||t20378.5338798215s|0a54c32d151f2ddd|21753604|qs|local|vector|||9.58||
 summer_ratio|stem|c9eaf743a400f4f3|d426f0721d565e4a|76c3ad93954651fd|-2047373249||t20334.8026358577s|befd366870eae8dd|105642263|qs|local|vector|||2249.86|NANaN function evaluation. NANaN function evaluation. Model convergence problem false convergence 8. See vignettetroubleshooting, helpdiagnose|
 summer_ratio_plots|stem|cebe277d270bda0b|4e4b00fa8d374e56|e570e65501c9dbd6|2125052850||t20334.8328719991s|ff026697d66e9a9f|75|qs|local|vector|||1.96||
-summer_rss_by_SRI|stem|0531c98d8511bf95|9daef99438015add|4394ec1a21c02790|828195958||t20354.5379198473s|ff026697d66e9a9f|75|qs|local|vector|||1.33||
-summer_rss_plots|stem|aec73f9bcd08061a|40906099fe3dcf7d|c0a0398e721d79d8|2021187670||t20353.710616149s|abbdb7fe746336f0|76|qs|local|vector|||2.12||
-summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|c45f9f3d24700986|-1877487464||t20353.7135530453s|8619def19bb20a44|79|qs|local|vector|||2.94||
-summer_SRI|stem|4341f7b76022efd4|d1e1feba25aa0b73|77f17801160799c0|-1677326071||t20350.824312433s|f8506963f9eb5825|2148|qs|local|vector|||26.27||
+summer_rss_by_SRI|stem|0531c98d8511bf95|9daef99438015add|12c08999e0eca442|828195958||t20378.69605169s|ff026697d66e9a9f|75|qs|local|vector|||1.54||
+summer_rss_plots|stem|aec73f9bcd08061a|40906099fe3dcf7d|7eed7e7dbbf7e9af|2021187670||t20378.6265321178s|abbdb7fe746336f0|76|qs|local|vector|||1.98||
+summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|38e1aa83206801ca|-1877487464||t20378.6702267876s|8619def19bb20a44|79|qs|local|vector|||3.72||
+summer_SRI|stem|69d78c86c8c61697|d1e1feba25aa0b73|55a100bfafe5909e|-1677326071||t20378.6960326666s|d3f328cd52258ea4|1934|qs|local|vector|||30.81||
 summer_ta_model|stem|8234445fedb11631|19219cc4f3b6e3f8|58589f318b13a053|519007553||t20356.5237768879s|0359b01089f095cf|178535152|qs|local|vector|||1054.13||
 summer_ta_plots|stem|0ff88d9401370536|b5c84c009530559f|8efcd01bdcd38e8b|52496615||t20356.6592213211s|c6fbfb9abe15abfd|72|qs|local|vector|||3.33||
 ta_model|function|7fa088bc171ed26c|||||||||||||||
@@ -644,10 +644,10 @@ winter_plots|stem|4242350867828b4f|92e0bb66f1807667|fce4aa9dc421a6d3|-1624304466
 winter_popn|stem|843823bfc768231a|0af05601d3ca0619|ef46db3751d8e999|2114830086||t20347.7361875796s|b44c136b29c9a3ce|606|qs|local|vector|||0.41||
 winter_prep|stem|40fbc537ee071677|923c2e8a9d945709|7236791a1677c952|-1461948889||t20378.5339592261s|047c844f4188450f|26105889|qs|local|vector|||6.06||
 winter_ratio|stem|523c8b2979812022|4249e1c7ddd34dd9|72cea26eb1084997|994097338||t20334.7566301364s|ee4cf196d3a47051|135070144|qs|local|vector|||3651.22|NANaN function evaluation. NANaN function evaluation. NANaN function evaluation. Model convergence problem nonpositivedefinite Hessian matrix. See vignettetroubleshooting. Model convergence problem false convergence 8. See vignettetroubleshooting, helpdiagnose|
-winter_rss_by_SRI|stem|c465e4d21798364f|6bb08fb8fd21036b|1bf2a407a262f5a3|1489754865||t20354.5426516277s|8619def19bb20a44|79|qs|local|vector|||1.56||
-winter_rss_plots|stem|6925b79ededa1529|bc4f1fc7fa4d148e|e69e4bc6517c92df|632338834||t20353.7102396174s|abbdb7fe746336f0|76|qs|local|vector|||1.78||
-winter_speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|120aa0350c1b3947|2054416414||t20353.7135760368s|8619def19bb20a44|79|qs|local|vector|||1.96||
-winter_SRI|stem|853a61846db801f2|fdb9009395901857|0cb1deec6669417b|296145730||t20350.8247326657s|ef4fd13b3d44973b|2072|qs|local|vector|||24.3||
+winter_rss_by_SRI|stem|c465e4d21798364f|6bb08fb8fd21036b|bb05bc4d8731bb32|1489754865||t20378.6950495081s|8619def19bb20a44|79|qs|local|vector|||1.67||
+winter_rss_plots|stem|6925b79ededa1529|bc4f1fc7fa4d148e|fba8b806533c4479|632338834||t20378.6171937282s|abbdb7fe746336f0|76|qs|local|vector|||1.9||
+winter_speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|96b2e5898717dfbf|2054416414||t20378.6702530899s|8619def19bb20a44|79|qs|local|vector|||2.2||
+winter_SRI|stem|4e7f3e7ccd44916b|fdb9009395901857|70a2dc5ab9d505a3|296145730||t20378.695029096s|eecad1b394aa1d9e|1987|qs|local|vector|||29.9||
 winter_ta_boxplot|stem|1ebd42e663a5bed9|9da52ff3c8798700|bdf071293fcde854|220504864||t20314.9139119199s|a05bd40045694929|136415|qs|local|vector|||0.05||
 winter_ta_model|stem|d82b7b2fed69b3c5|e57dec7702f9e7bf|237006853f707011|-1792265813||t20356.5342818199s|5412b460a829a145|159781761|qs|local|vector|||902.61||
 winter_ta_plots|stem|19f3a51a802e29e3|bc6a222da71b7be3|533af11e85a47c0f|696193834||t20356.7192414483s|8619def19bb20a44|79|qs|local|vector|||3.15||

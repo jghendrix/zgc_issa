@@ -18,11 +18,6 @@ prepare_model <- function(DT, season) {
     filter(y1_ > 5503000)
   
   
-  
-  ## UPDATED 16 SEPTEMBER WITH BIOLOGICALLY MEANINGFUL DATES:
-  # "winter" = 1 Jan - 1 Mar (doy 1-61), period with > 75% snow cover in all years
-  # "summer" = 16 Jun (peak greenup date) - 16 August, so both can be same length (doy 167 - 228)
-  
   if(season == "winter"){
     
     DT %<>% filter(doy < 61)

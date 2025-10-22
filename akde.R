@@ -104,13 +104,31 @@ cor(
 
 # Can we bring in the stoich maps to this now?
 
+tar_load(c(lichen, vascular))
+lich <- rast(lichen)
+vasc <- rast(vascular)
+lich_res <- resample(lich, north)
+vasc_res <- resample(vasc, north)
+trio <- c(north, lich_res)
+quad <- c(trio, vasc_res)
 
+nquad <- quad %>% filter(y > 5503000)
+# summer, winter, lichen, vascular kernel
+
+cor(
+  values(nquad)[, 3],
+  values(nquad)[, 4],
+  use = "na.or.complete"
+)
+# 12% correlation between winter kernel and Cladonia N
+# 11% between winter and vascular N
+# - 10% between Cladonia and Vascular N
 
 #ggplot(comp, aes(x = summer, y = winter)) + geom_point(alpha = 0.1)
-plot(both)
+terra::plot(nquad)
 
-sk_z <- sk %>% rename(kernel = ) %>%
-  mutate(kernel = kernel/max(kernel))
+#sk_z <- sk %>% rename(kernel = ) %>%
+#  mutate(kernel = kernel/max(kernel))
 
 
 

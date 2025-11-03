@@ -5,9 +5,9 @@ plot_rss_popn <- function(rss, theme) {
   
   ggplot(data = rss) +
     geom_line(aes(x = x, y = rss),
-              linewidth = 1, colour = "darkgreen") +
+              linewidth = 1, colour = "navyblue") +
     geom_ribbon(aes(x = x, ymin = min_rss, ymax = max_rss),
-                alpha = 0.5, fill = "palegreen") +
+                alpha = 0.5, fill = "#969CB5") +
    # scale_color_viridis(discrete = "TRUE", option = "D",
     #                    begin = 0.85, end = 0.2) +
     #scale_fill_viridis(discrete = "TRUE", option = "D",
@@ -19,7 +19,7 @@ plot_rss_popn <- function(rss, theme) {
       size = .7
     ) +
     plot_theme() +
-    #	xlim(c(0, 2)) +
+    ylim(c(-0.5, 0.5)) +
     theme(plot.title = element_text(size = 12, hjust = 0.05),
           axis.title = element_text(size = 12),
           axis.text = element_text(size = 10))

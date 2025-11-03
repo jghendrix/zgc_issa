@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|1c0f7857336784c7|||||||||||||||
+.Random.seed|object|0c74b8fb84573649|||||||||||||||
 akde|function|54b93ae4744cb145|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
@@ -242,7 +242,7 @@ model_check|function|7ec6d14bc2ab9bd7|||||||||||||||
 N_by_SRI|function|d691384bc524396c|||||||||||||||
 n_random_steps|object|f3582cdc107e111b|||||||||||||||
 N_rss_by_SRI|function|23845819f25fa6df|||||||||||||||
-p_Clad_winter_plot|stem|c9f37f0e6ab13a63|160acfb9533e89df|b2c17d5f34398f03|634935958||t20347.7379202007s|b573965d2c0642d8|105596|qs|local|vector|||0.17|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
+p_Clad_winter_plot|stem|a5bd702abac7c5c7|160acfb9533e89df|f06836540db92773|634935958||t20394.6902648898s|74ef4ab7bfa298de|166129|qs|local|vector|||0.23|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 p_Cladonia_summer_plot|stem|16ad5ab1638cdb0c|c57d007b8a80adf4|8058d07f51b7aaf6|1497217166||t20351.4454994546s|18f77afae7c22016|105631|qs|local|vector|||0.14|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 p_h1_Cladonia_summer|stem|d201453d23229353|d07fdd8af9818369|186a9ca3edde3199|1261336620||t20378.6767024896s|4da5b2acca07b467|3604|qs|local|vector|||0.64||
 p_h1_Cladonia_winter|stem|2a28854b674d33c3|b642e081c9b710e6|993c6e91547ba598|-704220643||t20378.6767214826s|2b1294cd50b2c44f|3633|qs|local|vector|||0.44||
@@ -254,7 +254,7 @@ p_h2_winter|stem|33e3d700ece37078|824e769c41388a41|de69f6f63e499a4c|-2059554132|
 p_h2_winter_clad|stem|61a51c4dcadf3f64|94484cf4bc457bdb|44548d0e852bb081|-62387237||t20378.6767222532s|d902a50fb830bc79|627|qs|local|vector|||0.04||
 p_h2_winter_vasc|stem|6469a5a621bd3ee2|fce490d1f21136f5|44548d0e852bb081|1980196951||t20378.6767158701s|d902a50fb830bc79|627|qs|local|vector|||0.14||
 p_vasc_summer_plot|stem|a4bd3ba3886e3703|fc717d72112c58f9|0329c6acfb68450b|-1274943528||t20347.6929354228s|c84623066b23601c|105540|qs|local|vector|||0.14|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
-p_vasc_winter_plot|stem|f1eacaa7c88036e1|4d684a200873ffc1|ba5b3f48a659bc82|-623643817||t20347.7385058062s|1eda3d2bf89b813a|105617|qs|local|vector|||0.17|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
+p_vasc_winter_plot|stem|1567bda0d50ffb55|4d684a200873ffc1|6c6fdac85f7c3edd|-623643817||t20394.6923535222s|4f2069fdb4e36ca2|166188|qs|local|vector|||0.24|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 parkboundcol|object|58a7d971c943be55|||||||||||||||
 parkcol|object|b62f2d883ff5355f|||||||||||||||
 plot_box_horiz|function|77aca61742601728|||||||||||||||
@@ -277,7 +277,8 @@ plot_rss_forest_speed_w|stem|6baf4c5489be3f45|21e91c43dd879ec9|c8a7c5bacfc05ace|
 plot_rss_forest_ta|stem|807d1bcdccd3a5a9|855d2a3ec2a307fc|070f8bae39202443|347497241||t20356.6591821615s|25a9676ccf69a2db|315789|qs|local|vector|||0.06||
 plot_rss_forest_taw|stem|ae707f58a47ab62d|80df00b1dc445efc|5861dbbf34dba891|1025877484||t20356.7192001885s|127e7cdc82bf0a73|300281|qs|local|vector|||0.09||
 plot_rss_forest_w|stem|e08f73d0356c7f81|e0eae23fddb12d04|33cafea8f3e75781|1125815976||t20378.6171713122s|ab1c6edf50bc5291|295652|qs|local|vector|||0.04||
-plot_rss_popn|function|50c85a1dddbf901a|||||||||||||||
+plot_rss_popn|function|7e1ac1b01186b91a|||||||||||||||
+plot_rss_popn_merge_seasons|function|da4afd1b2eae2550|||||||||||||||
 plot_rss_popn_seasonal|function|d709601897dd1db5|||||||||||||||
 plot_rss_speed|function|e51145621692efd5|||||||||||||||
 plot_rss_vasc_r|stem|236ca6cec9ef89e9|9ffb1f9bcf792e05|4cbfcd0daeca474e|1365775348||t20334.8327925457s|2f4ac1f071d28123|302770|qs|local|vector|||0.06||
@@ -299,9 +300,12 @@ popn_Clad_seasonal|stem|ff545ce13eed636a|8608cf167ba6e2f8|1cf9b9ee98a6f4c7|75536
 popn_Cladonia_summer|stem|931482abf02dddf8|ddde24dea7629096|1a1b1998330eb3ff|653987169||t20378.6767317204s|7476e099b1770598|2980|qs|local|vector|||0.04||
 popn_Cladonia_winter|stem|9d810c3d8e9f4a4e|9310f42790a92dbe|61ed0c0cb56c2415|-1589270357||t20378.6767328284s|46e0562bede3a739|2967|qs|local|vector|||0.02||
 popn_RSS|stem|56031996ac896326|ff1e000fc5723f1e|fa974d3e67303e2f|-1579191376||t20378.6767593229s|9064907978062c20|56|qs|local|vector|||1.66||
+popn_seasonal_RSS|stem|56031996ac896326|26ec7256a1253ebd|b8cb9445749b45a3|1366542134||t20394.5833405807s|9064907978062c20|56|qs|local|vector|||3.16||
+popn_summer_comp|stem|9af5fde913c7ca2d|0cffab530d9c0197|202574155f4830f2|-1010664196||t20394.5777470324s|fe306da475229186|149960|qs|local|vector|||0.35|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 popn_vasc_seasonal|stem|83a8d5bf12aabe0b|f05496158a43e493|1968eec1fd98d014|705176567||t20378.6767377435s|1ceeb46ba08e06ea|149938|qs|local|vector|||0.25|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
 popn_vasc_summer|stem|5dd1d492d3d95303|3116da1054df60a7|c66d512e647f860b|1111242405||t20378.6767309094s|4906a597eccf7f0f|2958|qs|local|vector|||0.03||
 popn_vasc_winter|stem|2c9464f6d1e91e46|f659fa3b80d924ca|706c80c6dcfdec9e|-1517519797||t20378.6767322975s|c10fad1e35c4e454|3012|qs|local|vector|||0.01||
+popn_winter_comp|stem|b3e05a1d81d7df0e|a308011a0650d695|63f45e57bb49a921|1684345276||t20394.5777497434s|06022aebad76b6cb|149970|qs|local|vector|||0.06||
 pred_h1_Cladonia_byspeed_s|stem|df9d3174b7af8572|dabed86664d103c0|5517a471c67f4b9b|-627184711||t20378.6427879327s|cdf5e159db807337|87681|qs|local|vector|||477.87||
 pred_h1_Cladonia_byspeed_w|stem|437669398ad95f81|7618465781bb7a84|5e61b25de999a5f8|1232405599||t20378.6639426642s|e5808a7ee187e52f|86151|qs|local|vector|||475.91||
 pred_h1_Cladonia_fast|stem|641c31f291661efc|7e60ec25e6ec38a9|8ac51a65e6e8cef8|1193402174||t20334.8098861787s|6e37caab0c26f4d8|32537|qs|local|vector|||210.83||
@@ -449,7 +453,7 @@ targets_fire_effects|object|97dd94dda94b087e|||||||||||||||
 targets_kernel|object|d089091e8c1e5e8b|||||||||||||||
 targets_prep|object|dfc94a2dd104f47f|||||||||||||||
 targets_rss_by_speed|object|029ab7e7678ba3c0|||||||||||||||
-targets_rss_social_popn|object|b5c53d0b437112df|||||||||||||||
+targets_rss_social_popn|object|eb53ffffdae5c44a|||||||||||||||
 targets_rss_summer|object|3118c132017280cb|||||||||||||||
 targets_rss_summer_ratio|object|361a846f43a92afe|||||||||||||||
 targets_rss_ta_summer|object|b1d3ba2165a87c40|||||||||||||||

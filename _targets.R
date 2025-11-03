@@ -1169,13 +1169,30 @@ targets_rss_social_popn <- c(
     plot_rss_popn_seasonal(popn_Cladonia_summer, popn_Cladonia_winter, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'Population-level RSS for Cladonia %N')),
-  
   tar_target(
     popn_RSS,
     save_rss_plot(popn_vasc_seasonal, "popn/seasonal_vasc_rss",
                   popn_Clad_seasonal, "popn/seasonal_Cladonia_rss")
-  )
+  ),
   
+  # What if we make a summer and winter plot instead of a vascular and Cladonia plot?
+  tar_target(
+    popn_summer_comp,
+    plot_rss_popn_merge_seasons(popn_Cladonia_summer, popn_vasc_summer, plot_theme()) +
+      labs(x = '%N in forage', y = 'logRSS',
+           title = 'Population-level RSS for %N in summer')),
+  
+  tar_target(
+    popn_winter_comp,
+    plot_rss_popn_merge_seasons(popn_Cladonia_winter, popn_vasc_winter, plot_theme()) +
+      labs(x = '%N in forage', y = 'logRSS',
+           title = 'Population-level RSS for %N in winter')),
+  
+  tar_target(
+    popn_seasonal_RSS,
+    save_rss_plot(popn_winter_comp, "popn/seasonal_rss_winter",
+                  popn_summer_comp, "popn/seasonal_rss_summer")
+  )
   
 )
 

@@ -286,7 +286,10 @@ ggsave(filename = "graphics/validation/W_sim120_Cladonia.png",
 
 
 
-## Summer comparisons of 19 simulations to one real ----
+# Summer comparisons of 19 simulations to one real ----
+
+## 5 November 2025 - have to redo this one because it went into the southern half of the island that we are no longer using in the issa/stoich maps
+
 tar_load(summer_prep)
 summer_steps <- summer_prep %>% filter(case_ == TRUE)
 
@@ -302,15 +305,14 @@ hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
 # among these steps, the y-values are between 550 3000 and 550 5000
 
 begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5503000 & y1_ < 5505000)
-# 1887 options for starting points of a 50-step segment 
-rand <- begin %>% slice_sample(n = 1)
-# randomly choose one, turned out to be step_id_ 998
-s.track <- sea %>% filter(step_id_ >= 10967 & step_id_ < (10967+120)) %>%
+# 1582 options for starting points of a 120-step segment 
+rand <- begin %>% slice_sample(n = 1) %>% dplyr::select(c(step_id_))
+# randomly choose one, turned out to be step_id_ 6433
+s.track <- sea %>% filter(step_id_ >= 10842 & step_id_ < (10842 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
 
-# step id 998 only got us 108 steps... 
-# regenerated, 10967 got us the full 120
+# 10842 gets us 120 steps complete
 s.track %>% summarise(xl = min(x_), xh = max(x_), yl = min(y_), yh = max(y_))
 
 

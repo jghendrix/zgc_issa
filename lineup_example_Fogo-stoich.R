@@ -71,6 +71,15 @@ layers <- c(layers, vasc)
 
 writeRaster(layers, 'output/issa_preds.tif')
 
+# Crop raster to Fogo perimeter -----
+# Also want to include a perimeter of Fogo somehow
+# could use the shape file to mask the rasters to NA outside of the poly
+fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
+forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
+lich_poly <- crop(lich, fogo_poly, mask = TRUE)
+vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
+
+
 ## WORKFLOW STARTS HERE-----
 #layers <- rast(raster('output/issa_surface.tif'))
 
@@ -187,13 +196,6 @@ w.comp %>% summarise(minx = min(x_, na.rm = T), maxx = max(x_, na.rm = T),
                    miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
 # use these to trim down our plots slightly so you can actually see the trajectories
 
-# Crop raster to Fogo perimeter -----
-# Also want to include a perimeter of Fogo somehow
-# could use the shape file to mask the rasters to NA outside of the poly
-fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
-forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
-lich_poly <- crop(lich, fogo_poly, mask = TRUE)
-vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
 
 # Winter plots --------
 ## on forest -----
@@ -312,7 +314,7 @@ s.track <- sea %>% filter(step_id_ >= 10842 & step_id_ < (10842 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
 
-# 10842 gets us 120 steps complete
+# step_id_ == 10842 gets us 120 steps complete
 s.track %>% summarise(xl = min(x_), xh = max(x_), yl = min(y_), yh = max(y_))
 
 
@@ -354,7 +356,7 @@ ssf_sim <-list()
 
 for(i in 1:n){
   start <- make_start(c(runif(1, 709000, 711000), 
-                        runif(1,5503000,5505000)), 
+                        runif(1, 5504000, 5505000)), 
                       dt = hours(2),
                       crs = crs$wkt,
                       ta_ = 0)
@@ -438,7 +440,7 @@ s_sim_on_vasc <- ggplot() +
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/S_120_vasc.png",
+ggsave(filename = "graphics/validation/north_summer_120_vasc.png",
        s_sim_on_vasc,
        height = 2000,
        width = 2400,

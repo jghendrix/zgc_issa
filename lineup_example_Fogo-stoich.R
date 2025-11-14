@@ -79,6 +79,8 @@ forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
 lich_poly <- crop(lich, fogo_poly, mask = TRUE)
 vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
 
+layers_poly <- crop(layers, fogo_poly, mask = TRUE)
+layers_poly %<>% filter(y > 5503000)
 
 ## WORKFLOW STARTS HERE-----
 #layers <- rast(raster('output/issa_surface.tif'))
@@ -306,27 +308,27 @@ hist(subset(sea, x1_ > 710000 & x1_ < 712000)$x1_, breaks = 50)
 hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
 # among these steps, the y-values are between 550 3000 and 550 5000
 
-begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5503000 & y1_ < 5505000)
+begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5505000)
 # 1582 options for starting points of a 120-step segment 
 rand <- begin %>% slice_sample(n = 1) %>% dplyr::select(c(step_id_))
 # randomly choose one, turned out to be step_id_ 6433
-s.track <- sea %>% filter(step_id_ >= 10842 & step_id_ < (10842 + 120)) %>%
+s.track <- sea %>% filter(step_id_ >= 10649 & step_id_ < (10649 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
 
-# step_id_ == 10842 gets us 120 steps complete
+# step_id_ == 10649 gets us 120 steps complete
 s.track %>% summarise(xl = min(x_), xh = max(x_), yl = min(y_), yh = max(y_))
 
 
 ggplot() + 
-  geom_spatraster(data = vasc_poly)  +
+  #geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.track, aes(x_, y_), 
             col= "red") +
   # facet_wrap(~ id, nrow = 4) + 
   scale_fill_terrain_c() +
-  xlim(c(708000, 713000)) + 
+ # xlim(c(708000, 713000)) + 
   # zoomed these out by an additional 1km on all sides to get better perspective on where we are
-  ylim(c(5502000, 5506000)) +
+#  ylim(c(5505000, 5506000)) +
   theme_bw()
 
 # This ended up being in the deep southeast coast, like just west of Cape Cove... I don't think this is the best place necessarily to test our stoich model LOL
@@ -356,14 +358,14 @@ ssf_sim <-list()
 
 for(i in 1:n){
   start <- make_start(c(runif(1, 709000, 711000), 
-                        runif(1, 5504000, 5505000)), 
+                        runif(1, 5505000, 5507000)), 
                       dt = hours(2),
                       crs = crs$wkt,
                       ta_ = 0)
   
   rdk <- amt::redistribution_kernel(summ, 
                                     start = start,
-                                    map = layers,
+                                    map = layers_poly,
                                     as.rast = FALSE,
                                     landscape= "continuous",
                                     tolerance.outside = 0.1)
@@ -395,6 +397,9 @@ ggplot() +
 s.comp <- rbind(ssf_simtr, s.track)
 s.comp %>% summarise(minx = min(x_), maxx = max(x_),
                    miny = min(y_), maxy = max(y_))
+
+south <- s.comp %>% filter(y_ > 5503000)
+
 # use these to trim down our plots slightly so you can actually see the trajectories
 
 # Summer plots ---
@@ -417,7 +422,7 @@ levels(s.comp$label) <- c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", 
 
 
 
-
+### Summer simulations on vascular %N ----
 
 s_sim_on_vasc <- ggplot() + 
   geom_spatraster(data = vasc_poly)  +
@@ -426,7 +431,7 @@ s_sim_on_vasc <- ggplot() +
   facet_wrap(~ label, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(705000, 715000)) + 
-  ylim(c(5500000, 5510000)) +
+  ylim(c(5503000, 5510000)) +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +
@@ -440,9 +445,9 @@ s_sim_on_vasc <- ggplot() +
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
-ggsave(filename = "graphics/validation/north_summer_120_vasc.png",
+ggsave(filename = "graphics/validation/northern_summer_120_vasc.png",
        s_sim_on_vasc,
-       height = 2000,
+       height = 1400,
        width = 2400,
        units = "px")
 
@@ -455,7 +460,7 @@ s_sim_on_forest <- ggplot() +
   facet_wrap(~ label, nrow = 4) + 
   scale_fill_terrain_c() +
   xlim(c(705000, 715000)) + 
-  ylim(c(5500000, 5510000)) +
+  ylim(c(5503000, 5510000)) +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +

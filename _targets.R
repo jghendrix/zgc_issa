@@ -169,11 +169,22 @@ targets_kernel <- c(
     prepare_kernel(locs_prep, "winter", "yr")
   ),
   
- # tar_target(
-  #  kernels,
-  #  akde(w_fixes)
-  #),
-  #tar_target(
+ tar_target( 
+    w_kernels,
+    akde(w_fixes, "winter")
+  ),
+ 
+ tar_target(
+   s_fixes,
+   prepare_kernel(locs_prep, "summer", "yr")
+ ),
+ 
+ tar_target( 
+   s_kernels,
+   akde(s_fixes, "summer")
+ ),
+ 
+ #tar_target(
   #  w_kernel,
   #  caribou_intensity(w_fixes)
     #,    pattern = map(w_fixes)
@@ -193,22 +204,7 @@ targets_kernel <- c(
   tar_target(
     Clad_kernel,
     kernel_stoich(Cladonia_sites, crs)
-  ),
- 
- tar_target(
-   s_fixes,
-   prepare_kernel(locs_prep, "summer", "yr")
- )
- 
- # tar_target(
- #  kernels,
- #  akde(w_fixes)
- #),
- #tar_target(
- #  w_kernel,
- #  caribou_intensity(w_fixes)
- #,    pattern = map(w_fixes)
- #),
+  )
 )
 
 # Targets: tracks ---------------------------------------------------------
@@ -917,7 +913,7 @@ targets_rss_by_speed <- c(
   tar_target(
     plot_rss_forest_speed_w,
     plot_rss_speed(rss_forest_byspeed_w, plot_theme()) +
-      labs(x = '% forest cover (100m)', y = 'logRSS',
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
            title = 'Winter RSS for forest cover by speed')
   ),
   
@@ -982,7 +978,7 @@ targets_rss_by_speed <- c(
   tar_target(
     plot_rss_forest_speed_s,
     plot_rss_speed(rss_forest_byspeed_s, plot_theme()) +
-      labs(x = '% forest cover (100m)', y = 'logRSS',
+      labs(x = 'Proportion forested (100m)', y = 'logRSS',
            title = 'Summer RSS for forest cover by speed')
   ),
   

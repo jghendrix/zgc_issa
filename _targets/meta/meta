@@ -1,6 +1,6 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|0c74b8fb84573649|||||||||||||||
-akde|function|54b93ae4744cb145|||||||||||||||
+.Random.seed|object|94a1c6fc8fc0638c|||||||||||||||
+akde|function|4a995dfadc2cc528|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
 calc_rss|function|e5633c936e184a51|||||||||||||||
@@ -272,8 +272,8 @@ plot_rss_Cladonia_taw|stem|b5cc38cc0e96cd5d|a0df54a3f5c40265|430b9545b4b82b67|-1
 plot_rss_Cladonia_w|stem|407eb966546b2440|3a408a7806cdfed1|9d9f2dc2dbe62e1c|385184317||t20378.6171693037s|c8555ab1a1046301|294290|qs|local|vector|||0.07||
 plot_rss_forest_r|stem|bc605392c1d99ca0|df1ff198856c1712|d324802d99106380|-1274454037||t20334.8327958171s|cd22ddd8807c2938|299440|qs|local|vector|||0.06||
 plot_rss_forest_s|stem|6f07a5ef6a73b8fe|5009939ff80fc744|ca381c5d7c984768|558072572||t20378.6265085617s|f62f0aa1e912d9ed|298031|qs|local|vector|||0.06||
-plot_rss_forest_speed_s|stem|2e7cc225b2300f41|d08543f0aa9c868d|ca3db587ad70a1fa|-576804929||t20378.6701605055s|892e8386067d0679|800969|qs|local|vector|||0.22||
-plot_rss_forest_speed_w|stem|6baf4c5489be3f45|21e91c43dd879ec9|c8a7c5bacfc05ace|379344128||t20378.6701696574s|e35ddccdebd2a93a|794638|qs|local|vector|||0.08||
+plot_rss_forest_speed_s|stem|d80296b40c40eb3b|95ae18ab352d048f|ca3db587ad70a1fa|-576804929||t20406.589164266s|d063eda2c4933bea|800977|qs|local|vector|||0.15||
+plot_rss_forest_speed_w|stem|ab777486d43d64ca|cfcd8019cd56d504|c8a7c5bacfc05ace|379344128||t20406.5891673655s|5b39b2df13e839bc|794647|qs|local|vector|||0.06||
 plot_rss_forest_ta|stem|807d1bcdccd3a5a9|855d2a3ec2a307fc|070f8bae39202443|347497241||t20356.6591821615s|25a9676ccf69a2db|315789|qs|local|vector|||0.06||
 plot_rss_forest_taw|stem|ae707f58a47ab62d|80df00b1dc445efc|5861dbbf34dba891|1025877484||t20356.7192001885s|127e7cdc82bf0a73|300281|qs|local|vector|||0.09||
 plot_rss_forest_w|stem|e08f73d0356c7f81|e0eae23fddb12d04|33cafea8f3e75781|1125815976||t20378.6171713122s|ab1c6edf50bc5291|295652|qs|local|vector|||0.04||
@@ -359,7 +359,7 @@ predict_h2_speed|function|6b768ebc77299b78|||||||||||||||
 prep_speed_summer|stem|75ae0ae0bd162f0b|ef29b75f162c1c85|aa197899d6fac2ab|829739165||t20350.8849172854s|4af3fa6e24072f8b|2425|qs|local|vector|||0.13||
 prep_speed_winter|stem|abd3cd3c5a414837|e4f45d78816fde3f|a06b83612ca5227e|914348213||t20351.445464409s|a6d8051a64448cf1|2271|qs|local|vector|||0.71||
 prepare_data|function|78de06a8664cfa95|||||||||||||||
-prepare_kernel|function|a794422f717818d3|||||||||||||||
+prepare_kernel|function|3cb2070da16dec26|||||||||||||||
 prepare_locs|function|e175e22dcb562cf2|||||||||||||||
 prepare_model|function|d511ad53b3c22f9b|||||||||||||||
 prepare_speed|function|bc845305ae30ca8a|||||||||||||||
@@ -399,7 +399,8 @@ rss_vasc_s|stem|d5bd2644abf3aed5|46ff24b6329b17a1|f07c7b9c991587ec|-1220762161||
 rss_vasc_ta|stem|c1fb45eb9c82e46b|b01ef18ad2bf63f3|c1ca377c19abe91e|-551456761||t20356.6591694302s|37088d6fc25896e3|60423|qs|local|vector|||0.02||
 rss_vasc_taw|stem|86707f695b8e7f8f|547ddc9d5c4ae9f2|382e9690904d1ce1|-1377066736||t20356.7191899407s|4cdb027b1266131a|55525|qs|local|vector|||0.05||
 rss_vasc_w|stem|de4d1f1922c10d25|d10f60db84124285|607438657e745be8|942298831||t20378.6171612927s|a04ce333de57298d|52838|qs|local|vector|||0.03||
-s_fixes|stem|a9314fa26de6fb71|fb8bf64b02e955d1|95b90871cc5d6d95|-1343072823||t20377.735872077s|43fd6819a33bdd7d|1013255|qs|local|vector|||0.47||
+s_fixes|stem|84f77f11ffadc666|fb8bf64b02e955d1|18c139add346d90b|-1343072823||t20406.6485775074s|fd0f19258e4fd59a|767591|qs|local|vector|||0.95||
+s_kernels|stem||a25cacf9f70e18db|9daf62be0cdad6b3|-1513346564||t20406.7064402827s||0|qs|local|vector|||4541.12|Times might be out of order or duplicated in FO2016002. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016003. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016004. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016005. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016009. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016012. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016013. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2016015. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2017007. Make sure that timeformat and timezone are correctly specified.. Times might be out of order or duplicated in FO2017008. Make sure that timeformat and timezone are correctly specified.. MLE is near a boundary or optimizer failed.|select doesnt handle lists.
 save_plot|function|0bdfbb6d83df4dd9|||||||||||||||
 save_rss_plot|function|17b2538f4255a538|||||||||||||||
 scale_kernel|function|7ceb6d8a801336c3|||||||||||||||
@@ -440,7 +441,7 @@ summer_ratio|stem|c9eaf743a400f4f3|d426f0721d565e4a|76c3ad93954651fd|-2047373249
 summer_ratio_plots|stem|cebe277d270bda0b|4e4b00fa8d374e56|e570e65501c9dbd6|2125052850||t20334.8328719991s|ff026697d66e9a9f|75|qs|local|vector|||1.96||
 summer_rss_by_SRI|stem|0531c98d8511bf95|9daef99438015add|12c08999e0eca442|828195958||t20378.69605169s|ff026697d66e9a9f|75|qs|local|vector|||1.54||
 summer_rss_plots|stem|aec73f9bcd08061a|40906099fe3dcf7d|7eed7e7dbbf7e9af|2021187670||t20378.6265321178s|abbdb7fe746336f0|76|qs|local|vector|||1.98||
-summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|38e1aa83206801ca|-1877487464||t20378.6702267876s|8619def19bb20a44|79|qs|local|vector|||3.72||
+summer_speed_rss_plots|stem|d1cb02d6ea8fcd22|4fdb4d3815839a9c|fe4be6c59b6878a2|-1877487464||t20406.5892061743s|8619def19bb20a44|79|qs|local|vector|||3.11||
 summer_SRI|stem|69d78c86c8c61697|d1e1feba25aa0b73|55a100bfafe5909e|-1677326071||t20378.6960326666s|d3f328cd52258ea4|1934|qs|local|vector|||30.81||
 summer_ta_model|stem|8234445fedb11631|19219cc4f3b6e3f8|58589f318b13a053|519007553||t20356.5237768879s|0359b01089f095cf|178535152|qs|local|vector|||1054.13||
 summer_ta_plots|stem|0ff88d9401370536|b5c84c009530559f|8efcd01bdcd38e8b|52496615||t20356.6592213211s|c6fbfb9abe15abfd|72|qs|local|vector|||3.33||
@@ -450,9 +451,9 @@ targets_data|object|ad49d56168b95085|||||||||||||||
 targets_distributions|object|931dbd09ef2c9a64|||||||||||||||
 targets_extract|object|35bf17ec1296cb8d|||||||||||||||
 targets_fire_effects|object|97dd94dda94b087e|||||||||||||||
-targets_kernel|object|d089091e8c1e5e8b|||||||||||||||
+targets_kernel|object|e2a662b56130882f|||||||||||||||
 targets_prep|object|dfc94a2dd104f47f|||||||||||||||
-targets_rss_by_speed|object|029ab7e7678ba3c0|||||||||||||||
+targets_rss_by_speed|object|2c5cdd00e35f8ef3|||||||||||||||
 targets_rss_social_popn|object|eb53ffffdae5c44a|||||||||||||||
 targets_rss_summer|object|3118c132017280cb|||||||||||||||
 targets_rss_summer_ratio|object|361a846f43a92afe|||||||||||||||
@@ -626,7 +627,7 @@ vascular_path|object|d1323d03617fe8e6|||||||||||||||
 vascular_ratio|stem|21bbfa0831bd626b|17d668513cf42213|6966e3f1366394aa|594025394||t20314.5505886417s|e947cbec72ccedda|771|qs|local|vector|||0.11||
 vascular_ratio_file|stem|44c051d1c6a70831|16cdd4de518f4fbb|122ce6182c242a3f|-1234085756|input/Vascular_CN.tif|t20314.5422643658s|b20fb81030c54e8f|37069602|file|local|vector|||0||
 vascular_ratio_path|object|44c92f8c7622e5c2|||||||||||||||
-w_fixes|stem|633145db4641bbb6|fd819644509c9a98|95b90871cc5d6d95|-2117111093||t20370.609939738s|a8e9d07f79d5927e|879362|qs|local|vector|||0.45||
+w_fixes|stem|e582af8677fa236a|fd819644509c9a98|18c139add346d90b|-2117111093||t20406.6485788756s|9a540b53ed460f41|834108|qs|local|vector|||0.07||
 w_kernel|stem|6dd71d12008128c1|bf30093102315458|4ee51af938790b2a|-2058650398||t20369.6993244023s|de1c6d017cb4e8a8|38|qs|local|vector|||4.85||
 w_kernel_17571f27|branch|339f5f321b2a837d|bf30093102315458|54b5ba7b195470cd|1164666401||t20369.6826607337s|433dec921f783554|443229|qs|local|vector|w_kernel||2.25||
 w_kernel_4030f68f|branch|339f5f321b2a837d|bf30093102315458|54b5ba7b195470cd|-1480211401||t20369.6827472072s|433dec921f783554|443229|qs|local|vector|w_kernel||1.67||
@@ -650,7 +651,7 @@ winter_prep|stem|40fbc537ee071677|923c2e8a9d945709|7236791a1677c952|-1461948889|
 winter_ratio|stem|523c8b2979812022|4249e1c7ddd34dd9|72cea26eb1084997|994097338||t20334.7566301364s|ee4cf196d3a47051|135070144|qs|local|vector|||3651.22|NANaN function evaluation. NANaN function evaluation. NANaN function evaluation. Model convergence problem nonpositivedefinite Hessian matrix. See vignettetroubleshooting. Model convergence problem false convergence 8. See vignettetroubleshooting, helpdiagnose|
 winter_rss_by_SRI|stem|c465e4d21798364f|6bb08fb8fd21036b|bb05bc4d8731bb32|1489754865||t20378.6950495081s|8619def19bb20a44|79|qs|local|vector|||1.67||
 winter_rss_plots|stem|6925b79ededa1529|bc4f1fc7fa4d148e|fba8b806533c4479|632338834||t20378.6171937282s|abbdb7fe746336f0|76|qs|local|vector|||1.9||
-winter_speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|96b2e5898717dfbf|2054416414||t20378.6702530899s|8619def19bb20a44|79|qs|local|vector|||2.2||
+winter_speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|0e9d0667977702e0|2054416414||t20406.589228477s|8619def19bb20a44|79|qs|local|vector|||1.77||
 winter_SRI|stem|4e7f3e7ccd44916b|fdb9009395901857|70a2dc5ab9d505a3|296145730||t20378.695029096s|eecad1b394aa1d9e|1987|qs|local|vector|||29.9||
 winter_ta_boxplot|stem|1ebd42e663a5bed9|9da52ff3c8798700|bdf071293fcde854|220504864||t20314.9139119199s|a05bd40045694929|136415|qs|local|vector|||0.05||
 winter_ta_model|stem|d82b7b2fed69b3c5|e57dec7702f9e7bf|237006853f707011|-1792265813||t20356.5342818199s|5412b460a829a145|159781761|qs|local|vector|||902.61||

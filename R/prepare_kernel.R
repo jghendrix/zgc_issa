@@ -3,6 +3,8 @@
 #' @author Jack G Hendrix
 prepare_kernel <- function(DT, season, split_by) {
 
+  DT %<>% filter(y_ > 49.64336) #from FO2023011, the southern cutoff
+  
   if(season == "winter"){
     
     DT %<>% filter(doy < 61)

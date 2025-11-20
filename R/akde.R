@@ -4,17 +4,21 @@
 akde <- function(DT, season) {
   
   #DT <- w_fixes
-  DT %<>% dplyr::select(Longitude = x_, 
-                        Latitude = y_, 
+  #DT <- tracks %>% dplyr::filter(doy < 61 & y_ > 5503000)
+  #DT %<>% as.data.table()
+  DT %<>% dplyr::select(location_long = x_, 
+                        location_lat = y_, 
                         id = Animal_ID,
-                        timestamp = t_)
+                        timestamp = t_) %>%
+    arrange(timestamp, by = id)
   
-  conflicts_prefer(ctmm::head)
+# long lat CANNOT be called X and Y, else it thinks they're UTM values in zone 1. jesus christ. 
+
+    conflicts_prefer(ctmm::head)
   
-  DTt <- as.telemetry(DT, projection = crs("epsg:32621")) 
+  DTt <- as.telemetry(DT, projection = "epsg:32621")
   
-  
-  # check what it's projected as...
+     # check what it's projected as...
   ctmm::projection(DTt)
   # ok, good to go
   

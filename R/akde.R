@@ -3,7 +3,7 @@
 
 akde <- function(DT, season) {
   
-  #DT <- w_fixes
+  #DT <- s_fixes
   #DT <- tracks %>% dplyr::filter(doy < 61 & y_ > 5503000)
   #DT %<>% as.data.table()
   DT %<>% dplyr::select(location_long = x_, 
@@ -36,6 +36,13 @@ akde <- function(DT, season) {
     FITS[[i]] <- ctmm.fit(DTt[[i]],GUESS)
     
   }
+  
+  
+  
+  #starting summer kernel 10pm on Nov 20th
+  
+  #season <- "summer"
+  
   
   AKDES <- akde(DTt, FITS)
   

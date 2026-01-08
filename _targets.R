@@ -90,19 +90,6 @@ targets_data <- c(
     vascular,
     vascular_path,
     raster(!!.x)
-  ),
-
-  tar_target(
-    coast,
-    get_coastline(bb, crs)
-  ),
-  tar_target(
-    roads,
-    get_roads(bb, crs)
-  ),
-  tar_target(
-    water,
-    get_lakes(bb, crs)
   )
 )
 

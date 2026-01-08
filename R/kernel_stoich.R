@@ -2,7 +2,6 @@
 
 kernel_stoich <- function(DT, crs) {
 
- 
   locs <- setDT(DT)
   pt <- c('x', 'y')
   

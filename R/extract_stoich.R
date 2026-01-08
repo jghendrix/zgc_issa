@@ -9,17 +9,10 @@ extract_stoich <- function(DT, crs, stoich, var, pixel) {
   crs(stoich) <- crs$wkt
   
   r <- rast(stoich) 
-  # stoich rasters are at a 5m resolution, can we average those out to like 30m?
-  
-  # first sub 0s for NAs, if it's the percentage map. we don't want to impute zeros for the C:N ratio b/c 0 is extremely HIGH quality forage
-  
-  
-  if(var == "N_Cladonia" | var == "N_vasc") {
-    r  %<>% classify(cbind(NA, 0))
-  }
-  else{}
-  
-  # then aggregate 5m to 30m
+  # stoichiometry rasters are at a 5m resolution
+  # 'pixel' argument is a factor by which to average calls - pixel = 6 transforms to 30m cells, the same scale as the land cover map
+
+  # aggregate 5m to 30m
   r2 <- aggregate(r, fact = pixel)
   
   r3 <- raster(r2)

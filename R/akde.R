@@ -1,9 +1,9 @@
-# Calculating aKDE for winter caribou data
+# Calculating aKDE for caribou data
 # This takes forever, we already did it and wrote to an .rds file, just read that into the workflow in subsequent analyses
 
 akde <- function(DT, season) {
   
-  #DT <- s_fixes
+  #DT <-w_fixes
   #DT <- tracks %>% dplyr::filter(doy < 61 & y_ > 5503000)
   #DT %<>% as.data.table()
   DT %<>% dplyr::select(location_long = x_, 

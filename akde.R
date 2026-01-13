@@ -7,7 +7,8 @@ akde <- function(DT, season) {
   DT %<>% dplyr::select(Longitude = x_, 
                         Latitude = y_, 
                         id = Animal_ID,
-                        timestamp = t_)
+                        timestamp = t_) %>%
+    arrange(timestamp, by = id)
   
   conflicts_prefer(ctmm::head)
   
@@ -35,7 +36,7 @@ akde <- function(DT, season) {
   
   AKDES <- akde(DTt, FITS)
   
-  saveRDS(AKDES, paste0('output/kernels/', season, '_akdes.Rds'))
+  saveRDS(AKDES, paste0('output/kernels/', season, '_north_akdes.Rds'))
   
   # color to be spatially distinct
  # COL <- color(AKDES, by='individual')

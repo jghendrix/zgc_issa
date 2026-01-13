@@ -113,25 +113,25 @@ targets_prep <- c(
 )
 
 # Targets: caribou kernel density (for appendix) -------------------------
-targets_kernel <- c(
-  tar_target(
-    w_fixes,
-    prepare_kernel(locs_prep, "winter", "yr")
-  ),
- tar_target( 
-    w_kernels,
-    akde(w_fixes, "winter")
-  ),
- 
- tar_target(
-   s_fixes,
-   prepare_kernel(locs_prep, "summer", "yr")
- ),
- tar_target( 
-   s_kernels,
-   akde(s_fixes, "summer")
- )
-)
+# targets_kernel <- c(
+#   tar_target(
+#     w_fixes,
+#     prepare_kernel(locs_prep, "winter", "yr")
+#   ),
+#  tar_target( 
+#     w_kernels,
+#     akde(w_fixes, "winter")
+#   ),
+#  
+#  tar_target(
+#    s_fixes,
+#    prepare_kernel(locs_prep, "summer", "yr")
+#  ),
+#  tar_target( 
+#    s_kernels,
+#    akde(s_fixes, "summer")
+#  )
+# )
 
 # Targets: tracks ---------------------------------------------------------
 targets_tracks <- c(

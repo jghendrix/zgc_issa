@@ -9,6 +9,54 @@ summer.ud <- mean(AKDES)
 winter <- readRDS('output/kernels/akdes.Rds')
 winter.ud <- mean(winter)
 
+fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
+
+## 12 January - trying to get polygons of summer and winter ranges
+summer_poly <- SpatialPolygonsDataFrame.UD(summer.ud,
+                                          level.UD = 0.95)
+summer_con <- SpatialPolygonsDataFrame.UD(summer.ud, convex = TRUE,
+                                           level.UD = 0.95)
+terra::plot(summer_poly)
+terra::plot(summer_con)
+
+winter_poly <- SpatialPolygonsDataFrame.UD(winter.ud, level.UD = 0.95)
+terra::plot(winter_poly)
+
+# Ok, I think this worked, but I don't know what we're looking at?
+tar_load(lichen)
+lich <- rast(lichen)
+epsg <- 32621
+crs <- st_crs(epsg)
+crs_sp <- CRS(crs$wkt)
+crs(lich) <- crs$wkt
+names(lich) <- "N_Cladonia"
+varnames(lich) <- "N_Cladonia"
+lich_poly <- crop(lich, fogo_poly, mask = TRUE)
+
+
+ggplot() +
+  geom_spatraster(data = lich_poly) #+
+  geom_spatvector(data = summer_poly)
+
+
+
+
+
+sk <- rast(raster(summer.ud))
+wk <- rast(raster(winter.ud))
+
+scrop <- crop(sk, fogo_poly, mask = TRUE) %>%
+  rename(summer = layer) %>%
+  filter(y > 5503000)
+wcrop <- crop(wk, fogo_poly, mask = TRUE) %>%
+  rename(winter = layer) %>%
+  filter(y > 5503000)
+
+
+ggplot() +
+  geom_spatraster(data = scrop) +
+  geom_spatvector(data = summer_poly, fill = "red", alpha = 0.5)
+
 ctmm::projection(summer.ud)
 ctmm::projection(winter.ud)
 

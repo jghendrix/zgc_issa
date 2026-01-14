@@ -34,7 +34,11 @@ akde <- function(DT, season) {
     
   }
   
-  AKDES <- akde(DTt, FITS)
+  saveRDS(FITS, paste0('output/kernels/', 'FITS.Rds'))
+  
+  # ^ took 2 hours approx to run for summer
+  # this next step 11:26
+  AKDES <- akde(DTt, FITS, grid = list(dr = 60))
   
   saveRDS(AKDES, paste0('output/kernels/', "summer", '_north_akdes.Rds'))
   

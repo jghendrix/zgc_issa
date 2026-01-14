@@ -4,25 +4,86 @@ library(adehabitatHR)
 library(ctmm)
 
 # 7 November - Bhattacharya overlap of summer and winter population kernels------
-AKDES <- readRDS('output/kernels/summer_akdes.Rds')
-summer.ud <- mean(AKDES)
-winter <- readRDS('output/kernels/akdes.Rds')
+summer <- readRDS('output/kernels/summer_north_akdes.Rds')
+summer.ud <- mean(summer_sub)
+# giving an error... [[5]] is not a UD object, it's a ctmm object, remove it
+summer_sub <- summer[-5]
+summer.ud <- mean(summer_sub)
+
+winter <- readRDS('output/kernels/winter_north_akdes.Rds')
 winter.ud <- mean(winter)
 
 fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
 
-## 12 January - trying to get polygons of summer and winter ranges
+## 12 January - polygons of summer and winter ranges
+### 95% kdes cover the entire island, basically
+### 50% kdes might make more sense?
+### also don't know if we want convex or actual kdes
+
 summer_poly <- SpatialPolygonsDataFrame.UD(summer.ud,
                                           level.UD = 0.95)
 summer_con <- SpatialPolygonsDataFrame.UD(summer.ud, convex = TRUE,
                                            level.UD = 0.95)
-terra::plot(summer_poly)
-terra::plot(summer_con)
+core_summer_poly <- SpatialPolygonsDataFrame.UD(summer.ud, level.UD = 0.5)
+core_summer_con <- SpatialPolygonsDataFrame.UD(summer.ud, convex = TRUE,
+                                               level.UD = 0.5)
+#terra::plot(summer_poly)
+#terra::plot(summer_con)
+summary(summer.ud, level.UD = 0.95) # 95% summer akde is 197 km2
+summary(summer.ud, level.UD = 0.50) # 50% summerakde is 51.7 km2
+summary(summer.ud, level.UD = 0.10) # 10% winter akde is 4.2 km2
 
+
+# same for winter, now
 winter_poly <- SpatialPolygonsDataFrame.UD(winter.ud, level.UD = 0.95)
-terra::plot(winter_poly)
+winter_con <- SpatialPolygonsDataFrame.UD(summer.ud, convex = TRUE,
+                                          level.UD = 0.95)
+core_winter_poly <- SpatialPolygonsDataFrame.UD(winter.ud, level.UD = 0.5)
+core_winter_con <- SpatialPolygonsDataFrame.UD(winter.ud, convex = TRUE,
+                                          level.UD = 0.5)
 
-# Ok, I think this worked, but I don't know what we're looking at?
+summary(winter.ud, level.UD = 0.95) # 95% winter akde is 270 km2
+# 95% kernel is bigger than summer? but uncertainty much larger too
+summary(winter.ud, level.UD = 0.50) # 50% winter akde is 56.2 km2
+# again, larger than core area in summer. WTF.
+summary(winter.ud, level.UD = 0.10) # 10% winter akde is 6.0 km2... still bigger
+
+# Ok, why is winter home range LARGER now? ----
+## it seems like, if we remove the southern steps, and then calculate kde using those alone, we are removing more summer data than winter. Only looking at the notrh half of the island, we see more relative use in winter
+# If we calculate akdes using the whole data set, including southern fixes. And then we take the completed home range estimate and censor it to that boundary, then winter is smaller?
+
+all_winter <- readRDS('output/kernels/winter_akdes.Rds')
+winter.full <- mean(all_winter)
+all_summer <- readRDS('output/kernels/summer_akdes.Rds')
+summer.full <- mean(all_summer)
+
+# What are these range sizes when considering the entire island?
+summary(winter.full, level.UD = 0.95) # 270 km2... bigger than Fogo
+summary(winter.full, level.UD = 0.50) # 56.2 km2
+summary(winter.ud, level.UD = 0.10) # 6.0 km2
+
+summary(summer.full, level.UD = 0.95) # 345 km2... way bigger than Fogo
+summary(summer.full, level.UD = 0.50) # 80.8 km2
+summary(summer.full, level.UD = 0.10) # 11.1 km2
+
+# so the 10%, 50% and 95% are all bigger in summer now
+# the 95% is bigger than the entire island in both cases. The 50% makes sense to use, I think?
+
+
+# Plotting -----
+# need the polygons as sf objects
+s_sf <- st_as_sf(summer_poly)
+s_vex_sf <- st_as_sf(summer_con)
+s_core_sf <- st_as_sf(core_summer_poly)
+s_core_vex_sf <- st_as_sf(core_summer_con)
+
+w_sf <- st_as_sf(winter_poly)
+w_vex_sf <- st_as_sf(winter_con)
+w_core_sf <- st_as_sf(core_winter_poly)
+w_core_vex_sf <- st_as_sf(core_winter_con)
+
+# Ok, now we just want the underlying island to plot them on top of
+
 tar_load(lichen)
 lich <- rast(lichen)
 epsg <- 32621
@@ -34,18 +95,255 @@ varnames(lich) <- "N_Cladonia"
 lich_poly <- crop(lich, fogo_poly, mask = TRUE)
 
 
+## Plot: Summer 95% range over lichen quality -----
 ggplot() +
-  geom_spatraster(data = lich_poly) #+
-  geom_spatvector(data = summer_poly)
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = s_sf, alpha = 0.3)+
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes summer 95% aKDE polygons, with 95% CI")
+ggsave(filename = "graphics/maps/summer_north_95_lichen.png",
+               height = 2000,
+               width = 2400,
+               units = "px")
+# summer 95% convex
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = s_vex_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes summer 95% aKDE convex, with 95% CI")
+ggsave(filename = "graphics/maps/summer_north_convex_95_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# summer core
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = s_core_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes summer 50% aKDE, with 95% CI")
+ggsave(filename = "graphics/maps/summer_north_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+# summer core convex
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = s_core_vex_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes summer 50% aKDE convex, with 95% CI")
+ggsave(filename = "graphics/maps/summer_north_convex_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+# Plots in Winter: 95% polygon over lichen -----
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = w_sf, alpha = 0.3)+
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes winter 95% aKDE polygons, with 95% CI")
+ggsave(filename = "graphics/maps/winter_north_95_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+# winter 95% convex
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = w_vex_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes winter 95% aKDE convex, with 95% CI")
+ggsave(filename = "graphics/maps/winter_north_convex_95_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# winter core
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = w_core_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes winter 50% aKDE, with 95% CI")
+ggsave(filename = "graphics/maps/winter_north_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+# winter core convex
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = w_core_vex_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("North GPS fixes winter 50% aKDE convex, with 95% CI")
+ggsave(filename = "graphics/maps/winter_north_convex_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+# All the plots above are using only northern GPS fixes, in which case winter ranges appear larger. What if we plot the akdes from the complete data set?
+
+winter_50_full <- SpatialPolygonsDataFrame.UD(winter.full, level.UD = 0.5)
+w_full_sf <- st_as_sf(winter_50_full)
+
+summer_50_full <- SpatialPolygonsDataFrame.UD(summer.full, level.UD = 0.5)
+s_full_sf <- st_as_sf(summer_50_full)
+
+# all winter data, core 50% plot
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = w_full_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("Full GPS dataset winter 50% aKDE, with 95% CI")
+ggsave(filename = "graphics/maps/winter_whole-island_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# all summer data, core 50% plot
+ggplot() +
+  geom_spatraster(data = lich_poly) +
+  geom_spatvector(data = s_full_sf, alpha = 0.3) +
+  labs(fill = "%N Cladonia") +
+  ggtitle("Full GPS dataset summer 50% aKDE, with 95% CI")
+ggsave(filename = "graphics/maps/summer_whole-island_50_lichen.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+
+# 14 January -----
+## 1. We want area of the winter range. 50% kde estimate is 56 km2, but this includes all of Shoal Bay. can we calculate the area excluding ocean?
+## 2. %N of lichen and the %N of plants from all the sites we have data for in the winter range and %N of lichen and the %N of plants from all the other sites. then do a simple ANOVA or Chi-Square to see if winter grounds have higher %N in lichen or vascular
+
+# 1 - winter area
+w_core_sf
+# three objects, the mean estimate and then 95% CI either side of that
+# can we calculate the area of each of these polygons that is off the coast?
+ctmm::plot(fogo_poly)
+# fogo_poly excludes freshwater too... which during winter, they do walk on sometimes... idk let's leave that be for now.
+
+# calculate intersection of these polygons?
+land_area <- st_intersection(w_core_sf, fogo_poly)
+
+st_crs(w_core_sf)
+st_crs(fogo_poly) # NAD83, let's change this to match the caribou data
+
+epsg <- 32621
+crs <- st_crs(epsg)
+crs_sp <- CRS(crs$wkt)
+fogo_trans <- st_transform(fogo_poly, crs = crs$wkt)
+
+land_area <- st_intersection(fogo_trans, w_core_sf)
+# this worked, but I think it did it for the upper 95% CI... I would like this to give me three estimates
+low <- w_core_sf %>% slice(1)
+est <- w_core_sf %>% slice(2)
+high <- w_core_sf %>% slice(3)
+
+land_lower <- st_intersection(fogo_trans, low)
+land_area <- st_intersection(fogo_trans, est)
+land_upper <- st_intersection(fogo_trans, high)
+
+
+ggplot() +
+  geom_spatvector(data = land_lower, alpha = 0.3, fill = "darkgreen") +
+  geom_spatvector(data = land_area, alpha = 0.3, fill = "darkgreen") +
+  geom_spatvector(data = land_upper, alpha = 0.3, fill = "darkgreen")
+
+terr_HR <- rbind(land_lower, land_area, land_upper) %>%
+  mutate(Id = c("lower", "est", "upper"))
+saveRDS(terr_HR, 'output/kernels/winter_50_land_area.Rds')
+
+winter_areas <- st_area(terr_HR)/1000000
+
+# Winter 50% home range land area = 38.39 km2 (LCL = 15.67, UCL = 76.04)
+
+# what is the nitrogen content within these areas?
+lich_north <- lich_poly %>%
+  filter(y > 5503000)
+
+
+#lich_inside <- st_intersection(lich_north, land_area)
+lich_vals <- extract(lich_north, land_area)
+mean(lich_vals$N_Cladonia, na.rm = T) # 0.3245888 %N in Cladonia within the mean winter core range
+
+
+# want a polygon EXCLUDING the winter range
+outside <- st_sym_difference(fogo_trans, land_area)
+lich_outside <- extract(lich_north, outside)
+mean(lich_outside$N_Cladonia, na.rm = T) # 0.3386499 %N in Cladonia outside the mean winter core range
+
+outside <- lich_outside %<>% filter(!is.na(N_Cladonia)) %>%
+  mutate(site = "outside")
+
+inside <- lich_vals %<>% filter(!is.na(N_Cladonia)) %>%
+  mutate(site = "inside")
+
+
+Cladonia <- rbind(outside, inside)
+
+ggplot(Cladonia, aes(x = site, y = N_Cladonia)) +
+  geom_boxplot()
+summary(lm(N_Cladonia ~ site, data = Cladonia))
+# lichen %N values are slightly higher outside vs. inside the core winter range
+## by .01 %, but it is highly significant.
+
+# What about vascular N vs. winter range? ----
+tar_load(vascular)
+vasc <- rast(vascular)
+crs(vasc) <- crs$wkt
+names(vasc) <- "N_vascular"
+varnames(vasc) <- "N_vascular"
+vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
+vasc_north <- vasc_poly %>%
+  filter(y > 5503000)
+
+vasc_inside <- extract(vasc_north, land_area)
+mean(vasc_inside$N_vascular, na.rm = T)
+
+outside <- st_sym_difference(fogo_trans, land_area)
+vasc_outside <- extract(vasc_north, outside)
+mean(vasc_outside$N_vascular, na.rm = T) 
+# 2.21 %N in vascular plants inside the mean winter core range
+# 2.35 %N in vascular plants outside winter range
+
+v_outside <- vasc_outside %<>% filter(!is.na(N_vascular)) %>%
+  mutate(site = "outside")
+v_inside <- vasc_inside %<>% filter(!is.na(N_vascular)) %>%
+  mutate(site = "inside")
+
+vascular <- rbind(v_outside, v_inside)
+
+summary(lm(N_vascular ~ site, data = vascular))
+# vascular %N values are  higher outside vs. inside the core winter range
+## by .14 %, but highly significant
+
+ggplot(vascular, aes(x = site, y = N_vascular)) +
+  geom_boxplot()
+
+
+
+# Ok, well then. Nitrogen levels in both vascular and lichen are higher OUTSIDE of the core winter range. So much for that.
 
 
 
 
+
+
+
+
+
+
+
+
+
+terra::plot(lich_north)
 
 sk <- rast(raster(summer.ud))
 wk <- rast(raster(winter.ud))
 
-scrop <- crop(sk, fogo_poly, mask = TRUE) %>%
+scrop <- crop(sk, fogo_poly, mask = TRUE) #%>%
   rename(summer = layer) %>%
   filter(y > 5503000)
 wcrop <- crop(wk, fogo_poly, mask = TRUE) %>%
@@ -53,9 +351,6 @@ wcrop <- crop(wk, fogo_poly, mask = TRUE) %>%
   filter(y > 5503000)
 
 
-ggplot() +
-  geom_spatraster(data = scrop) +
-  geom_spatvector(data = summer_poly, fill = "red", alpha = 0.5)
 
 ctmm::projection(summer.ud)
 ctmm::projection(winter.ud)

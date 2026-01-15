@@ -366,21 +366,79 @@ mean(vasc_outside10$N_vascular, na.rm = T)
 # 2.32 %N in vascular plants outside winter 10% KDE
 
 
+# Kristy wants actual lichen nitrogen samples relative to seasonal ranges, not the predicted values -----
+
+# something along the lines of st_contains(winter_core, sites) should do it?
+library(tidyverse)
+sites <- read_csv('input/sp_prep.csv')
+clad <- sites %>% filter(species == "Cladonia") %>%
+  dplyr::select(c(site, percent_N, x, y, Lat, Long))
+c_locs <- clad %>% filter(!duplicated(paste0(x, y)))
+
+points <- st_as_sf(c_locs, coords = c("x", "y"), crs = crs$wkt)
+
+locs <- sites %>% dplyr::select(c(site, lc, species, x, y, Lat, Long, percent_N))
+locs <- st_as_sf(locs, coords = c("x", "y"), crs = crs$wkt)
+
+inside <- c(st_intersects(points, land_area, sparse = FALSE))
+
+all_inside <- c(st_intersects(locs, land_area, sparse = FALSE))
+
+all_sp <- cbind(locs, all_inside)
+
+ggplot() +
+  geom_spatvector(data = land_area) +
+  geom_point(data = c_locs, aes(x = x, y = y))
+# I think this actually worked!
+
+group <- pts %>% dplyr::select(Lat, Long, inside)
+
+clad_g <- left_join(clad, group, by = c("Lat", "Long"))
 
 
+ggplot(clad_g, aes(x = inside, y = percent_N)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.4) +
+  xlab("Within winter range") +
+  ylab("%N in Cladonia")
+
+clad_g %>% group_by(inside) %>%
+  summarise(n = n(),
+            mean = mean(percent_N, na.rm = T), 
+            median = median.default(percent_N, na.rm = T), 
+            sd = sd(percent_N, na.rm = T))
 
 
+summary(lm(percent_N ~ inside, data = clad_g))
+# No difference wrt lichen N, at least
+
+all_sp %<>%
+  filter(species != "Black_spruce" & species != "graminoid_spp.") %>%
+  rename(winter_range = all_inside)
 
 
+summary(lm(percent_N ~ winter_range*species, data = all_sp))
+ggplot(all_sp, aes(x = species, y = percent_N, colour = winter_range)) +
+  geom_boxplot()
 
+lcs <- all_sp %>% filter(!duplicated(site)) %>%
+  group_by(lc, winter_range) %>%
+  summarise(n = n()) %>%
+  ungroup()
 
+lcs %<>% group_by(winter_range) %>%
+  mutate(prop_inside = n/sum(n)) %>%
+  ungroup() %>%
+  dplyr::select(-c(geometry))
 
+summary(lm(percent_N ~ winter_range + lc, data = subset(all_sp, species == "Cladonia")))
 
+cladonia <- all_sp %>% filter(species == "Cladonia") %>%
+  mutate(open = ifelse(lc %in% c("Wetland", "Scrub", "Rocky", "Lichen"), "open", "closed"))
 
-
-
-
-
+ggplot(cladonia, aes(x = open, y = percent_N, colour = winter_range)) +
+  geom_boxplot()
+summary(lm(percent_N ~ winter_range*open, data = cladonia))
 
 
 terra::plot(lich_north)

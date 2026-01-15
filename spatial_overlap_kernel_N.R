@@ -92,7 +92,8 @@ crs_sp <- CRS(crs$wkt)
 crs(lich) <- crs$wkt
 names(lich) <- "N_Cladonia"
 varnames(lich) <- "N_Cladonia"
-lich_poly <- crop(lich, fogo_poly, mask = TRUE)
+lich_poly <- crop(lich, fogo_poly, mask = TRUE) %>%
+  filter(y > 5503000)
 
 
 ## Plot: Summer 95% range over lichen quality -----
@@ -325,6 +326,50 @@ ggplot(vascular, aes(x = site, y = N_vascular)) +
 
 
 # Ok, well then. Nitrogen levels in both vascular and lichen are higher OUTSIDE of the core winter range. So much for that.
+
+# What if we go even more core? 10%? ----
+winter_10 <- SpatialPolygonsDataFrame.UD(winter.full, level.UD = 0.1)
+w_10_sf <- st_as_sf(winter_10)
+
+low10 <- w_10_sf %>% slice(1)
+mean10 <- w_10_sf %>% slice(2)
+high10 <- w_10_sf %>% slice(3)
+
+lower10 <- st_intersection(fogo_trans, low10)
+inside10 <- st_intersection(fogo_trans, mean10)
+upper10 <- st_intersection(fogo_trans, high10)
+
+
+# 10% KDE vs. Cladonia N
+inside_10_lichen <- extract(lich_north, inside10)
+mean(inside_10_lichen$N_Cladonia, na.rm = T) # 0.3255207 %N in Cladonia within the 10% winter KDE
+
+# want a polygon EXCLUDING the winter 10% range
+outside10 <- st_sym_difference(fogo_trans, inside10)
+lich_outside10 <- extract(lich_north, outside10)
+mean(lich_outside10$N_Cladonia, na.rm = T) 
+# 0.335053 %N in Cladonia outside the mean winter core range
+
+
+ggplot() +
+  geom_spatraster(data = lich_north) +
+  geom_spatvector(data = inside10, alpha = 0.3, fill = "darkgreen")
+
+
+# What about at the 10% KDE for vascular? ----
+vasc_inside10 <- extract(vasc_north, inside10)
+mean(vasc_inside10$N_vascular, na.rm = T) # 2.108391
+
+vasc_outside10 <- extract(vasc_north, outside10)
+mean(vasc_outside10$N_vascular, na.rm = T) 
+# 2.11 %N in vascular plants inside the 10% winter aKDE
+# 2.32 %N in vascular plants outside winter 10% KDE
+
+
+
+
+
+
 
 
 

@@ -441,6 +441,116 @@ ggplot(cladonia, aes(x = open, y = percent_N, colour = winter_range)) +
 summary(lm(percent_N ~ winter_range*open, data = cladonia))
 
 
+wint <- all_sp %>% dplyr::select(c(site, winter_range)) %>%
+  filter(!duplicated(site))
+wkdes <- as.data.frame(wint) %>% dplyr::select(c(site, winter_range)) 
+saveRDS(wkdes, 'output/sites_in_winter_kernel.Rds')
+
+# how many alder are we working with?
+all_sp %>% filter(species == "Alder") %>% group_by(winter_range) %>% summarise(n = n())
+
+# 19 January - extract continuous winter kernel for each site, rather than 50% kernel inside vs. outside -----
+locs <- sites %>% dplyr::select(c(site, lc, species, x, y, Lat, Long, percent_N)) %>%
+  filter(species != "Black_spruce" & species != "graminoid_spp.")
+
+w_rast <- raster(winter.ud)
+s_rast <- raster(summer.ud)
+
+DT <- setDT(locs)
+
+# extract_pt is an Alec function in R/
+extract_pt(DT, w_rast, coords = c("x", "y"))
+extract_pt(DT, s_rast, coords = c("x", "y"))
+DT %<>% rename(winter_k = pt_w_rast,
+               summer_k = pt_s_rast)
+
+saveRDS(DT, "output/stoich_w_continuous_kde.Rds")
+
+ggplot(DT, aes(x = winter_k, y = percent_N
+               #, colour = species
+               )) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm") +
+  scale_colour_viridis(discrete = TRUE, option = "B", end = 0.9) +
+  theme_bw() +
+  labs(x = "Winter KDE", y = "% nitrogen content", title = "Forage N content by winter intensity of use")
+ggsave(filename = "graphics/maps/N_by_winter_KDE_continuous.png",
+       height = 1600,
+       width = 2000,
+       units = "px")
+
+# facet out each species?
+ggplot(DT, aes(x = winter_k, y = percent_N)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm") +
+  facet_wrap(vars(species), nrow = 2) +
+  theme_bw() +
+  labs(x = "Winter KDE", y = "% nitrogen content", title = "Forage N content by winter intensity of use")
+
+ggsave(filename = "graphics/maps/N_by_winter_KDE_continuous_faceted.png",
+       height = 1600,
+       width = 2000,
+       units = "px")
+
+summary(winter <- lm(percent_N ~ species*winter_k, data = DT))
+#  non-sig positive slope for Alder,,, but I want slopes for each level
+
+spp <- unique(DT$species)
+
+for(i in spp){
+  
+  dat <- DT %>% filter(species == i)
+  print(i)
+  print(summary(i <- lm(percent_N ~ winter_k, data = dat)))
+}
+
+# what about summer kernel effect on plants? 
+ggplot(DT, aes(x = summer_k, y = percent_N, colour = species)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm") +
+  scale_colour_viridis(discrete = TRUE, option = "B", end = 0.9) +
+  theme_bw() +
+  labs(x = "Summer KDE", y = "% nitrogen content", title = "Forage N content by summer intensity of use")
+ggsave(filename = "graphics/maps/N_by_summer_KDE_continuous.png",
+       height = 1600,
+       width = 2000,
+       units = "px")
+
+# facet out each species?
+ggplot(DT, aes(x = winter_k, y = percent_N)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm") +
+  facet_wrap(vars(species), nrow = 2) +
+  theme_bw() +
+  labs(x = "Winter KDE", y = "% nitrogen content", title = "Forage N content by winter intensity of use")
+
+ggsave(filename = "graphics/maps/N_by_winter_KDE_continuous_faceted.png",
+       height = 1600,
+       width = 2000,
+       units = "px")
+
+summary(winter <- lm(percent_N ~ species*winter_k, data = DT))
+#  non-sig positive slope for Alder,,, but I want slopes for each level
+
+spp <- unique(DT$species)
+
+for(i in spp){
+  
+  dat <- DT %>% filter(species == i)
+  print(i)
+  print(summary(i <- lm(percent_N ~ winter_k, data = dat)))
+}
+
+
+
+library(visreg)
+visreg(winter, "winter_k", by = "species", overlap = FALSE)
+
+
+
+
+
+
 terra::plot(lich_north)
 
 sk <- rast(raster(summer.ud))

@@ -489,7 +489,7 @@ ggplot(DT, aes(x = winter_k, y = percent_N)) +
 
 ggsave(filename = "graphics/maps/N_by_winter_KDE_continuous_faceted.png",
        height = 1600,
-       width = 2000,
+       width = 2400,
        units = "px")
 
 summary(winter <- lm(percent_N ~ species*winter_k, data = DT))
@@ -517,28 +517,25 @@ ggsave(filename = "graphics/maps/N_by_summer_KDE_continuous.png",
        units = "px")
 
 # facet out each species?
-ggplot(DT, aes(x = winter_k, y = percent_N)) +
+ggplot(DT, aes(x = summer_k, y = percent_N)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm") +
   facet_wrap(vars(species), nrow = 2) +
   theme_bw() +
-  labs(x = "Winter KDE", y = "% nitrogen content", title = "Forage N content by winter intensity of use")
+  labs(x = "Summer KDE", y = "% nitrogen content", title = "Forage N content by summer intensity of use")
 
-ggsave(filename = "graphics/maps/N_by_winter_KDE_continuous_faceted.png",
+ggsave(filename = "graphics/maps/N_by_summer_KDE_continuous_faceted.png",
        height = 1600,
-       width = 2000,
+       width = 2400,
        units = "px")
 
-summary(winter <- lm(percent_N ~ species*winter_k, data = DT))
+summary(summer <- lm(percent_N ~ species*summer_k, data = DT))
 #  non-sig positive slope for Alder,,, but I want slopes for each level
 
-spp <- unique(DT$species)
-
 for(i in spp){
-  
   dat <- DT %>% filter(species == i)
   print(i)
-  print(summary(i <- lm(percent_N ~ winter_k, data = dat)))
+  print(summary(i <- lm(percent_N ~ summer_k, data = dat)))
 }
 
 
@@ -547,9 +544,37 @@ library(visreg)
 visreg(winter, "winter_k", by = "species", overlap = FALSE)
 
 
+# 20 January - comparing upper and lower quartiles, maybe?
+
+DT <- readRDS('output/stoich_w_continuous_kde.Rds')
+hist(DT$winter_k)
+# two natural breakpoints in the data, between 26 and 26%, and 61 and 73%
+# take everything below 30 and above 70 as high vs. low
+DT %<>% mutate(winter_bin = ifelse(winter_k < 0.3, "core", NA),
+               winter_bin = ifelse(winter_k > 0.7, "peripheral", winter_bin))
+
+bins <- DT %>% filter(!is.na(winter_bin))
+
+ggplot(bins, aes(x = winter_bin, y = percent_N)) +
+  geom_boxplot() +
+  facet_wrap(vars(species), nrow = 2) +
+  theme_bw()
+
+summary(lm(percent_N ~ winter_bin*species, data = bins))
+
+spp <- unique(bins$species)
+
+for(i in spp){
+  
+  dat <- bins %>% filter(species == i)
+  print(i)
+  print(summary(i <- lm(percent_N ~ winter_bin, data = dat)))
+}
+
+# Eh, basically the same as the linear regression, nevermind
 
 
-
+### Other -----
 
 terra::plot(lich_north)
 

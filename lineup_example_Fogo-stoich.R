@@ -1,3 +1,5 @@
+## Lineup protocol to test iSSA goodness of fit
+
 library(amt)
 library(tidyverse)
 library(terra)
@@ -7,36 +9,19 @@ library(tidyterra)
 library(sp)
 
 
-w.comp <- readRDS('output/winter_sims.Rds')
-s.comp <- readRDS('output/summer_sims.Rds')
-
-# Real data
-
-sim_s <- ggplot() + 
-  geom_path(data = subset(s.comp, id == 20), aes(x_, y_), 
-            col = "black") +
- # xlim(c(700000, 710000)) + 
-  #ylim(c(5505000, 5515000)) +
-  xlab("") +
-  ylab("") +
-  theme_bw()
-
-sim_w
-sim_s
-
-# THE ORDER WASN'T RANDOMIZED UGHHHH
+# Generating simulations takes a while, saved some in the output/ folder after first run if not doing from scratch
+## Can skip to Line______ if not running the simulation again to load the output/sims.Rds files
 
 
-# This simulation system is built with amt... my model is glmmTMB
-
-# amt has a make_issf_model() function
+# This simulation system is built with amt, but our model is glmmTMB
+# amt has a make_issf_model() function that we want to use to convert our model
 # you have to manually define the coefficients as a vector
-# let's focus on the winter %N model for now?
 
-# We need a single stacked raster with all of the predictors in it -----
+## First, let's focus on the winter %N model ----
+
+# We need a single stacked raster with all of the predictors in it
 # easy enough for lichen + vascular stoich, but what about prop forest?
-# we subsampled that out into a raster to extract from in the targets workflow, can we just pull that one in?
-
+# we subsampled that out into a raster to extract from in the targets workflow, just pull that one in?
 forest <- raster('output/prop_forest.tif')
 f.terra <- rast(forest)
 targets::tar_load(lichen)
@@ -44,7 +29,7 @@ lich <- rast(lichen)
 targets::tar_load(vascular)
 vasc <- rast(vascular)
 
-# need the forest % back in 5m cells to match up with the stoich, though
+# need the forest % back in 5m cells to match up with the stoich layers, though
 f5 <- disagg(f.terra, 20)
 # then shift it to match the stoich layers
 fshift <- terra::shift(f5, dx = 5, dy = 115)
@@ -66,66 +51,83 @@ names(vasc) <- "N_vasc"
 varnames(vasc) <- "N_vasc"
 names(ftrim) <- "prop_forest"
 varnames(ftrim) <- "prop_forest"
+# Then bring the different predictor surfaces together
 layers <- c(ftrim, lich)
 layers <- c(layers, vasc)
 
+# Save this stacked raster for future needs so we don't have to mess with that again
 writeRaster(layers, 'output/issa_preds.tif')
 
-# Crop raster to Fogo perimeter -----
-# Also want to include a perimeter of Fogo somehow
-# could use the shape file to mask the rasters to NA outside of the poly
+# We want the separate rasters to use as underlying maps to plot the simulations on top of, after we've generated the simulated tracks
+# crop each raster using the Fogo shapefile, and focus on northern half of island
 fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
-forest_poly <- crop(ftrim, fogo_poly, mask = TRUE)
-lich_poly <- crop(lich, fogo_poly, mask = TRUE)
-vasc_poly <- crop(vasc, fogo_poly, mask = TRUE)
+forest_poly <- crop(ftrim, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
+lich_poly <- crop(lich, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
+vasc_poly <- crop(vasc, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
 
-layers_poly <- crop(layers, fogo_poly, mask = TRUE)
-layers_poly %<>% filter(y > 5503000)
 
 ## WORKFLOW STARTS HERE-----
-#layers <- rast(raster('output/issa_surface.tif'))
+# read in layers if using the saved raster stack
+# layers <- rast(raster('output/issa_surface.tif'))
 
 ## Winter comparisons of 19 simulations to one real ----
-# first need to make our amt() version of the model
+
+# first we need to make our amt() version of the model
+# reminder of what the parameter estimates look like
 summary(winter_model)
 
-# ignoring the individual random effects, I suppose
+# ignoring the individual random effects
 w.coefs <- c("log(sl_)" = -0.023459,
-           "cos(ta_)" = -0.005796,
-           "N_Cladonia_end" = -0.765825,
-           "N_vasc_end" = 0.328766,
-           "prop_forest_end" = -0.047950,
-           "log(sl_):prop_forest_end" = -0.406460,
-           "log(sl_):N_Cladonia_end" = 0.426530,
-           "log(sl_):N_vasc_end" = -0.041197
+             "cos(ta_)" = -0.005796,
+             "N_Cladonia_end" = -0.765825,
+             "N_vasc_end" = 0.328766,
+             "prop_forest_end" = -0.047950,
+             "log(sl_):prop_forest_end" = -0.406460,
+             "log(sl_):N_Cladonia_end" = 0.426530,
+             "log(sl_):N_vasc_end" = -0.041197
 )
-# what were the parameters of the distribution we drew from?
+
+# Also need the parameters of the step length and turn angle distributions we drew from
 # each individual got its own distributions, but if we average those to the population for both seasons
-# kappa 0.1634281    
-# shape 0.6341374   
-# scale 378.2702
+# kappa = 0.1634281    
+# shape = 0.6341374   
+# scale = 378.2702
 
+# Using those parameters, specify a new amt iSSF model
 wint <- amt::make_issf_model(coefs = w.coefs,
-                       sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
-                       ta = make_vonmises_distr(kappa = 0.1634281)
+                             sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
+                             ta = make_vonmises_distr(kappa = 0.1634281)
 )
 
 
-# maybe start with which step begins around the origin we picked above...
+# Now need to load the winter data
+# subset to only the real observed steps, not the random ones we generated
 tar_load(winter_prep)
 winter_steps <- winter_prep %>% filter(case_ == TRUE)
 
-# where do most of these steps start?
-# pick an individual to start with... 2016013 has the most steps
+# We need to randomly select an individual
+indivs <- winter_steps %>% dplyr::filter(!duplicated(id)) %>% slice_sample(n = 1)
+# FO2016013 was selected
+# We need a general starting point from which to run all the simulations, where is a good starting point from this animal's data?
+# where do most of their steps start?
 fogo <- winter_steps %>% filter(id == "FO2016013")
-hist(subset(fogo,x1_ > 702000 & x1_ < 706000)$x1_, breaks = 30)
-# let's call it 703500
-hist(subset(fogo, x1_ > 702000 & x1_ < 706000)$y1_, breaks = 30)
-# and 5511000
+hist(fogo$x1_, breaks = 50)
+hist(fogo$y1_, breaks = 50)
 
-# we should generate new starting points for the 19 references, using different starts
+# let's call it ~703500 and ~5511000
 
-# Run 19 distinct simulations with different starting points ------
+# we should generate new starting points for the 19 simulations, using different starts within ~1.5km of this region
+# Randomly select a start point within our parameters to choose the actual track for comparing against the 19
+begin <- fogo %>% filter(x1_ > 702000 & x1_ < 706000 & y1_ > 5510000 & y1_ < 5512000)
+# 959 options for starting points of a 120-step segment 
+begin %<>% slice_sample(n = 1)
+# random selection turned out to be step_id_ 14344
+
+w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ < (14344 + 120)) %>%
+  make_track(x1_, y1_, t1_) %>%
+  mutate(id = 20) # how we will distinguish this from the 19 simulated
+
+# Run 19 distinct simulations with different starting points
 n <- 19
 ssf_sim <-list()
 
@@ -137,11 +139,11 @@ for(i in 1:n){
                       ta_ = 0)
   
   rdk <- amt::redistribution_kernel(wint, 
-                               start = start,
-                               map = layers,
-                               as.rast = FALSE,
-                               landscape= "continuous",
-                              tolerance.outside = 0.1)
+                                    start = start,
+                                    map = layers,
+                                    as.rast = FALSE,
+                                    landscape= "continuous",
+                                    tolerance.outside = 0.1)
   
   # Originally did 50 steps, but we should extend that probably eh?
   ssf_sim[[i]] <- simulate_path(rdk, n.steps = 120) 
@@ -158,45 +160,45 @@ ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
 #ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
 
 #ggplot() + 
- # geom_spatraster(data = lich)  +
-  #geom_path(data = ssf_simtr, aes(x_, y_), 
-   #         col= "black") +
+# geom_spatraster(data = lich)  +
+#geom_path(data = ssf_simtr, aes(x_, y_), 
+#         col= "black") +
 #  facet_wrap(~ id, nrow = 4) + 
- # scale_fill_terrain_c() +
-  #theme_bw()
+# scale_fill_terrain_c() +
+#theme_bw()
 
-# Now we have to insert the single observed track into this set of 19
-# pick a random individual, and a start point within our parameters
-fogo <- winter_steps %>% filter(id == "FO2016013")
-begin <- fogo %>% filter(x1_ > 702000 & x1_ < 706000 & y1_ > 5510000 & y1_ < 5512000)
-# 959 options for starting points of a 50-step segment 
-begin %<>% slice_sample(n = 1)
-# randomly choose one, turned out to be step_id_ 14344
 
-w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ < (14344 + 120)) %>%
-  make_track(x1_, y1_, t1_) %>%
-  mutate(id = 20)
-
-ggplot() + 
-  geom_spatraster(data = lich)  +
-  geom_path(data = w.track, aes(x_, y_), 
-            col= "red") +
- # facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
-  xlim(c(700000, 708000)) + 
-  ylim(c(5505000, 5515000))
-  theme_bw()
-  ggsave(filename = "graphics/validation/winter_real.png",
-         height = 2000,
-         width = 2400,
-         units = "px")
-  
 
 # now bring them all together
 w.comp <- rbind(ssf_simtr, w.track)
 w.comp %>% summarise(minx = min(x_, na.rm = T), maxx = max(x_, na.rm = T),
-                   miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
+                     miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
 # use these to trim down our plots slightly so you can actually see the trajectories
+
+
+
+
+
+
+
+
+
+
+
+# Load simulations ----
+#w.comp <- readRDS('output/winter_sims.Rds')
+#s.comp <- readRDS('output/summer_sims.Rds')
+
+# Real data
+# 
+# sim_s <- ggplot() + 
+#   geom_path(data = subset(s.comp, id == 20), aes(x_, y_), 
+#             col = "black") +
+#  # xlim(c(700000, 710000)) + 
+#   #ylim(c(5505000, 5515000)) +
+#   xlab("") +
+#   ylab("") +
+#   theme_bw()
 
 
 # Winter plots --------

@@ -10,7 +10,7 @@ library(sp)
 
 
 # Generating simulations takes a while, saved some in the output/ folder after first run if not doing from scratch
-## Can skip to Line______ if not running the simulation again to load the output/sims.Rds files
+## Can skip to Line 242 if not running the simulation again to load the output/sims.Rds files
 
 
 # This simulation system is built with amt, but our model is glmmTMB
@@ -127,7 +127,7 @@ w.track <- fogo %>% filter(step_id_ >= 14344 & step_id_ < (14344 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20) # how we will distinguish this from the 19 simulated
 
-# Run 19 distinct simulations with different starting points
+# Run 19 distinct simulations from this range of starting points
 n <- 19
 ssf_sim <-list()
 
@@ -145,10 +145,9 @@ for(i in 1:n){
                                     landscape= "continuous",
                                     tolerance.outside = 0.1)
   
-  # Originally did 50 steps, but we should extend that probably eh?
   ssf_sim[[i]] <- simulate_path(rdk, n.steps = 120) 
   ### simulate individual trajectories
-  ssf_sim[[i]]$id <- i
+  ssf_sim[[i]]$id <- i # add a label to each trajectory
 }
 
 # take all those tracks and bind them together
@@ -156,187 +155,40 @@ ssf_simdat <- do.call(rbind, ssf_sim)
 
 ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
 
-# Plot just four of these, at first
-#ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
-
-#ggplot() + 
-# geom_spatraster(data = lich)  +
-#geom_path(data = ssf_simtr, aes(x_, y_), 
-#         col= "black") +
-#  facet_wrap(~ id, nrow = 4) + 
-# scale_fill_terrain_c() +
-#theme_bw()
-
-
-
-# now bring them all together
+# Bring the actual track into the same df as these simulations
 w.comp <- rbind(ssf_simtr, w.track)
 w.comp %>% summarise(minx = min(x_, na.rm = T), maxx = max(x_, na.rm = T),
                      miny = min(y_, na.rm = T), maxy = max(y_, na.rm = T))
-# use these to trim down our plots slightly so you can actually see the trajectories
+# seeing the spatial range to set the boundaries on our plots
 
+# Save these simulated trajectories to save time in future
+saveRDS(w.comp, 'output/winter_sims.Rds')
 
-
-
-
-
-
-
-
-
-
-# Load simulations ----
-#w.comp <- readRDS('output/winter_sims.Rds')
-#s.comp <- readRDS('output/summer_sims.Rds')
-
-# Real data
-# 
-# sim_s <- ggplot() + 
-#   geom_path(data = subset(s.comp, id == 20), aes(x_, y_), 
-#             col = "black") +
-#  # xlim(c(700000, 710000)) + 
-#   #ylim(c(5505000, 5515000)) +
-#   xlab("") +
-#   ylab("") +
-#   theme_bw()
-
-
-# Winter plots --------
-## on forest -----
-# We want to randomize the order of these facets, but make sure we know which is which
-# Randomize the order of the ids in w.comp
-w.comp$rid <- as.factor(w.comp$id)
-levels(w.comp$rid) <- sample(unique(w.comp$id))
-
-#winter <- w.comp[order(levels(w.comp$rid)),]
-
-# then use this random order associated with the letter A through T
-w_text <- data.frame(
-  rid = as.factor(levels(w.comp$rid)),
-  season = "W",
-  num = seq(from = 1, to = 20)
-)
-w_text %<>% mutate(label = paste0(season, num)) %>%
-  mutate(label = as.factor(label))
-labs <- w_text %>% dplyr::select(c(rid, label))
-w.comp <- left_join(w.comp, labs, by = "rid")
-
-levels(w.comp$label) <- c("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12", "W13", "W14", "W15", "W16", "W17", 'W18', 'W19', 'W20')
-
-# the real, non-simulated track will be the letter associated with rid == 20 in w_text
-
-#winter <- left_join(w.comp, w_text, by = "id")
-
-sim_on_forest <- ggplot() + 
-  geom_spatraster(data = forest_poly)  +
-  geom_path(data = w.comp, aes(x_, y_), 
-            col = "black") +
-  facet_wrap(~ label, nrow = 4
-             #, 
-             #as.table = FALSE, drop = FALSE
-             ) + 
-  scale_fill_terrain_c() +
-  xlim(c(700000, 710000)) + 
-  ylim(c(5505000, 5515000)) +
-  xlab("") +
-  ylab("") +
-  labs(fill = "Proportion forested") +
- # geom_text(data = w_text, 
-#            mapping = aes(x = -Inf, y = -Inf, label = label),
- #           hjust = -1, vjust = -5.5, size = 5
-#  ) +
-  theme_bw() +
-  theme(strip.background = element_blank(),
-        #strip.text = element_blank(),
-        panel.background = element_rect(fill = "grey90"),
-        panel.grid = element_blank())
-
-ggsave(filename = "graphics/validation/W_forest_120.png",
-       sim_on_forest,
-       height = 2000,
-       width = 2400,
-       units = "px")
-
-
-
-# winter Cladonia plot?
-
-sim_on_Clad <- ggplot() + 
-  geom_spatraster(data = lich_poly)  +
-  geom_path(data = w.comp, aes(x_, y_), 
-            col = "black") +
-  facet_wrap(~ label, nrow = 4) + 
-  scale_fill_terrain_c() +
-  xlim(c(700000, 710000)) + 
-  ylim(c(5505000, 5515000)) +
-  xlab("") +
-  ylab("") +
-  labs(fill = "%N in Cladonia") +
-  theme_bw() +
-  #geom_text(data = w_text, 
-  #          mapping = aes(x = -Inf, y = -Inf, label = label),
-  #          hjust = -1, vjust = -5.5, size = 5
-  #) +
-  theme(strip.background = element_blank(),
-   #     strip.text = element_blank(),
-        panel.background = element_rect(fill = "grey90"),
-        panel.grid = element_blank())
-ggsave(filename = "graphics/validation/W_sim120_Cladonia.png",
-       sim_on_Clad,
-       height = 2000,
-       width = 2400,
-       units = "px")
-
-
-
-
-
-
-# Summer comparisons of 19 simulations to one real ----
-
-## 5 November 2025 - have to redo this one because it went into the southern half of the island that we are no longer using in the issa/stoich maps
-
+# Summer simulations ----
+## same as above, but for the summer model now
 tar_load(summer_prep)
 summer_steps <- summer_prep %>% filter(case_ == TRUE)
 
 # first, pick an individual to use as our basis
-ids <- summer_prep %>% group_by(id) %>% summarise(n = n())
-# lots of individuals could work... 2017007 has the most steps
-# we could theoretically randomly sample one of them too, but for now let's just use her... she died spring 2024 of brainworm tho, so make sure to use earlier data
+indivs <- winter_steps %>% dplyr::filter(!duplicated(id)) %>% slice_sample(n = 1)
+# random draw gave FO2017007
 sea <- summer_steps %>% filter(id == "FO2017007")
 
-hist(subset(sea, x1_ > 710000 & x1_ < 712000)$x1_, breaks = 50)
-# let's call it 710 000 to 712 000
-hist(subset(sea, x1_ > 710000 & x1_ < 712000)$y1_, breaks = 50)
-# among these steps, the y-values are between 550 3000 and 550 5000
+hist(sea$x1_, breaks = 50)
+# let's use 710 000 to 712 000
+hist(sea$y1_, breaks = 50)
+# y-values between 550 3000 (lower bounds) and 550 5000
 
 begin <- sea %>% filter(x1_ > 710000 & x1_ < 712000 & y1_ > 5505000)
 # 1582 options for starting points of a 120-step segment 
 rand <- begin %>% slice_sample(n = 1) %>% dplyr::select(c(step_id_))
-# randomly choose one, turned out to be step_id_ 6433
+# random selection chose step_id_ 6433
 s.track <- sea %>% filter(step_id_ >= 10649 & step_id_ < (10649 + 120)) %>%
   make_track(x1_, y1_, t1_) %>%
   mutate(id = 20)
 
-# step_id_ == 10649 gets us 120 steps complete
-s.track %>% summarise(xl = min(x_), xh = max(x_), yl = min(y_), yh = max(y_))
 
-
-ggplot() + 
-  #geom_spatraster(data = vasc_poly)  +
-  geom_path(data = s.track, aes(x_, y_), 
-            col= "red") +
-  # facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
- # xlim(c(708000, 713000)) + 
-  # zoomed these out by an additional 1km on all sides to get better perspective on where we are
-#  ylim(c(5505000, 5506000)) +
-  theme_bw()
-
-# This ended up being in the deep southeast coast, like just west of Cape Cove... I don't think this is the best place necessarily to test our stoich model LOL
-# but let's go for it, i suppose
-
-# Building amt() version of summer_model
+## Build amt() version of summer_model
 summary(summer_model)
 
 s.coefs <- c("log(sl_)" = -0.103300,
@@ -350,11 +202,11 @@ s.coefs <- c("log(sl_)" = -0.103300,
 )
 
 summ <- amt::make_issf_model(coefs = s.coefs,
-        sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
-        ta = make_vonmises_distr(kappa = 0.1634281)
+                             sl = make_gamma_distr(shape = 0.6341374, scale = 378.2702),
+                             ta = make_vonmises_distr(kappa = 0.1634281)
 ) 
 
-# Run 19 distinct simulations with different starting points ------
+# Run 19 distinct simulations from starting points
 n <- 19
 ssf_sim <-list()
 
@@ -369,7 +221,7 @@ for(i in 1:n){
                                     start = start,
                                     map = layers_poly,
                                     as.rast = FALSE,
-                                    landscape= "continuous",
+                                    landscape = "continuous",
                                     tolerance.outside = 0.1)
   
   ssf_sim[[i]] <- simulate_path(rdk, n.steps = 120) 
@@ -382,50 +234,115 @@ ssf_simdat <- do.call(rbind, ssf_sim)
 
 ssf_simtr <- ssf_simdat %>% make_track(x_, y_, t_ , id = id)
 
-# Plot just four of these, at first
-ssf_simtr_sample <- ssf_simtr |> filter(id %in% c(1:4)) 
-
-ggplot() + 
-  geom_spatraster(data = vasc)  +
-  geom_path(data = ssf_simtr, aes(x_, y_), 
-            col= "black") +
-  facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
-  theme_bw()
-
-# Now we have to insert the single observed track into this set of 19
-# pick a random individual, and a start point within our parameters
-# now bring them all together
+# Now  insert the single observed track into this set of 19
 s.comp <- rbind(ssf_simtr, s.track)
 s.comp %>% summarise(minx = min(x_), maxx = max(x_),
-                   miny = min(y_), maxy = max(y_))
-
+                     miny = min(y_), maxy = max(y_))
+# make sure none of them dip outside our StDM range
 south <- s.comp %>% filter(y_ > 5503000)
 
-# use these to trim down our plots slightly so you can actually see the trajectories
+# save these simulations for future use
+saveRDS(s.comp, 'output/summer_sims.Rds')
 
-# Summer plots ---
+## Load simulations, if skipping that step ----
+# w.comp <- readRDS('output/whole_island/inter_sims.Rds')
+# s.comp <- readRDS('output/summer_sims.Rds')
 
-s.comp$rid <- as.factor(s.comp$id)
-levels(s.comp$rid) <- sample(unique(s.comp$id))
+
+# Winter plots --------
+# We have to randomize the order of these facets, but make sure we know which is which
+# Randomize the order of the ids in w.comp
+w.comp$randid <- as.factor(w.comp$id)
+levels(w.comp$randid) <- sample(unique(w.comp$id))
+
+#winter <- w.comp[order(levels(w.comp$rid)),]
+
+# then use this random order and pair it with W1 through W20
+# DO NOT LOOK AT w_text if you don't want to know which one is real yet
+w_text <- data.frame(
+  randid = as.factor(levels(w.comp$randid)),
+  season = "W",
+  num = seq(from = 1, to = 20)
+  ) %>% 
+  mutate(label = as.factor(paste0(season, num)))
+
+
+labs <- w_text %>% dplyr::select(c(randid, label))
+w.comp <- left_join(w.comp, labs, by = "randid")
+
+# Reorder w.comp based on this W1-W20 string, which shuffles the original 1-20 IDs, so now the 'actual' data is randomly placed within the 5 x 4 grid
+levels(w.comp$label) <- c("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12", "W13", "W14", "W15", "W16", "W17", 'W18', 'W19', 'W20')
+
+# the real, non-simulated track will be the letter associated with rid == 20 in w_text
+
+
+# over prop_forest
+w_on_forest <- ggplot() + 
+  geom_spatraster(data = forest_poly)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ label, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(700000, 710000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "Proportion forested") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+
+ggsave(filename = "graphics/validation/W_forest_120.png",
+       w_on_forest,
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+# winter tracks over Cladonia
+# the segments are the same, just changing the underlying plot those trajectories are shown on top of
+
+sim_on_Clad <- ggplot() + 
+  geom_spatraster(data = lich_poly)  +
+  geom_path(data = w.comp, aes(x_, y_), 
+            col = "black") +
+  facet_wrap(~ label, nrow = 4) + 
+  scale_fill_terrain_c() +
+  xlim(c(700000, 710000)) + 
+  ylim(c(5505000, 5515000)) +
+  xlab("") +
+  ylab("") +
+  labs(fill = "%N in Cladonia") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        panel.background = element_rect(fill = "grey90"),
+        panel.grid = element_blank())
+ggsave(filename = "graphics/validation/W_sim120_Cladonia.png",
+       sim_on_Clad,
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+
+
+# Summer plots ------
+# randomize order like for winter, but now 20 new random trajectories
+s.comp$randid <- as.factor(s.comp$id)
+levels(s.comp$randid) <- sample(unique(s.comp$id))
 
 s_text <- data.frame(
-  rid = seq(1:20),
-  season = "S"
-)
+  randid = seq(1:20),
+  season = "S") %>%
+  mutate(label = as.factor(paste0(season, randid)))
 
-s_text %<>% mutate(label = paste0(season, rid)) %>%
-  mutate(label = as.factor(label),
-         rid = as.factor(rid))
-labs <- s_text %>% dplyr::select(c(rid, label))
-s.comp <- left_join(s.comp, labs, by = "rid")
+labs <- s_text %>% dplyr::select(c(randid, label))
+s.comp <- left_join(s.comp, labs, by = "randid")
 
 levels(s.comp$label) <- c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", 'S18', 'S19', 'S20')
 
 
-
-### Summer simulations on vascular %N ----
-
+## Over vascular %N
 s_sim_on_vasc <- ggplot() + 
   geom_spatraster(data = vasc_poly)  +
   geom_path(data = s.comp, aes(x_, y_), 
@@ -437,13 +354,8 @@ s_sim_on_vasc <- ggplot() +
   xlab("") +
   ylab("") +
   labs(fill = "%N in vascular plants") +
-  #geom_text(data = s_text, 
-  #          mapping = aes(x = -Inf, y = -Inf, label = label),
-  #          hjust = -1, vjust = -5.5, size = 5
-  #) +
   theme_bw() +
   theme(strip.background = element_blank(),
-   #     strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
@@ -453,7 +365,7 @@ ggsave(filename = "graphics/validation/northern_summer_120_vasc.png",
        width = 2400,
        units = "px")
 
-# try it on the forest cover map?
+# try it on the forest cover map as well
 
 s_sim_on_forest <- ggplot() + 
   geom_spatraster(data = forest_poly)  +
@@ -466,13 +378,8 @@ s_sim_on_forest <- ggplot() +
   xlab("") +
   ylab("") +
   labs(fill = "Proportion forested") +
-  #geom_text(data = s_text, 
-  #          mapping = aes(x = -Inf, y = -Inf, label = label),
-  #          hjust = -1, vjust = -5.5, size = 5
-  #) +
   theme_bw() +
   theme(strip.background = element_blank(),
-   #     strip.text = element_blank(),
         panel.background = element_rect(fill = "grey90"),
         panel.grid = element_blank())
 
@@ -481,50 +388,3 @@ ggsave(filename = "graphics/validation/S_120_forest.png",
        height = 2000,
        width = 2400,
        units = "px")
-
-
-
-
-
-
-
-
-saveRDS(w.comp, 'output/winter_sims.Rds')
-saveRDS(s.comp, 'output/summer_sims.Rds')
-
-# How to randomize order ----
-## We want to randomize the order of these plots tho, it shouldn't always be the last one
-
-# Try this new order out?
-
-# Ok, this randomization worked, BUT it's still identified as #20... if we remove the facet labels though, we have no way of knowing which is which
-# have to have duplicate copies with and without?
-# Or we can we add manual labels A through T, perhaps?
-
-dat_text <- data.frame(
-  label = c(letters[seq( from = 1, to = 20 )]),
-  id = as.factor(levels(w.comp$id))
-)
-
-rand_on_Clad <- ggplot() + 
-  geom_spatraster(data = lich_poly)  +
-  geom_path(data = w.comp, aes(x_, y_), 
-            col = "black") +
-  facet_wrap(~ id, nrow = 4) + 
-  scale_fill_terrain_c() +
-  xlim(c(700000, 710000)) + 
-  ylim(c(5505000, 5515000)) +
-  xlab("") +
-  ylab("") +
-  labs(fill = "%N in Cladonia") +
-  geom_text(data = dat_text, 
-            mapping = aes(x = -Inf, y = -Inf, label = label),
-            hjust = -0.5, vjust = -5
-            ) +
-  theme_bw() +
-  theme(strip.background = element_blank(),
-        strip.text = element_blank(),
-        panel.background = element_rect(fill = "grey90"),
-        panel.grid = element_blank())
-
-rand_on_Clad

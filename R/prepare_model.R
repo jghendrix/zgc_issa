@@ -15,7 +15,8 @@ prepare_model <- function(DT, season) {
     filter(sl_ > 0) %>% 
   # 17 October 2025: restricting down to steps based on our stoich sites only being on the north side of the island
   # anything below this latitude, we don't trust the stoich projections as much
-    filter(y1_ > 5503000)
+    filter(y1_ > 5503000 & 
+           y2_ > 5503000)
   
   
   if(season == "winter"){

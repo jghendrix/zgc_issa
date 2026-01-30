@@ -632,11 +632,11 @@ targets_rss_social_popn <- c(
   
   tar_target(
     summer_popn, # population slopes and CIs from model
-    setDT(readr::read_csv('output/summer_betas.csv', show_col_types = FALSE))
+    setDT(readr::read_csv('output/north_summer_betas.csv', show_col_types = FALSE))
   ),
   tar_target(
     winter_popn,
-    setDT(readr::read_csv('output/winter_betas.csv', show_col_types = FALSE))
+    setDT(readr::read_csv('output/north_winter_betas.csv', show_col_types = FALSE))
   ),
 
  ## start with winter Cladonia %N, agnostic to speed

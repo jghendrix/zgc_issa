@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|6e7442896dc71225|||||||||||||||
+.Random.seed|object|5be34975a92c0f22|||||||||||||||
 akde|function|b044402d5cf28ca7|||||||||||||||
 bb|object|44094e2e567df9bc|||||||||||||||
 calc_distribution_parameters|function|3bbc63744148d6fc|||||||||||||||
@@ -197,14 +197,16 @@ id_col|object|bc33c1349a78e0bd|||||||||||||||
 id_path|object|7d0d8a0973b99ee1|||||||||||||||
 ids|stem|285fc3cfd543ac64|adf0c7f1fdfa8244|606335df22187110|127298475||t20301.6202776098s|4fa881245fd93336|320|qs|local|vector|||0.02||
 ids_file|stem|ac3bac5987a1c19f|3a3d993c7e2c1960|b8ba5de7aa5112bc|296387082|input/collar-animal-ids.csv|t20286.4927385765s|4764b896dcd0d132|527|file|local|vector|||0||
-indiv_estimates|function|b7badf70dff4eb70|||||||||||||||
+indiv_Clad_seasonal|stem|e6aef0c5c098ebdf|2e353dcc15d076ec|d5f221540822bb09|-1044351910||t20483.6656832453s|44c946667c812dba|659522|qs|local|vector|||0.25||
+indiv_estimates|function|6b040b6c44efa792|||||||||||||||
 indiv_ratio_estimates|function|7872f3f66a8af5f9|||||||||||||||
 indiv_sum|function|1a319f3e14cb951f|||||||||||||||
-indiv_summer|stem|7900037dc111bc83|01ecc433cdcf8fcc|e5f67da7110e5e2f|-549763119||t20465.6812650543s|5504c1d3965af2ae|5672|qs|local|vector|||10.64||
+indiv_summer|stem|9e834b5acb55dc1a|01ecc433cdcf8fcc|137a3f29b2ec6efc|-549763119||t20483.6938276759s|ae2578da6a9e6f7f|5087|qs|local|vector|||44.3||
 indiv_summer_ratio|stem|b6666bb9a4577f32|98d169801385ce45|864d79e9a17a8dd4|-1924781991||t20334.8278569277s|75f0177333322a8c|6086|qs|local|vector|||30.88||
 indiv_ta_estimates|function|a25e87ee252259d7|||||||||||||||
 indiv_ta_summer|stem|b79f0d710185f891|3abdc3e21715c6e2|b310cad5a75f907a|1261514681||t20356.6375347769s|434f136ffd395bde|5741|qs|local|vector|||52.76||
 indiv_ta_winter|stem|8dfe3f33bd92c71e|d8b433c0550b7ebd|01912b425de1de40|-1754610180||t20356.6381021803s|b9d74754744b5f04|5331|qs|local|vector|||45.91||
+indiv_vasc_seasonal|stem|f2cd372774315733|bca8bf3db45a000a|319af15d344e9052|2042233945||t20483.6656884422s|53cbd45a4c35b152|675859|qs|local|vector|||0.13||
 indiv_winter|stem|ef9940a35eaaba28|3c3d6f231549aaab|3e60616a4aac0446|-2101056623||t20465.6587745271s|359d9fde8d57dd45|5409|qs|local|vector|||7.59|NaNs produced. NaNs produced|
 islandcol|object|be13c8f592230e36|||||||||||||||
 join_rss|function|09f5ccaf131be83b|||||||||||||||
@@ -257,6 +259,7 @@ p_vasc_summer_plot|stem|e5230aed137f07b0|fc717d72112c58f9|f3f07159d371f7e2|-1274
 p_vasc_winter_plot|stem|7bd0bc52397c9462|4d684a200873ffc1|ebbd078e7c33ee99|-623643817||t20465.6915681346s|6be125b8ca70a625|166160|qs|local|vector|||0.1||
 parkboundcol|object|58a7d971c943be55|||||||||||||||
 parkcol|object|b62f2d883ff5355f|||||||||||||||
+pi_seasonal_RSS|stem|56031996ac896326|78b17e56aeefd773|285fe4324bce9546|1915757825||t20483.6580546814s|9064907978062c20|56|qs|local|vector|||2.97||
 plot_box_horiz|function|77aca61742601728|||||||||||||||
 plot_dist|function|abac4493aa203907|||||||||||||||
 plot_distributions|function|f252665e371e33d2|||||||||||||||
@@ -277,10 +280,12 @@ plot_rss_forest_speed_w|stem|6ce76cc2cd44a97b|cfcd8019cd56d504|afb12c6d503c6f89|
 plot_rss_forest_ta|stem|807d1bcdccd3a5a9|855d2a3ec2a307fc|070f8bae39202443|347497241||t20356.6591821615s|25a9676ccf69a2db|315789|qs|local|vector|||0.06||
 plot_rss_forest_taw|stem|ae707f58a47ab62d|80df00b1dc445efc|5861dbbf34dba891|1025877484||t20356.7192001885s|127e7cdc82bf0a73|300281|qs|local|vector|||0.09||
 plot_rss_forest_w|stem|6d438b79b1443c4c|e0eae23fddb12d04|2b738d98a3e0b262|1125815976||t20465.6915632925s|f4dcdb7e37fb93bb|287122|qs|local|vector|||0.06||
+plot_rss_indiv_seasonal|function|de049adf12c47422|||||||||||||||
 plot_rss_popn|function|7e1ac1b01186b91a|||||||||||||||
 plot_rss_popn_merge_seasons|function|da4afd1b2eae2550|||||||||||||||
 plot_rss_popn_seasonal|function|d709601897dd1db5|||||||||||||||
-plot_rss_speed|function|e51145621692efd5|||||||||||||||
+plot_rss_seasonal_pi|function|c34d1cf0dac740da|||||||||||||||
+plot_rss_speed|function|b6196405fd18007e|||||||||||||||
 plot_rss_vasc_r|stem|236ca6cec9ef89e9|9ffb1f9bcf792e05|4cbfcd0daeca474e|1365775348||t20334.8327925457s|2f4ac1f071d28123|302770|qs|local|vector|||0.06||
 plot_rss_vasc_s|stem|c0704f2cc1051c20|7da0424dd7e8c765|cbe94f4bfd18be14|220705782||t20465.6915799524s|9a7277330c64d28e|294255|qs|local|vector|||0.06||
 plot_rss_vasc_speed_s|stem|0847e707645e26e9|be6cda2e74e99c65|61734c2b273a772b|-1458035418||t20465.6915860929s|cb133234857c397e|765928|qs|local|vector|||0.05||
@@ -359,7 +364,7 @@ predict_h2_speed|function|6b768ebc77299b78|||||||||||||||
 prep_speed_summer|stem|b75db9efda7aa1a8|ef29b75f162c1c85|b01e9b7c04044a43|829739165||t20465.6915203027s|d5485a24ca6ed883|2241|qs|local|vector|||0.05|fun.aggregate is NULL, but found duplicate rowcolumn combinations, so defaulting to length. That is, the variables id, term used in formula do not uniquely identify rows in the input data. In such cases, fun.aggregate is used to derive a single representative value for each combination in the output data.table, for example by summing or averaging fun.aggregatesum or fun.aggregatemean, respectively. Check the resulting table for values larger than 1 to see which combinations were not unique. See dcast.data.table for more details.|
 prep_speed_winter|stem|6a10d18afeb6d10e|e4f45d78816fde3f|b5adb92c061dca33|914348213||t20465.6914663123s|36d245d18fb54c67|2202|qs|local|vector|||0.15|fun.aggregate is NULL, but found duplicate rowcolumn combinations, so defaulting to length. That is, the variables id, term used in formula do not uniquely identify rows in the input data. In such cases, fun.aggregate is used to derive a single representative value for each combination in the output data.table, for example by summing or averaging fun.aggregatesum or fun.aggregatemean, respectively. Check the resulting table for values larger than 1 to see which combinations were not unique. See dcast.data.table for more details.|
 prepare_data|function|78de06a8664cfa95|||||||||||||||
-prepare_kernel|function|3cb2070da16dec26|||||||||||||||
+prepare_kernel|function|a794422f717818d3|||||||||||||||
 prepare_locs|function|e175e22dcb562cf2|||||||||||||||
 prepare_model|function|d511ad53b3c22f9b|||||||||||||||
 prepare_speed|function|bc845305ae30ca8a|||||||||||||||
@@ -410,7 +415,10 @@ sdss_legend|stem|7a51a65acbe3614e|ffbf8d8d05743fa8|062cb9d639d2d3d7|-1648936476|
 sdss_legend_file|stem|0c056c65d44e3966|c930bb10580bfb89|63e22de26eacaa8d|1073122042|input/legend_sdss.csv|t20231.6205925894s|63e5c65d6d1ce375|134|file|local|vector|||0||
 sdss_legend_path|object|86f6275b9997cb12|||||||||||||||
 sdss_path|object|63e3b3dc6a50d454|||||||||||||||
+seasonal_Clad_popn_and_indiv|stem|2924f2a261b58682|5b469de3c809a3f5|c6052c34ef6005e8|-775114903||t20483.6580164641s|8b2f2cc100588cca|880833|qs|local|vector|||0.5|Using size aesthetic for lines was deprecated in ggplot2 3.4.0.ℹ Please use linewidth instead.|
+seasonal_RSS|stem|56031996ac896326|ce04be3200dbd018|eb3d55776c89cc9c|-124643228||t20483.6657874554s|9064907978062c20|56|qs|local|vector|||8.47||
 seasonal_split|object|9c939838458b7c1f|||||||||||||||
+seasonal_vasc_popn_and_indiv|stem|336e66e611e5c08f|6d8bd5a245e8318c|7037a23996245639|-764592502||t20483.6580198994s|f53c545af8bafdbd|903148|qs|local|vector|||0.06||
 site_extract|function|ceecb827b48d89c5|||||||||||||||
 speed_rss_plots|stem|02a1412c911128ee|97423ee8a77fde8c|2df51daeec15ee01|-2012696440||t20335.6047976977s|8619def19bb20a44|79|qs|local|vector|||3.23||
 split_by|object|bc33c1349a78e0bd|||||||||||||||
@@ -454,7 +462,7 @@ targets_fire_effects|object|97dd94dda94b087e|||||||||||||||
 targets_kernel|object|3a74cfb52604714b|||||||||||||||
 targets_prep|object|dfc94a2dd104f47f|||||||||||||||
 targets_rss_by_speed|object|2c5cdd00e35f8ef3|||||||||||||||
-targets_rss_social_popn|object|eb53ffffdae5c44a|||||||||||||||
+targets_rss_social_popn|object|ba6f6f79f046aec4|||||||||||||||
 targets_rss_summer|object|3118c132017280cb|||||||||||||||
 targets_rss_summer_ratio|object|361a846f43a92afe|||||||||||||||
 targets_rss_ta_summer|object|b1d3ba2165a87c40|||||||||||||||

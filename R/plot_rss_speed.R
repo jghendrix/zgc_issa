@@ -3,19 +3,7 @@
 
 plot_rss_speed <- function(rss, theme) {
 
-#if(season == "winter"){
-#	rss %<>% mutate(idspd = paste0(id, "_", speed)) %>%
-#    mutate(`Speed percentile` = ifelse(speed == "10th", "10th (4 m/h)", "50th (64 m/h)"),
-#           `Speed percentile` = ifelse(speed == "90th", "90th (312 m/h)", `Speed percentile`))
-#}
-#  else{
-#    rss %<>% mutate(idspd = paste0(id, "_", speed)) %>%
-#      mutate(`Speed percentile` = ifelse(speed == "10th", "10th (4 m/h)", "50th (62 m/h)"),
-#             `Speed percentile` = ifelse(speed == "90th", "90th (301 m/h)", `Speed percentile`))
-    
- # }
-
-  # We're not gonna worry about including the actual speeds in the legend, just leave the percentages
+# If you want to calculate what the 10th, 50th, 90th percentiles of speed actually look like, go for it; this just leaves the legend as %iles
   rss %<>% mutate(idspd = paste0(id, '_', speed))
   
 ggplot(data = rss, aes(x = x, y = rss, colour = speed)) +
@@ -41,11 +29,11 @@ ggplot(data = rss, aes(x = x, y = rss, colour = speed)) +
 					axis.title = element_text(size = 12),
 					axis.text = element_text(size = 10))
 	
-	#ggsave(filename = paste0('graphics/rss/byspeed_winterCladonia.png'),
-	#       width = 2000,
-	#       height = 1500,
-	#       dpi = 320,
-	#       units = "px"
-	#)
+	ggsave(filename = paste0('graphics/', rss, '.png'),
+	       width = 2000,
+	       height = 1500,
+	       dpi = 320,
+	       units = "px"
+	)
 
 }

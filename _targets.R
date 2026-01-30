@@ -774,6 +774,24 @@ targets_rss_social_popn <- c(
   
   # Putting winter + summer for each forage source on the same plot
   tar_target(
+    indiv_Clad_seasonal,
+    plot_rss_indiv_seasonal(rss_Cladonia_s, rss_Cladonia_w, plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'RSS for Cladonia %N')),
+ 
+ tar_target(
+   indiv_vasc_seasonal,
+   plot_rss_indiv_seasonal(rss_vasc_s, rss_vasc_w, plot_theme()) +
+     labs(x = '%N in vascular plants', y = 'logRSS',
+          title = 'RSS for vascular %N')),
+ 
+ tar_target(
+   seasonal_RSS,
+   save_rss_plot(indiv_vasc_seasonal, "seasonal_vasc_rss",
+                 indiv_Clad_seasonal, "seasonal_Cladonia_rss")
+ ),
+ 
+  tar_target(
     popn_vasc_seasonal,
     plot_rss_popn_seasonal(popn_vasc_summer, popn_vasc_winter, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
@@ -791,6 +809,33 @@ targets_rss_social_popn <- c(
                   popn_Clad_seasonal, "popn/seasonal_Cladonia_rss")
   ),
   
+ # Superimposing individual RSS over the pop'n level responses with 95% CIs
+ 
+ tar_target(
+   seasonal_Clad_popn_and_indiv,
+   plot_rss_seasonal_pi(popn_Cladonia_summer, popn_Cladonia_winter,
+                        rss_Cladonia_s, rss_Cladonia_w,
+                        plot_theme()) +
+     labs(x = '%N in Cladonia', y = 'logRSS',
+          title = 'Population and individual RSS for Cladonia %N')),
+ 
+ 
+ tar_target(
+   seasonal_vasc_popn_and_indiv,
+   plot_rss_seasonal_pi(popn_vasc_summer, popn_vasc_winter,
+                        rss_vasc_s, rss_vasc_w,
+                        plot_theme()) +
+     labs(x = '%N in vascular plants', y = 'logRSS',
+          title = 'Population and individual RSS for vascular %N')),
+ 
+ tar_target(
+   pi_seasonal_RSS,
+   save_rss_plot(seasonal_Clad_popn_and_indiv, "popn/Clad_pop-and-indiv",
+                 seasonal_vasc_popn_and_indiv, "popn/vasc_pop-and-indiv")
+ ),
+ 
+ 
+ 
   # Now, combine both lichen + vascular within season, to have a summer plot and a winter plot
   tar_target(
     popn_summer_comp,

@@ -17,14 +17,16 @@ indiv_estimates <- function(model) {
 
 	vasc_pop <- mean(subset(indiv, term == "I(log(sl_)):N_vasc")$estimate)
 	clad_pop <- mean(subset(indiv, term == "I(log(sl_)):N_Cladonia")$estimate)
-
+	forest_pop <- mean(subset(indiv, term == "I(log(sl_)):prop_forest")$estimate)
+	
 	indiv %<>% mutate(estimate = ifelse(term == "N_vasc:I(log(sl_))",
 																			estimate + vasc_pop, estimate),
-										estimate = ifelse(term == "N_Cladonia:I(log(sl_))",
-																			estimate + clad_pop, estimate)) %>%
-		filter(term != "I(log(sl_)):N_vasc" & term != "I(log(sl_)):N_Cladonia") %>%
-	  mutate(term = ifelse(term == "I(log(sl_)):prop_forest",
-	                       "prop_forest:I(log(sl_))", term))
+									  estimate = ifelse(term == "N_Cladonia:I(log(sl_))",
+																			estimate + clad_pop, estimate),
+										estimate = ifelse(term == "prop_forest:I(log(sl_))",																                  estimate + forest_pop, estimate)) %>%
+		filter(term != "I(log(sl_)):N_vasc" & 
+		       term != "I(log(sl_)):N_Cladonia" &
+		       term != "I(log(sl_)):prop_forest")
 
 	indiv %<>% filter(term != "(Intercept)")
 

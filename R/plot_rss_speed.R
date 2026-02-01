@@ -1,7 +1,7 @@
 #' @title Plot RSS by speed
 #' @export
 
-plot_rss_speed <- function(rss, theme) {
+plot_rss_speed <- function(rss, theme, predseas) {
 
 # If you want to calculate what the 10th, 50th, 90th percentiles of speed actually look like, go for it; this just leaves the legend as %iles
   rss %<>% mutate(idspd = paste0(id, '_', speed))
@@ -28,12 +28,5 @@ ggplot(data = rss, aes(x = x, y = rss, colour = speed)) +
 		theme(plot.title = element_text(size = 12, hjust = 0.05),
 					axis.title = element_text(size = 12),
 					axis.text = element_text(size = 10))
-	
-	ggsave(filename = paste0('graphics/', rss, '.png'),
-	       width = 2000,
-	       height = 1500,
-	       dpi = 320,
-	       units = "px"
-	)
 
 }

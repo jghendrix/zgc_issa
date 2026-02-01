@@ -34,7 +34,7 @@ predict_h1_Cladonia_popn <- function(DT, popn) {
 			      N_Cladonia*clad_B_min +
 			      N_vasc*vasc_B +
 			      sl*prop_forest*slXforest +
-			      sl*N_Cladonia*slXclad_max +
+			      sl*N_Cladonia*slXclad_min +
 			      sl*N_vasc*slXvasc
 			]
 			
@@ -45,7 +45,7 @@ predict_h1_Cladonia_popn <- function(DT, popn) {
 			      N_Cladonia*clad_B_max +
 			      N_vasc*vasc_B +
 			      sl*prop_forest*slXforest +
-			      sl*N_Cladonia*slXclad_min +
+			      sl*N_Cladonia*slXclad_max +
 			      sl*N_vasc*slXvasc
 			]
 		

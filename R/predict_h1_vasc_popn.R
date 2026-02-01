@@ -35,7 +35,7 @@ predict_h1_vasc_popn <- function(DT, popn) {
 			      N_vasc*vasc_B_min +
 			      sl*prop_forest*slXforest +
 			      sl*N_Cladonia*slXclad +
-			      sl*N_vasc*slXvasc_max
+			      sl*N_vasc*slXvasc_min
 			]
 			
 			new[, h1_vasc_max :=
@@ -46,7 +46,7 @@ predict_h1_vasc_popn <- function(DT, popn) {
 			      N_vasc*vasc_B_max +
 			      sl*prop_forest*slXforest +
 			      sl*N_Cladonia*slXclad +
-			      sl*N_vasc*slXvasc_min
+			      sl*N_vasc*slXvasc_max
 			]
 		
 			new[, x := seq(from = 0, to = 4, length.out = N)]

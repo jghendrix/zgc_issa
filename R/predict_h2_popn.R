@@ -29,31 +29,34 @@ predict_h2_popn <- function(DT, popn, predictor) {
 	      N_Cladonia*clad_B +
 	      N_Cladonia*clad_B_min -
 	      sl*N_Cladonia*slXclad +
-	      sl*N_Cladonia*slXclad_max
+	      sl*N_Cladonia*slXclad_min
 	]
 	
 	new[, h2_max :=
-	      h2_mean - N_Cladonia*clad_B +
+	      h2_mean - 
+	      N_Cladonia*clad_B +
 	      N_Cladonia*clad_B_max -
 	      sl*N_Cladonia*slXclad +
-	      sl*N_Cladonia*slXclad_min
+	      sl*N_Cladonia*slXclad_max
 	]
 	}
 	
 	if(predictor == "vasc") {
 	  
 	  new[, h2_min :=
-	        h2_mean - N_vasc*vasc_B +
+	        h2_mean - 
+	        N_vasc*vasc_B +
 	        N_vasc*vasc_B_min -
 	        sl*N_vasc*slXvasc +
-	        sl*N_vasc*slXvasc_max
+	        sl*N_vasc*slXvasc_min
 	  ]
 	  
 	  new[, h2_max :=
-	        h2_mean - N_vasc*vasc_B +
+	        h2_mean - 
+	        N_vasc*vasc_B +
 	        N_vasc*vasc_B_max -
 	        sl*N_vasc*slXvasc +
-	        sl*N_vasc*slXvasc_min
+	        sl*N_vasc*slXvasc_max
 	  ] 
 	  
 	}

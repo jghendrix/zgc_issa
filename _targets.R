@@ -113,25 +113,25 @@ targets_prep <- c(
 )
 
 # Targets: caribou kernel density -------------------------
-targets_kernel <- c(
-  tar_target(
-    w_fixes,
-    prepare_kernel(locs_prep, "winter", "yr")
-  ),
- tar_target(
-    w_kernels,
-    akde(w_fixes, "winter")
-  ),
-
- tar_target(
-   s_fixes,
-   prepare_kernel(locs_prep, "summer", "yr")
- ),
- tar_target(
-   s_kernels,
-   akde(s_fixes, "summer")
- )
-)
+# targets_kernel <- c(
+#   tar_target(
+#     w_fixes,
+#     prepare_kernel(locs_prep, "winter", "yr")
+#   ),
+#  tar_target(
+#     w_kernels,
+#     akde(w_fixes, "winter")
+#   ),
+# 
+#  tar_target(
+#    s_fixes,
+#    prepare_kernel(locs_prep, "summer", "yr")
+#  ),
+#  tar_target(
+#    s_kernels,
+#    akde(s_fixes, "summer")
+#  )
+# )
 
 # Targets: tracks ---------------------------------------------------------
 targets_tracks <- c(
@@ -627,7 +627,7 @@ targets_rss_by_speed <- c(
   )
 )
 
-## Population-level RSS plots showing 95% confidence interval of estimates -----
+# Population-level RSS plots showing 95% confidence interval of estimates -----
 targets_rss_social_popn <- c(
   
   tar_target(
@@ -772,7 +772,7 @@ targets_rss_social_popn <- c(
       labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'Population-level RSS for Cladonia %N in summer')),
   
-  # Putting winter + summer for each forage source on the same plot
+  ## Putting winter + summer for each forage source on the same plot ----
   tar_target(
     indiv_Clad_seasonal,
     plot_rss_indiv_seasonal(rss_Cladonia_s, rss_Cladonia_w, plot_theme()) +

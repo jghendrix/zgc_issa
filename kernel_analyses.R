@@ -165,6 +165,21 @@ winter_areas <- st_area(terr_HR)/1000000
 
 ## Winter 50% home range land area = 38.39 km2 (LCL = 15.67, UCL = 76.04)
 
+low <- s_sf %>% slice(1)
+est <- s_sf %>% slice(2)
+high <- s_sf %>% slice(3)
+
+land_lower <- st_intersection(fogo_trans, low)
+land_area <- st_intersection(fogo_trans, est)
+land_upper <- st_intersection(fogo_trans, high)
+
+sum_HR <- rbind(land_lower, land_area, land_upper) %>%
+  mutate(Id = c("lower", "est", "upper"))
+saveRDS(sum_HR, 'output/kernels/summer_50_land_area.Rds')
+
+# Calculate area of each shape, then convert from m2 to km2 
+summer_areas <- st_area(sum_HR)/1000000
+## Winter 50% home range land area = 64.11 km2 (LCL = 44.52, UCL = 87.77)
 
 
 # Nitrogen relative to seasonal ranges ----
@@ -178,21 +193,45 @@ sites <- read_csv('input/sp_prep.csv') %>%
   dplyr::select(c(site, lc, species, x, y, Lat, Long, percent_N)) %>%
   filter(species != "Black_spruce" & species != "graminoid_spp.")
 
+
 # convert to sf object
 locs <- st_as_sf(sites, coords = c("x", "y"), crs = crs$wkt)
 
 # extract which sites are within vs. without the 50% range
 all_inside <- c(st_intersects(locs, land_area, sparse = FALSE))
 all_sp <- cbind(locs, all_inside) %>%
-  rename(winter_range = all_inside)
+  rename(winter_range = all_inside) %>%
+  mutate(`Winter range` = ifelse(winter_range == TRUE, "inside", "outside"))
 
+all_sp$species <- gsub("_", " ", all_sp$species)
+all_sp$species <- gsub("Kalmia", "Sheep laurel", all_sp$species)
+all_sp$species <- as.factor(all_sp$species)
 # Is percent N higher inside the winter range vs. outside, depending on species?
-ggplot(all_sp, aes(x = species, y = percent_N, colour = winter_range)) +
+ggplot(all_sp, aes(x = species, y = percent_N, colour = `Winter range`)) +
   geom_boxplot() +
-  theme_bw()
+  scale_colour_viridis(discrete = TRUE, option = "plasma", end = 0.8) +
+  theme_bw() +
+  xlab("") +
+  ylab("Percent N (dry mass)")
+ggsave(filename = 'graphics/maps/N-inside-outside.png',
+       height = 4,
+       width = 8)
 
 # Most species appear to be very slightly higher in N at sites inside the 50% kernel vs. outside, but not really any significant differences based on this dichotomous variable
 # Alder appears to be behaving opposite the rest though, which is perhaps interesting given it is a nitrogen fixer
+
+spp <- unique(all_sp$species)
+
+for(i in spp){
+  
+  dat <- all_sp %>% filter(species == i)
+  print(i)
+  print(summary(i <- lm(percent_N ~ winter_range, data = dat)))
+}
+
+
+
+
 
 # Using continuous winter kernel estimate at each site, rather than 50% kernel inside vs. outside? -----
 # convert UD into a raster from which to extract % kernel by site

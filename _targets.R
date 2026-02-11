@@ -628,7 +628,7 @@ targets_rss_by_speed <- c(
 )
 
 # Population-level RSS plots showing 95% confidence interval of estimates -----
-targets_rss_social_popn <- c(
+targets_rss_popn <- c(
   
   tar_target(
     summer_popn, # population slopes and CIs from model

@@ -4,6 +4,7 @@ library(raster)
 library(SDMTools)
 library(adehabitatHR)
 library(ctmm)
+library(tidyverse)
 
 # Fogo Island shapefile
 fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
@@ -165,21 +166,25 @@ winter_areas <- st_area(terr_HR)/1000000
 
 ## Winter 50% home range land area = 38.39 km2 (LCL = 15.67, UCL = 76.04)
 
-low <- s_sf %>% slice(1)
-est <- s_sf %>% slice(2)
-high <- s_sf %>% slice(3)
+low_s <- s_sf %>% slice(1)
+est_s <- s_sf %>% slice(2)
+high_s <- s_sf %>% slice(3)
 
-land_lower <- st_intersection(fogo_trans, low)
-land_area <- st_intersection(fogo_trans, est)
-land_upper <- st_intersection(fogo_trans, high)
+land_lower_s <- st_intersection(fogo_trans, low_s)
+land_area_s <- st_intersection(fogo_trans, est_s)
+land_upper_s <- st_intersection(fogo_trans, high_s)
 
-sum_HR <- rbind(land_lower, land_area, land_upper) %>%
+sum_HR <- rbind(land_lower_s, land_area_s, land_upper_s) %>%
   mutate(Id = c("lower", "est", "upper"))
 saveRDS(sum_HR, 'output/kernels/summer_50_land_area.Rds')
 
 # Calculate area of each shape, then convert from m2 to km2 
 summer_areas <- st_area(sum_HR)/1000000
-## Winter 50% home range land area = 64.11 km2 (LCL = 44.52, UCL = 87.77)
+## summer 50% home range land area = 64.11 km2 (LCL = 44.52, UCL = 87.77)
+
+# overlap of summer and winter land areas = 9.020492 km2
+# 14.1% of summer
+# 23.5% of winter
 
 
 # Nitrogen relative to seasonal ranges ----
@@ -192,7 +197,7 @@ summer_areas <- st_area(sum_HR)/1000000
 sites <- read_csv('input/sp_prep.csv') %>% 
   dplyr::select(c(site, lc, species, x, y, Lat, Long, percent_N)) %>%
   filter(species != "Black_spruce" & species != "graminoid_spp.")
-
+wint <- readRDS('output/sites_in_winter_kernel.Rds')
 
 # convert to sf object
 locs <- st_as_sf(sites, coords = c("x", "y"), crs = crs$wkt)
@@ -206,17 +211,43 @@ all_sp <- cbind(locs, all_inside) %>%
 all_sp$species <- gsub("_", " ", all_sp$species)
 all_sp$species <- gsub("Kalmia", "Sheep laurel", all_sp$species)
 all_sp$species <- as.factor(all_sp$species)
+
 # Is percent N higher inside the winter range vs. outside, depending on species?
+# boxplot of all species %N
 ggplot(all_sp, aes(x = species, y = percent_N, colour = `Winter range`)) +
   geom_boxplot() +
   scale_colour_viridis(discrete = TRUE, option = "plasma", end = 0.8) +
   theme_bw() +
   xlab("") +
   ylab("Percent N (dry mass)")
-ggsave(filename = 'graphics/maps/N-inside-outside.png',
+ggsave(filename = 'graphics/maps/N-inside-outside_boxplot.png',
        height = 4,
        width = 8)
 
+
+# geom_point and showing mean, not median
+sp_avg <- all_sp %>% group_by(`Winter range`, species) %>%
+  summarise(N = mean(percent_N, na.rm = T))
+
+ggplot(all_sp, aes(x = species, y = percent_N, colour = `Winter range`)) +
+  geom_jitter(alpha = 0.5,
+             position = position_jitterdodge(jitter.width = 0.2,
+                                             dodge.width = 0.7)) +
+  scale_colour_manual(values = c("steelblue", "sienna1")) +
+  geom_point(data = sp_avg, aes(x = species, y = N, group = `Winter range`),
+             size = 8, colour = "black", shape = 95,
+             position = position_dodge(0.7)) +
+  theme_bw() +
+  xlab("") +
+  ylab("Percent N (dry mass)")
+
+ggsave(filename = 'graphics/maps/N-inside-outside_jitter.png',
+       height = 4,
+       width = 8)
+
+
+
+## Statistical comparison of inside vs. outside %N ----
 # Most species appear to be very slightly higher in N at sites inside the 50% kernel vs. outside, but not really any significant differences based on this dichotomous variable
 # Alder appears to be behaving opposite the rest though, which is perhaps interesting given it is a nitrogen fixer
 
@@ -229,9 +260,14 @@ for(i in spp){
   print(summary(i <- lm(percent_N ~ winter_range, data = dat)))
 }
 
+## What about average vascular like that used in the models?
+df <- left_join(sites, wint, by = "site") %>%
+  mutate(vasc = ifelse(species == "Cladonia", "non-vasc", "vasc"))
 
+ggplot(df, aes(x = vasc, y = percent_N, colour = winter_range)) +
+  geom_boxplot()
 
-
+summary(lm(percent_N ~ winter_range, data = subset(df, vasc == "vasc")))
 
 # Using continuous winter kernel estimate at each site, rather than 50% kernel inside vs. outside? -----
 # convert UD into a raster from which to extract % kernel by site

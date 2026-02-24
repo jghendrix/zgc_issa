@@ -2,7 +2,7 @@ Based on the iSSA guild targets workflow: https://issa-guild.github.io/book/inde
 
 Code and data for submission to Journal of Animal Ecology. The integrated step selection analyses are all contained within the targets() workflow, based on the _targets.R file in the main directory, and the functions contained within /R.
 
-Code to determine seasonal thresholds based on spring greenup is found in seasonal_determination.R in main directory.
+Code to determine seasonal thresholds based on spring greenup is found in season_determination.R in main directory.
 
 Code to calculate seasonal range size and compare to stoichiometric distributions models is found in kernel_analyses.R file.
 

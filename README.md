@@ -4,4 +4,6 @@ Code and data for submission to Journal of Animal Ecology. The integrated step s
 Code to determine seasonal thresholds based on spring greenup are found in seasonal_determination.R in main directory.
 Code to calculate seasonal range size and compare to stoichiometric distributions models are found in kernel_analyses.R file.
 
-Note that we are unable to publically share the raw GPS locations for this caribou population, so we have omitted the code taking the GPS locations to create aKDE, and included only the final derived distributions.
+Note that we are unable to publicly share the raw GPS locations for this caribou population, so we have omitted the code taking the GPS locations to create aKDE, and included only the final derived distributions.
+
+Code used to create the underlying stoichiometric distribution models: https://doi.org/10.5281/zenodo.18760996

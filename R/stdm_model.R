@@ -28,5 +28,5 @@ stdm_model <- function(DT) {
 		family = poisson(),
 		map = list(theta = factor(c(NA, 1:8))),
 	start = list(theta = c(log(1000), seq(0, 0, length.out = 8)))
-	)
+ 	)
 }

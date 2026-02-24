@@ -1,16 +1,14 @@
 #' @title Plot RSS by speed
 #' @export
-#' @author Julie W. Turner, Alec L. Robitaille
-plot_rss_speed <- function(rss, theme) {
 
+plot_rss_speed <- function(rss, theme, predseas) {
 
-	rss %<>% mutate(idspd = paste0(id, "_", speed)) %>%
-    mutate(`Speed percentile` = ifelse(speed == 0.25, "25th (18 m/h)", "50th (65 m/h)"),
-           `Speed percentile` = ifelse(speed == 0.75, "75th (164 m/h)", `Speed percentile`))
-
-
-	ggplot(data = rss, aes(x = x, y = rss, colour = `Speed percentile`)) +
-		geom_line(aes(group = idspd, alpha = 0.5),
+# If you want to calculate what the 10th, 50th, 90th percentiles of speed actually look like, go for it; this just leaves the legend as %iles
+  rss %<>% mutate(idspd = paste0(id, '_', speed))
+  
+ggplot(data = rss, aes(x = x, y = rss, colour = speed)) +
+		geom_line(aes(group = idspd),
+		          alpha = 0.25,
 							linewidth = 0.5,
 							linetype = "dashed",
 							show.legend = F
@@ -23,7 +21,7 @@ plot_rss_speed <- function(rss, theme) {
 			yintercept = 0,
 			colour = "black",
 			lty = 2,
-			size = .7
+			linewidth = .7
 		) +
 		plot_theme() +
 	#	ylim(c(-10, 3)) +

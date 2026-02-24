@@ -16,7 +16,7 @@ predict_h1_Cladonia <- function(DT, model) {
     yr = NA
   ), by = id]
   
-  new_data[, h1_Cladonia := predict(model, .SD, type = 'link', re.form = NULL)]
+  new_data[, h1_Cladonia := stats::predict(model, .SD, type = 'link', re.form = NULL)]
   
   new_data[, x := seq(from = 0, to = 1, length.out = N), by = id]
 }

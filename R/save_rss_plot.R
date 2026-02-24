@@ -1,4 +1,4 @@
-save_rss_plot <- function(A, nameA, B, nameB, C, nameC)
+save_rss_plot <- function(A, nameA, B, nameB, C = NULL, nameC = NULL)
 
 {
 

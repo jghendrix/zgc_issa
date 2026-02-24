@@ -1,6 +1,5 @@
-# === Targets: Fogo stoich mapping ----------------------
+# === Targets: Fogo StDM iSSA ----------------------
 # Jack G Hendrix
-# 24 February 2025
 
 # Source ------------------------------------------------------------------
 targets::tar_source('R')
@@ -9,20 +8,8 @@ targets::tar_source('R')
 tar_option_set(format = 'qs')
 
 # Data --------------------------------------------------------------------
-# Path to land cover raster
-sdss_path <- file.path('input', 'sdss.tif')
-sdss_legend_path <- file.path('input', 'legend_sdss.csv')
-
-# Stoich layer paths
-lichen_path <- file.path('input', 'Cladonia_N.tif')
-vascular_path <- file.path('input', 'Vascular_N.tif')
-
 # Caribou data path
-gps_path <- file.path('input', 'all_Fogo_caribou_locs_20June2025.csv')
-id_path <- file.path('input', 'collar-animal-ids.csv')
-
-# Stoich samples path
-stoich_path <- file.path('input', 'sp_prep.csv')
+gps_path <- file.path('input', 'gps_data.Rds')
 
 # Variables ---------------------------------------------------------------
 bb <- c(
@@ -36,205 +23,32 @@ crs <- st_crs(epsg)
 crs_sp <- CRS(crs$wkt)
 
 
-id_col <- 'Animal_ID'
+id_col <- 'id'
 datetime_col <- 'datetime'
-x_col <- 'x_long'
-y_col <- 'y_lat'
 tz <- 'America/St_Johns'
 
 # Split by: within which column or set of columns (eg. c(id, yr))
-#  do we want to split our analysis?
 split_by <- id_col
-seasonal_split <- "season"
-
-# For iSSA tracks:
-# Resampling rate
-rate <- minutes(120)
-# Tolerance
-tolerance <- minutes(5)
-# Number of random steps
-n_random_steps <- 10
-
 
 # Targets: data -----------------------------------------------------------
 targets_data <- c(
   
-   tar_file_read(
-    caribou,
-    gps_path,
-    fread(!!.x)
-  ),
-  tar_file_read(
-    ids,
-    id_path,
-    fread(!!.x)
-  ),
-  
-  tar_file_read(
-    sdss,
-    sdss_path,
-    raster(!!.x)
-  ),
-  tar_file_read(
-    sdss_legend,
-    sdss_legend_path,
-    fread(!!.x)
+   tar_target(
+    gps_data,
+    readr::read_rds(gps_path)
+    ),
+   
+   tar_target(
+     tracks_lc,
+     prepare_locs(gps_data, id_col, datetime_col, tz, split_by),
+    iteration = "group"
   ),
   
-  tar_file_read(
-    lichen,
-    lichen_path,
-    raster(!!.x)
-  ),
-  tar_file_read(
-    vascular,
-    vascular_path,
-    raster(!!.x)
-  )
-)
-
-
-# Targets: preparing caribou data ---------------------------
-targets_prep <- c(
-  
-  tar_target(
-    tidy_GPS,
-    GPS_tidying(caribou, ids)
-  ),
-  tar_target(
-    locs_prep,
-    prepare_locs(tidy_GPS, id_col, datetime_col, tz, x_col, y_col, split_by),
-    iteration = 'group'
-  ),
   tar_target(
     split_key,
-    unique(locs_prep[, .SD, .SDcols = c(split_by, 'tar_group')])
+    unique(tracks_lc[, .SD, .SDcols = c(split_by, 'tar_group')])
   )
 )
-
-# Targets: caribou kernel density -------------------------
-# targets_kernel <- c(
-#   tar_target(
-#     w_fixes,
-#     prepare_kernel(locs_prep, "winter", "yr")
-#   ),
-#  tar_target(
-#     w_kernels,
-#     akde(w_fixes, "winter")
-#   ),
-# 
-#  tar_target(
-#    s_fixes,
-#    prepare_kernel(locs_prep, "summer", "yr")
-#  ),
-#  tar_target(
-#    s_kernels,
-#    akde(s_fixes, "summer")
-#  )
-# )
-
-# Targets: tracks ---------------------------------------------------------
-targets_tracks <- c(
-  
-  tar_target(
-    tracks,
-    make_track(locs_prep, x_, y_, t_, all_cols = TRUE, crs = 4326) |>
-      transform_coords(crs_to = crs),
-    pattern = map(locs_prep)
-  ),
-  tar_target(
-    tracks_resampled,
-    resample_tracks(tracks, rate = rate, tolerance = tolerance),
-    pattern = map(tracks)
-  ),
-  tar_target(
-    tracks_random,
-    random_steps(tracks_resampled, n = n_random_steps),
-    pattern = map(tracks_resampled)
-  )
-)
-## Extracting data for tracks ------------------------------
-
-targets_extract <- c(
-  
-  tar_target(
-    tracks_cleaned,
-    remove_NA_steps(tracks_random)
-    )
-  ,
-  
-  tar_target(
-    tracks_extract,
-    extract_layers(
-      tracks_cleaned,
-      crs,
-      sdss,
-      sdss_legend
-    )
-  ),
-  
-  tar_target(
-    tracks_lichen,
-    extract_stoich(
-      tracks_extract,
-      crs,
-      lichen,
-      "N_Cladonia",
-      6 # 6 = the interval by which to average out the 5m x 5m pixels, this takes the average stoich at 30m
-    )
-  ),
-  
-  # any cells where Cladonia N is NA = no Cladonia growing there = set to zero
-  tar_target(
-   tracks_lichen_fixed,
-    tracks_lichen %>% 
-    mutate(N_Cladonia = ifelse(is.na(N_Cladonia), 0, N_Cladonia))
-  ),
-  
-  tar_target(
-    tracks_vasc,
-    extract_stoich(
-      tracks_lichen_fixed,
-      crs,
-      vascular,
-      "N_vasc",
-      6
-    )
-  ),
-
-  tar_target(
-    tracks_lc,
-    extract_forest(
-      tracks_vasc,
-      crs,
-      sdss, 
-      20 # aggregating 5m to 100m pixels to calculate % forest cover
-    )
-  )
-  
-)
-
-# Targets: distributions --------------------------------------------------
-targets_distributions <- c(
-  tar_target(
-    dist_parameters,
-    calc_distribution_parameters(tracks_random),
-    pattern = map(tracks_random)
-  ),
-  tar_target(
-    dist_sl_plots,
-    plot_distributions(tracks_resampled, 'sl_'),
-    pattern = map(tracks_resampled),
-    iteration = 'list'
-  ),
-    tar_target(
-    dist_ta_plots,
-    plot_distributions(tracks_resampled, 'ta_'),
-    pattern = map(tracks_resampled),
-    iteration = 'list'
-  )
-)
-
 # Targets: seasonal models ----------------------------------------------------------
 targets_winter <- c(
   tar_target(
@@ -262,7 +76,7 @@ targets_winter <- c(
     summer_model_check,
     model_check(summer_model)
   )
- 
+  
 )
 
 # Targets: model output and effects ------------------------------------------------------------
@@ -295,7 +109,7 @@ targets_seasonal_effects <- c(
 )
 # Targets: speed from seasonal models ------------------------------------------------------------
 targets_speed <- c(
-
+  
   tar_target(
     prep_speed_winter,
     prepare_speed(
@@ -384,7 +198,7 @@ targets_speed <- c(
               plot_speed_Cladonia_s, "summer_model_speed_Cladonia",
               plot_speed_vasc_s, "summer_model_speed_vascular")
   )
-
+  
 )
 
 # Targets: RSS from winter model -----------------------------------------------------------
@@ -405,7 +219,7 @@ targets_rss_winter <- c(
     pred_h2_w,
     predict_h2(winter_prep, winter_model)
   ),
-
+  
   tar_target(
     rss_forest_w,
     calc_rss(pred_h1_forest_w, 'h1_forest', pred_h2_w, 'h2')
@@ -507,7 +321,7 @@ targets_rss_summer <- c(
 # Targets: RSS for stoich from base model categorised out by speed ---------------------
 targets_rss_by_speed <- c(
   
-# First the winter versions
+  # First the winter versions
   tar_target(
     pred_h1_Cladonia_byspeed_w,
     predict_h1_Cladonia_speed(winter_prep, winter_model)
@@ -542,7 +356,7 @@ targets_rss_by_speed <- c(
       labs(x = '%N in vascular plants', y = 'logRSS',
            title = 'Winter RSS for vascular %N by speed')
   ),
-
+  
   tar_target(
     pred_h1_forest_byspeed_w,
     predict_h1_forest_speed(winter_prep, winter_model)
@@ -564,7 +378,7 @@ targets_rss_by_speed <- c(
     save_rss_plot(plot_rss_Cladonia_speed_w, 'by_speed_Cladonia_winter',
                   plot_rss_vasc_speed_w, 'by_speed_vasc_winter',
                   plot_rss_forest_speed_w, 'by_speed_forest_winter'
-                  )
+    )
   ),
   
   # Now the summer versions of the speed-factored RSS ----
@@ -638,8 +452,8 @@ targets_rss_popn <- c(
     winter_popn,
     setDT(readr::read_csv('output/north_winter_betas.csv', show_col_types = FALSE))
   ),
-
- ## start with winter Cladonia %N, agnostic to speed
+  
+  ## start with winter Cladonia %N, agnostic to speed
   tar_target(
     p_h1_Cladonia_winter,
     predict_h1_Cladonia_popn(winter_prep, winter_popn)
@@ -694,7 +508,7 @@ targets_rss_popn <- c(
     max_vasc_summer,
     calc_rss_popn(p_h1_vasc_summer, 'h1_vasc_max', p_h2_summer_vasc, 'h2_max')
   ),
-  
+
   tar_target(
     popn_vasc_summer,
     join_rss_popn(min_vasc_summer, mean_vasc_summer, max_vasc_summer)
@@ -704,7 +518,7 @@ targets_rss_popn <- c(
     plot_rss_popn(popn_vasc_summer, plot_theme()) +
       labs(x = '%N in vascular plants', y = 'logRSS',
            title = 'Population-level RSS for vascular %N in summer')),
-  
+
   # And then the inverses, where we expect a neutral response
   tar_target(
     p_h1_vasc_winter,
@@ -749,7 +563,7 @@ targets_rss_popn <- c(
     predict_h2_popn(summer_prep, summer_popn, "Cladonia")
   ),
   
- tar_target(
+  tar_target(
     min_Cladonia_summer,
     calc_rss_popn(p_h1_Cladonia_summer, 'h1_Clad_min', p_h2_summer_Cladonia, 'h2_min')
   ),
@@ -778,19 +592,19 @@ targets_rss_popn <- c(
     plot_rss_indiv_seasonal(rss_Cladonia_s, rss_Cladonia_w, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'RSS for Cladonia %N')),
- 
- tar_target(
-   indiv_vasc_seasonal,
-   plot_rss_indiv_seasonal(rss_vasc_s, rss_vasc_w, plot_theme()) +
-     labs(x = '%N in vascular plants', y = 'logRSS',
-          title = 'RSS for vascular %N')),
- 
- tar_target(
-   seasonal_RSS,
-   save_rss_plot(indiv_vasc_seasonal, "seasonal_vasc_rss",
-                 indiv_Clad_seasonal, "seasonal_Cladonia_rss")
- ),
- 
+  
+  tar_target(
+    indiv_vasc_seasonal,
+    plot_rss_indiv_seasonal(rss_vasc_s, rss_vasc_w, plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'RSS for vascular %N')),
+  
+  tar_target(
+    seasonal_RSS,
+    save_rss_plot(indiv_vasc_seasonal, "seasonal_vasc_rss",
+                  indiv_Clad_seasonal, "seasonal_Cladonia_rss")
+  ),
+  
   tar_target(
     popn_vasc_seasonal,
     plot_rss_popn_seasonal(popn_vasc_summer, popn_vasc_winter, plot_theme()) +
@@ -802,40 +616,40 @@ targets_rss_popn <- c(
     plot_rss_popn_seasonal(popn_Cladonia_summer, popn_Cladonia_winter, plot_theme()) +
       labs(x = '%N in Cladonia', y = 'logRSS',
            title = 'Population-level RSS for Cladonia %N')),
- 
+  
   tar_target(
     popn_RSS,
     save_rss_plot(popn_vasc_seasonal, "popn/seasonal_vasc_rss",
                   popn_Clad_seasonal, "popn/seasonal_Cladonia_rss")
   ),
   
- # Superimposing individual RSS over the pop'n level responses with 95% CIs
- 
- tar_target(
-   seasonal_Clad_popn_and_indiv,
-   plot_rss_seasonal_pi(popn_Cladonia_summer, popn_Cladonia_winter,
-                        rss_Cladonia_s, rss_Cladonia_w,
-                        plot_theme()) +
-     labs(x = '%N in Cladonia', y = 'logRSS',
-          title = 'Population and individual RSS for Cladonia %N')),
- 
- 
- tar_target(
-   seasonal_vasc_popn_and_indiv,
-   plot_rss_seasonal_pi(popn_vasc_summer, popn_vasc_winter,
-                        rss_vasc_s, rss_vasc_w,
-                        plot_theme()) +
-     labs(x = '%N in vascular plants', y = 'logRSS',
-          title = 'Population and individual RSS for vascular %N')),
- 
- tar_target(
-   pi_seasonal_RSS,
-   save_rss_plot(seasonal_Clad_popn_and_indiv, "popn/Clad_pop-and-indiv",
-                 seasonal_vasc_popn_and_indiv, "popn/vasc_pop-and-indiv")
- ),
- 
- 
- 
+  # Superimposing individual RSS over the pop'n level responses with 95% CIs
+  
+  tar_target(
+    seasonal_Clad_popn_and_indiv,
+    plot_rss_seasonal_pi(popn_Cladonia_summer, popn_Cladonia_winter,
+                         rss_Cladonia_s, rss_Cladonia_w,
+                         plot_theme()) +
+      labs(x = '%N in Cladonia', y = 'logRSS',
+           title = 'Population and individual RSS for Cladonia %N')),
+  
+  
+  tar_target(
+    seasonal_vasc_popn_and_indiv,
+    plot_rss_seasonal_pi(popn_vasc_summer, popn_vasc_winter,
+                         rss_vasc_s, rss_vasc_w,
+                         plot_theme()) +
+      labs(x = '%N in vascular plants', y = 'logRSS',
+           title = 'Population and individual RSS for vascular %N')),
+  
+  tar_target(
+    pi_seasonal_RSS,
+    save_rss_plot(seasonal_Clad_popn_and_indiv, "popn/Clad_pop-and-indiv",
+                  seasonal_vasc_popn_and_indiv, "popn/vasc_pop-and-indiv")
+  ),
+  
+  
+  
   # Now, combine both lichen + vascular within season, to have a summer plot and a winter plot
   tar_target(
     popn_summer_comp,
@@ -855,7 +669,6 @@ targets_rss_popn <- c(
                   popn_summer_comp, "popn/seasonal_rss_summer")
   )
 )
-
 
 # Targets: all ------------------------------------------------------------
 # Automatically grab and combine all the "targets_*" lists above

@@ -1,0 +1,17 @@
+season,term,estimate,se
+winter,I(log(sl_)),-0.011359,0.012487
+winter,I(cos(ta_)),-0.005263,0.005437
+winter,prop_forest,0.061596,0.197259
+winter,N_Cladonia,-0.840131,0.172449
+winter,N_vasc,0.352084,0.028915
+winter,prop_forest:I(log(sl_)),-0.437933,0.03361
+winter,N_Cladonia:I(log(sl_)),0.45482,0.027995
+winter,N_vasc:I(log(sl_)),-0.048125,0.005402
+summer,I(log(sl_)),-0.097192,0.014542
+summer,I(cos(ta_)),-0.167543,0.005939
+summer,prop_forest,0.556155,0.087719
+summer,N_Cladonia,-0.310456,0.167541
+summer,N_vasc,0.075547,0.026355
+summer,prop_forest:I(log(sl_)),-0.017874,0.016507
+summer,N_Cladonia:I(log(sl_)),-0.093476,0.031273
+summer,N_vasc:I(log(sl_)),0.05224,0.00536

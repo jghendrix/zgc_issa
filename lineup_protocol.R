@@ -8,21 +8,14 @@ library(patchwork)
 library(tidyterra)
 library(sp)
 
-
-# Generating simulations takes a while, saved some in the output/ folder after first run if not doing from scratch
-## Can skip to Line 242 if not running the simulation again to load the output/sims.Rds files
-
-
 # This simulation system is built with amt, but our model is glmmTMB
 # amt has a make_issf_model() function that we want to use to convert our model
 # you have to manually define the coefficients as a vector
 
-## First, let's focus on the winter %N model ----
+## First, focus on winter %N model ----
 
 # We need a single stacked raster with all of the predictors in it
-# easy enough for lichen + vascular stoich, but what about prop forest?
-# we subsampled that out into a raster to extract from in the targets workflow, just pull that one in?
-forest <- raster('output/prop_forest.tif')
+forest <- raster('input/prop_forest.tif')
 f.terra <- rast(forest)
 targets::tar_load(lichen)
 lich <- rast(lichen)
@@ -55,20 +48,16 @@ varnames(ftrim) <- "prop_forest"
 layers <- c(ftrim, lich)
 layers <- c(layers, vasc)
 
-# Save this stacked raster for future needs so we don't have to mess with that again
+# Save this stacked raster for future needs
 writeRaster(layers, 'output/issa_preds.tif')
 
 # We want the separate rasters to use as underlying maps to plot the simulations on top of, after we've generated the simulated tracks
-# crop each raster using the Fogo shapefile, and focus on northern half of island
+# separate cropped rasters to use in visualizing
+
 fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
 forest_poly <- crop(ftrim, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
 lich_poly <- crop(lich, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
 vasc_poly <- crop(vasc, fogo_poly, mask = TRUE) %>% filter(y > 5503000)
-
-
-## WORKFLOW STARTS HERE-----
-# read in layers if using the saved raster stack
-# layers <- rast(raster('output/issa_surface.tif'))
 
 ## Winter comparisons of 19 simulations to one real ----
 
@@ -114,9 +103,9 @@ fogo <- winter_steps %>% filter(id == "FO2016013")
 hist(fogo$x1_, breaks = 50)
 hist(fogo$y1_, breaks = 50)
 
-# let's call it ~703500 and ~5511000
+# ~703500 and ~5511000
 
-# we should generate new starting points for the 19 simulations, using different starts within ~1.5km of this region
+# Generate new starting points for the 19 simulations, using different starts within ~1.5km of this region
 # Randomly select a start point within our parameters to choose the actual track for comparing against the 19
 begin <- fogo %>% filter(x1_ > 702000 & x1_ < 706000 & y1_ > 5510000 & y1_ < 5512000)
 # 959 options for starting points of a 120-step segment 
@@ -133,7 +122,7 @@ ssf_sim <-list()
 
 for(i in 1:n){
   start <- make_start(c(runif(1, 702000, 706000), 
-                        runif(1,5510000,5512000)), 
+                        runif(1, 5510000, 5512000)), 
                       dt = hours(2),
                       crs = crs$wkt,
                       ta_ = 0)
@@ -244,12 +233,7 @@ south <- s.comp %>% filter(y_ > 5503000)
 # save these simulations for future use
 saveRDS(s.comp, 'output/summer_sims.Rds')
 
-## Load simulations, if skipping that step ----
-# w.comp <- readRDS('output/whole_island/inter_sims.Rds')
-# s.comp <- readRDS('output/summer_sims.Rds')
-
-
-# Winter plots --------
+# Randomizing facets --------
 # We have to randomize the order of these facets, but make sure we know which is which
 # Randomize the order of the ids in w.comp
 w.comp$randid <- as.factor(w.comp$id)
@@ -258,7 +242,9 @@ levels(w.comp$randid) <- sample(unique(w.comp$id))
 #winter <- w.comp[order(levels(w.comp$rid)),]
 
 # then use this random order and pair it with W1 through W20
-# DO NOT LOOK AT w_text if you don't want to know which one is real yet
+
+# DO NOT LOOK AT w_text if you don't want to know which one is real until after looking at the plots yourself
+
 w_text <- data.frame(
   randid = as.factor(levels(w.comp$randid)),
   season = "W",
@@ -276,7 +262,9 @@ levels(w.comp$label) <- c("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", 
 # the real, non-simulated track will be the letter associated with rid == 20 in w_text
 
 
-# over prop_forest
+# Winter plotting -----
+
+## over prop_forest
 w_on_forest <- ggplot() + 
   geom_spatraster(data = forest_poly)  +
   geom_path(data = w.comp, aes(x_, y_), 
@@ -300,7 +288,7 @@ ggsave(filename = "graphics/validation/W_forest_120.png",
        units = "px")
 
 # winter tracks over Cladonia
-# the segments are the same, just changing the underlying plot those trajectories are shown on top of
+# Note: the segments are the same, just changing the underlying plot those trajectories are shown superimposed over
 
 sim_on_Clad <- ggplot() + 
   geom_spatraster(data = lich_poly)  +
@@ -322,8 +310,6 @@ ggsave(filename = "graphics/validation/W_sim120_Cladonia.png",
        height = 2000,
        width = 2400,
        units = "px")
-
-
 
 
 # Summer plots ------
@@ -365,7 +351,7 @@ ggsave(filename = "graphics/validation/northern_summer_120_vasc.png",
        width = 2400,
        units = "px")
 
-# try it on the forest cover map as well
+# on the forest cover map as well
 
 s_sim_on_forest <- ggplot() + 
   geom_spatraster(data = forest_poly)  +

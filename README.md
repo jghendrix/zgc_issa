@@ -1,0 +1,7 @@
+Based on the iSSA guild targets workflow: https://issa-guild.github.io/book/index.html
+
+Code and data for submission to Journal of Animal Ecology. The integrated step selection analyses are all contained within the targets() workflow, based on the _targets.R file in the main directory, and the functions contained within /R.
+Code to determine seasonal thresholds based on spring greenup are found in seasonal_determination.R in main directory.
+Code to calculate seasonal range size and compare to stoichiometric distributions models are found in kernel_analyses.R file.
+
+Note that we are unable to publically share the raw GPS locations for this caribou population, so we have omitted the code taking the GPS locations to create aKDE, and included only the final derived distributions.

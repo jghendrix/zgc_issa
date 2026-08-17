@@ -1,7 +1,7 @@
 # Packages ----------------------------------------------------------------
 library(targets)
 library(tarchetypes)
-library(qs)
+library(qs2)
 library(visNetwork)
 
 library(renv)

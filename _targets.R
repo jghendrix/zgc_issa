@@ -34,16 +34,16 @@ split_by <- id_col
 targets_data <- c(
   
    tar_target(
-    gps_data,
+    tracks_lc,
     readr::read_rds(gps_path)
     ),
    
-   tar_target(
-     tracks_lc,
-     prepare_locs(gps_data, id_col, datetime_col, tz, split_by),
-    iteration = "group"
-  ),
-  
+  #  tar_target(
+  #    tracks_lc,
+  #    prepare_locs(gps_data, id_col, datetime_col, tz, split_by),
+  #   iteration = "group"
+  # ),
+  # 
   tar_target(
     split_key,
     unique(tracks_lc[, .SD, .SDcols = c(split_by, 'tar_group')])
@@ -75,8 +75,26 @@ targets_winter <- c(
   tar_target(
     summer_model_check,
     model_check(summer_model)
-  )
+  ),
   
+  # Reference models against which to compare the StDM iSSAs
+  tar_target(
+    winter_ref_model,
+    ref_forest_model(winter_prep)
+  ),
+  tar_target(
+    winter_ref_model_check,
+    model_check(winter_ref_model)
+  ),
+  
+  tar_target(
+    summer_ref_model,
+    ref_forest_model(summer_prep)
+  ),
+  tar_target(
+    summer_ref_model_check,
+    model_check(summer_ref_model)
+  )
 )
 
 # Targets: model output and effects ------------------------------------------------------------

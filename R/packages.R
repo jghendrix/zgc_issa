@@ -4,7 +4,7 @@ library(tarchetypes)
 library(qs2)
 library(visNetwork)
 
-library(renv)
+#library(renv)
 library(conflicted)
 conflicts_prefer(raster::extract)
 
@@ -38,7 +38,7 @@ require(osmdata)
 
 require(terra)
 require(neonUtilities)
-require(rhdf5)
+#require(rhdf5)
 require(ctmm)
 require(tidyterra)
 conflicts_prefer(stats::predict)

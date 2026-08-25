@@ -143,3 +143,15 @@ ggsave(filename = "graphics/maps/winter_KDE.png",
        height = 1000,
        width = 2000,
        units = "px")
+
+
+## 18 August: how many of the steps are in the southeast region that Reviewer2 flagged? ----
+
+# what are the boundaries of this area we're concerned with?
+# approximately... south of 5507000, east of 707000
+
+SEw <- winter_prep %>% filter(x1_ > 706000, y1_ < 5507000)
+SEs <- summer_prep %>% filter(x1_ > 706000, y1_ < 5507000)
+length(SEs$x1_)/length(summer_prep$x1_) # 29.6 % ...
+length(SEw$x1_)/length(winter_prep$x1_) # 17.3 % ...
+# so almost 30% of summer steps are in this region, but only 17% of winter steps at least?

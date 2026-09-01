@@ -27,6 +27,9 @@ id_col <- 'id'
 datetime_col <- 'datetime'
 tz <- 'America/St_Johns'
 
+
+sdss_path <- file.path('input', 'sdss.tif')
+
 # Split by: within which column or set of columns (eg. c(id, yr))
 split_by <- id_col
 
@@ -38,12 +41,6 @@ targets_data <- c(
     readr::read_rds(gps_path)
     ),
    
-  #  tar_target(
-  #    tracks_lc,
-  #    prepare_locs(gps_data, id_col, datetime_col, tz, split_by),
-  #   iteration = "group"
-  # ),
-  # 
   tar_target(
     split_key,
     unique(tracks_lc[, .SD, .SDcols = c(split_by, 'tar_group')])
@@ -94,7 +91,91 @@ targets_winter <- c(
   tar_target(
     summer_ref_model_check,
     model_check(summer_ref_model)
+  ),
+  
+  # models with categorical land cover? 
+  # these keep failing to converge... b/c categorical
+  # can we do proportions of these other in addition to forest?
+  
+  tar_file_read(
+    sdss,
+    sdss_path,
+    raster(!!.x)
+  ),
+  
+  tar_target(
+    winter_wet,
+    extract_prop_lc(winter_prep, crs, sdss, "wetland", 4) %>%
+      rename(prop_wetland = pt_r)
+  ),
+  
+  tar_target(
+    winter_bar,
+    extract_prop_lc(winter_wet, crs, sdss, "barrens", 4) %>%
+      rename(prop_barrens = pt_r)
+  ),
+  tar_target(
+    winter_scrub,
+    extract_prop_lc(winter_bar, crs, sdss, "scrub", 4) %>%
+      rename(prop_scrub = pt_r)
+  ),
+  
+  tar_target(
+    winter_lc_model,
+    ref_lc_model(winter_scrub)
+  ),
+  tar_target(
+    winter_lc_model_check,
+    model_check(winter_lc_model)
+  ),
+  
+  tar_target(
+    summer_wet,
+    extract_prop_lc(summer_prep, crs, sdss, "wetland", 4) %>%
+      rename(prop_wetland = pt_r)
+  ),
+  
+  tar_target(
+    summer_bar,
+    extract_prop_lc(summer_wet, crs, sdss, "barrens", 4) %>%
+      rename(prop_barrens = pt_r)
+  ),
+  tar_target(
+    summer_scrub,
+    extract_prop_lc(summer_bar, crs, sdss, "scrub", 4) %>%
+      rename(prop_scrub = pt_r)
+  ),
+  
+  tar_target(
+    summer_lc_model,
+    ref_lc_model(summer_scrub)
+  ),
+  tar_target(
+    summer_lc_model_check,
+    model_check(summer_lc_model)
+  ),
+  
+  # Null models (no environment)
+  
+  tar_target(
+    winter_null_model,
+    null_model(winter_prep)
+  ),
+  tar_target(
+    winter_null_model_check,
+    model_check(summer_null_model)
+  ),
+  
+  tar_target(
+    summer_null_model,
+    null_model(summer_prep)
+  ),
+  tar_target(
+    summer_null_model_check,
+    model_check(summer_null_model)
   )
+  
+  
 )
 
 # Targets: model output and effects ------------------------------------------------------------

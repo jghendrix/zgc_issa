@@ -155,3 +155,66 @@ SEs <- summer_prep %>% filter(x1_ > 706000, y1_ < 5507000)
 length(SEs$x1_)/length(summer_prep$x1_) # 29.6 % ...
 length(SEw$x1_)/length(winter_prep$x1_) # 17.3 % ...
 # so almost 30% of summer steps are in this region, but only 17% of winter steps at least?
+
+# Omitting Cape Cove?
+SSEw <- SEw %>% filter(x1_ < 713000)
+SSEs <- SEs %>% filter(x1_ < 713000)
+length(SSEs$x1_)/length(summer_prep$x1_) # 24.2 % ...
+length(SSEw$x1_)/length(winter_prep$x1_) # 5.5 % ...
+# so almost 30% of summer steps are in this region, but only 17% of winter steps at least?
+
+
+# 25 August - updating sample plot map including line showing where projections end ---- 
+sites <- read.csv("input/cleaned_all_stoich.csv") %>%
+  dplyr::select(c(site, lc, x, y)) %>% 
+  filter(!duplicated(site))
+
+sites %<>% mutate(xy = paste0(x, y)) %>% 
+  filter(!duplicated(xy)) %>% dplyr::select(-c(xy))
+coordinates(sites) <- ~ x + y
+
+crs(sites) <- "epsg:32621"
+plots <- st_as_sf(sites)
+
+plots %<>% mutate(lc = ifelse(lc == "Broadleaf" | lc == "Mixed", "Mixedwood", lc))
+plots$lc <- gsub("Conifer", "ConiferForest", plots$lc)
+plots$lc <- gsub("Scrub", "ConiferScrub", plots$lc)
+
+ggplot() +
+  geom_sf(data = fogo, fill = "#f0f9e6") +
+  geom_sf(data = plots, aes(colour = lc), size = 2) +
+  scale_colour_viridis(discrete = TRUE, option = "B", end = 0.85) +
+  theme_bw() +
+  coord_sf(ylim = c(5494000, 5515000)) +
+  theme(legend.title = element_blank()) +
+  geom_hline(yintercept = 5503000, colour = "darkred", linetype = "dashed", linewidth = 1.5)
+
+ggsave(filename = "graphics/maps/sample_plots.png",
+       height = 2000,
+       width = 2400,
+       units = "px")
+
+
+# add roads to this
+roads <- read_sf('input/FogoRoads/FogoRoads.shp')
+
+roads <- st_transform(roads, crs$wkt)
+
+# sample plots with roads
+ggplot() +
+  geom_sf(data = fogo, fill = "#f0f9e6") +
+  geom_sf(data = roads, colour = "grey20") +
+  geom_sf(data = plots, aes(colour = lc), size = 2) +
+  scale_colour_viridis(discrete = TRUE, option = "B", end = 0.85) +
+  theme_bw() +
+  coord_sf(ylim = c(5494000, 5515000)) +
+  theme(legend.title = element_blank()) +
+  geom_hline(yintercept = 5503000, colour = "darkred", linetype = "dashed", linewidth = 1.5) +
+  ggspatial::annotation_scale(pad_x = unit(10, "cm"),
+                              pad_y = unit(1, "cm"))
+
+
+ggsave(filename = "graphics/maps/sample_plots.png",
+       height = 2000,
+       width = 2400,
+       units = "px")

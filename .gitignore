@@ -22,7 +22,7 @@
 .Rproj.user/
 
 # Working files
-output/other
+output/
 graphics/
 GEE/
 code_to_ignore/

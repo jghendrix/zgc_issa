@@ -82,7 +82,7 @@ s50_areas <- st_area(seasonal_50)/1000000
 # I.e., 21.6% overlap wrt winter, 15.1% overlap wrt summer
 ## so 18.3% overlap on average?
 
-# Comparing to StDMs -----
+# Comparing seasonal kernels to StDMs -----
 epsg <- 32621
 crs <- st_crs(epsg)
 crs_sp <- CRS(crs$wkt)
@@ -177,7 +177,7 @@ summer_areas <- st_area(sum_HR)/1000000
 # 23.5% of winter
 
 
-# Nitrogen relative to seasonal ranges ----
+# Nitrogen in forage relative to seasonal ranges ----
 ## We want to compare the % N of lichen and plants from our sampling sites, relative to where those plots fall on the winter and summer ranges.
 
 # First, start by just comparing inside vs. outside the 50% kernel polygon we just created
@@ -234,8 +234,6 @@ ggsave(filename = 'graphics/maps/N-inside-outside_jitter.png',
        height = 4,
        width = 8)
 
-
-
 ## Statistical comparison of inside vs. outside %N ----
 # Most species appear to be very slightly higher in N at sites inside the 50% kernel vs. outside, but not really any significant differences based on this dichotomous variable
 # Alder appears to be behaving opposite the rest though, which is perhaps interesting given it is a nitrogen fixer
@@ -257,209 +255,3 @@ ggplot(df, aes(x = vasc, y = percent_N, colour = winter_range)) +
   geom_boxplot()
 
 summary(lm(percent_N ~ winter_range, data = subset(df, vasc == "vasc")))
-
-
-
-
-
-
-# 25 August - trying to figure out UDOI overlap of summer vs. winter?? ------
-library(ctmm)
-library(adehabitatHR)
-library(terra)
-library(tidyverse)
-library(sf)
-library(magrittr)
-library(tidyterra)
-
-bb <- c(
-  xmin = 693000,
-  ymin = 5503000,
-  xmax = 716900,
-  ymax = 5515100)
-
-epsg <- 32621
-crs <- st_crs(epsg)
-crs_sp <- CRS(crs$wkt)
-
-summer_pop <- readRDS('output/other/kernels/summer_pop.Rds')
-winter_pop <- readRDS('output/other/kernels/winter_pop.Rds')
-
-fogo_poly <- read_sf('input/FogoPoly/FogoPoly.shp')
-fogo_trans <- st_transform(fogo_poly, crs = crs$wkt)
-fogo <- st_crop(fogo_trans, bb)
-
-win_rast <- rast(raster(winter_pop))
-crs(win_rast) <- "epsg:32621"
-win_crop <- crop(win_rast, fogo, mask = TRUE)  
-
-sum_rast <- rast(raster(summer_pop))
-crs(sum_rast) <- "epsg:32621"
-sum_crop <- crop(sum_rast, fogo, mask = TRUE)  
-
-summary(win_crop)
-
-# These are currently in KDE style, i.e. lowest values = highest intensity of use area
-# for kerneloverlaphr, it needs to be the other way around
-win_inv <- win_crop %>% mutate(layer = abs(1-layer))
-summary(win_inv)
-sum_inv <- sum_crop %>% mutate(layer = abs(1-layer))
-
-
-# replace NAs with 0s in the middle of the ocean
-wz <- win_inv %>% mutate(layer = ifelse(is.na(layer), 0, layer))
-sz <- sum_inv %>% mutate(layer = ifelse(is.na(layer), 0, layer))
-
-# template raster against which to harmonize these two, before converting to spdf
-temp <- rast(xmin=693000, xmax=716900, ymin=5503000, ymax=5515100, res = 25, crs= crs$wkt)
-w2 <- project(wz, temp)
-s2 <- project(sz, temp)
-
-wr <- raster(w2)
-sr <- raster(s2)
-wspdf <- as(wr, "SpatialPixelsDataFrame")
-summary(wspdf)
-
-sspdf <- as(sr, "SpatialPixelsDataFrame")
-summary(sspdf)
-
-# s2 and w2 have the same dimensions, but sspdf is smaller than wspdf somehow?
-# the x-boundaries are 3 cells narrower but it reports having the same ncol and nrow, somehow...
-
-# I'm sure there's a better way than this but it should work?
-windf <- as.data.frame(wspdf) %>%
-  mutate(loc = paste0(x, y))
-sumdf <- as.data.frame(sspdf) %>%
-  mutate(loc = paste0(x, y))
-
-add <- windf %>% filter(!loc %in% sumdf$loc) %>%
-  mutate(layer = 0)
-
-sum2 <- rbind(sumdf, add) %>% dplyr::select(-c(loc))
-win2 <- windf %>% dplyr::select(-c(loc))
-sumc <- sum2
-winc <- win2
-
-coordinates(winc) = c("x", "y") # promote to SpatialPointsDataFrame
-gridded(winc) <- TRUE 
-coordinates(sumc) = c("x", "y") # promote to SpatialPointsDataFrame
-gridded(sumc) <- TRUE 
-
-sumc
-winc
-
-# go ahead with winc and sumc now
-
-#data(meuse.grid)
-#m = SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], data = meuse.grid)
-
-# Define parameters and slots for estUD - had to do this for some reason, get a volume error message otherwise
-fullgrid(winc) <- FALSE
-fullgrid(sumc) <- FALSE
-
-hli <- list(h = 1, meth="specified")
-
-win.estUD <- new("estUD", winc)
-slot(win.estUD, "h") <- hli
-slot(win.estUD, "vol") <- FALSE
-
-sum.estUD <- new("estUD", sumc)
-slot(sum.estUD, "h") <- hli
-slot(sum.estUD, "vol") <- FALSE
-
-UD.combined <- list(winter = win.estUD, summer = sum.estUD)
-class(UD.combined) <- "estUDm"
-
-saveRDS(UD.combined, 'output/summer-winter-UD.Rds')
-
-
-# Restart R session
-UD.combined <- readRDS('output/summer-winter-UD.Rds')
-library(adehabitatHR)
-
-summary(UD.combined)
-plot(UD.combined[[1]])
-plot(UD.combined[[2]])
-
-kerneloverlaphr(UD.combined, method = "VI")
-
-ver <- getverticeshr(win.estUD, percent = 95)
-
-# WHAT NOWWW
-
-# 27 August - Can we manually calculate the volume intersection from the dataframes? ----
-
-# sum2 and win2 are dataframes with x and y values
-sum2 %<>% rename(sumk = layer)
-win2 %<>% rename(wink = layer)
-
-sea <- left_join(sum2, win2, by = c("x", "y")) %>%
-  mutate(int = sumk*wink)
-
-# average intersection across all cells is 7.4%
-mean(sea$int)
-
-# if we sum the total probability for each season's UD and divide the volume of intersection by that?
-mean_tot <- (sum(sea$sumk) + sum(sea$wink))/2
-
-sum(sea$int)/mean_tot
-
-# 35.35% of each season's volume is tied up in the other... but is that statistically unexpected?? who the fuck knows
-
-
-
-
-# percent = 100, conditional = TRUE
-
-# method = "HR", output = NaN
-# method = "PHR", output = 0
-# method = "VI", output = 2e8  -OR- 0 if conditional = TRUE
-# method = "BA", output = 0
-# method = "UDOI", output = 0
-# method = "HD", output = 0
-data(puechabonsp)
-  
-kud <- kernelUD(puechabonsp$relocs[,1],
-                grid=200, same4all=TRUE)
-kerneloverlaphr(kud, meth = "BA", conditional = FALSE)
-plot(kud[[1]])
-
-
-# So this code using example data actually gives me appropriate ratio values less than 1... why does my code generate values in the two hundred millions?
-
-# In the example code, the highest values are in the highest intensity of use areas??? wtf???
-
-
-
-
-
-# other code pre-realizing my mistakes
-
-
-
-
-library(sp)
-
-win_re <- new("estUD", wspdf)
-class(win_re) <- "estUD"
-
-sum_re <- new("estUD", sspdf)
-class(sum_re) <- "estUD"
-UD.re <- list(winter = win_re, summer = sum_re)
-class(UD.re) <- "estUDm"
-saveRDS(UD.re, 'output/summer-winter-kernels_pre-hli-adj.Rds')
-
-# Trying to just figure out plotting, good lord
-library(adehabitatHR)
-library(raster)
-
-UD.combined <- readRDS('output/summer-winter-kernels.Rds')
-UD.pre <- readRDS('output/summer-winter-kernels_pre-hli-adj.Rds')
-
-plot(UD.combined[[1]])
-plot(UD.pre[[1]])
-
-# These appear to be functionally identical, and they appear accurate for where the highest intensity of use should be? There's just a ton of 0s in the ocean, is all
-
-kerneloverlaphr(UD.pre, method = "BA")
-# this function only works after we do the h <- "hli" adjustment, I have no idea why

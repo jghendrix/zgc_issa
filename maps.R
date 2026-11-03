@@ -17,6 +17,10 @@ fogo <- st_transform(fogo_poly, crs$wkt)
 
 # import StDMs
 tar_load(c(vascular, lichen))
+
+
+lichen <- raster('input/Cladonia_N.tif')
+
 lich <- rast(lichen)
 vasc <- rast(vascular)
 crs(lich) <- crs$wkt
@@ -31,15 +35,19 @@ varnames(vasc) <- "N_vasc"
 # crop to Fogo perimeter
 lich_poly <- crop(lich, fogo, mask = TRUE)
 vasc_poly <- crop(vasc, fogo, mask = TRUE)
+library(terra)
+
+lich_200 <- aggregate(lich_poly, fact = 8, fun = "mean", na.rm = TRUE)
 
 # %N in Cladonia predicted surface
 ggplot() + 
-  geom_spatraster(data = lich_poly) +
+  geom_spatraster(data = lich_200) +
   scale_fill_terrain_c() +
-  xlim(c(693000, 717000)) + # 20k
-  ylim(c(5503000, 5515000)) + #12k
+  #xlim(c(693000, 717000)) + # 20k
+  ylim(c(5493500, 5515000)) + #12k
   labs(fill = "Cladonia %N") +
-  theme_bw()
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "lightblue2"))
 
 ggsave(filename = "graphics/maps/lichen_N_map.png",
        height = 1600,
@@ -88,7 +96,7 @@ ggsave(filename = "graphics/maps/forest_cover_map.png",
 
 ## Caribou aKDEs ----
 # import UD rasters
-summer <- raster('output/summer_population_UD.tif')
+summer <- raster('output/other/summer_population_UD.tif')
 tsum <- rast(summer) 
 
 # crop to bounding box
@@ -101,45 +109,57 @@ crs(scrop) <- crs$wkt
 
 summer_poly <- crop(scrop, fogo, mask = TRUE)
   
-winter <- raster('output/winter_population_UD.tif')
+winter <- raster('output/other/winter_population_UD.tif')
 twin <- rast(winter) 
 
 wcrop <- crop(twin, e) %>%
   rename(UD = winter_population_UD) %>%
-  mutate(UD = winter_population_UD/max(winter_population_UD),
-         KDE = 1 - UD)
+  mutate(rUD = UD/max(UD),
+         KDE = 1 - rUD)
 
 crs(wcrop) <- crs$wkt
 winter_poly <- crop(wcrop, fogo, mask = TRUE) 
 
 # Summer kernel
 ggplot() + 
-  geom_spatraster(data = scrop, aes(fill = KDE)) +
-  scale_fill_viridis_c(na.value = "transparent", labels = label_percent()) +
+  geom_spatraster(data = summer_poly, aes(fill = UD)) +
+  scale_fill_viridis_c(na.value = "transparent"
+                       #, labels = label_percent()
+                       ) +
   xlim(c(693000, 717000)) + # 20k
   ylim(c(5503000, 5515000)) + #12k
-  ggplot2::annotate("text", 
-                    x = 694000, y = 5514000, 
-                    label = "A", size = 10) +
-  labs(fill = "KDE", x = "", y = "") +
-  theme_bw()
-ggsave(filename = "graphics/maps/summer_KDE.png",
+  #ggplot2::annotate("text", 
+ #                   x = 694000, y = 5514000, 
+  #                  label = "A", size = 10) +
+  labs(#fill = "UD", 
+    x = "", y = "") +
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "grey50"),
+        panel.grid = element_blank())
+  
+ggsave(filename = "graphics/maps/summer_UD_dark.png",
        height = 1000,
        width = 2000,
        units = "px")
 
 # Winter kernel
 ggplot() +
-  geom_spatraster(data = wcrop, aes(fill = KDE)) +
-  scale_fill_viridis_c(na.value = "transparent", labels = label_percent()) + 
+  geom_spatraster(data = winter_poly, aes(fill = rUD)) +
+  scale_fill_viridis_c(na.value = "transparent", 
+                       #labels = label_percent()
+                       ) + 
   xlim(c(693000, 717000)) +
   ylim(c(5503000, 5515000)) + 
-  ggplot2::annotate("text", 
-                    x = 694000, y = 5514000, 
-                    label = "B", size = 10) +
-  labs(fill = "KDE", x = "", y = "") +
-  theme_bw()
-ggsave(filename = "graphics/maps/winter_KDE.png",
+  #ggplot2::annotate("text", 
+  #                  x = 694000, y = 5514000, 
+  #                  label = "B", size = 10) +
+  labs(#fill = "UD", 
+    x = "", y = "") +
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "grey50"),
+        panel.grid = element_blank())
+
+ggsave(filename = "graphics/maps/winter_KDE_dark.png",
        height = 1000,
        width = 2000,
        units = "px")
